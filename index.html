@@ -3,138 +3,276 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>H.Ai - الذكاء الاصطناعي السلفي المتقدم</title>
+    <title>H.Ai - الذكاء الاصطناعي الإسلامي الشامل</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <link rel="icon" href="ai-icon.png" type="image/png">
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/4712/4712035.png" type="image/png">
 </head>
 <body>
-    <div class="app-container">
-        <header class="app-header">
-            <div class="header-content">
-                <div class="logo-container">
-                    <img src="ai-icon.png" alt="H.Ai Logo" class="logo">
-                    <h1>H.<span>Ai</span></h1>
-                </div>
-                <div class="header-actions">
-                    <button id="new-chat" class="btn-icon" title="محادثة جديدة">
-                        <i class="fas fa-plus"></i>
-                    </button>
-                    <button id="settings-btn" class="btn-icon" title="الإعدادات">
-                        <i class="fas fa-cog"></i>
-                    </button>
-                </div>
+    <div class="container">
+        <!-- شريط التنقل -->
+        <nav class="navbar">
+            <div class="logo">
+                <img src="https://cdn-icons-png.flaticon.com/512/4712/4712035.png" alt="H.Ai Logo">
+                <span>H.Ai</span>
             </div>
-        </header>
+            <ul class="nav-links">
+                <li><a href="#" id="chat-link" class="active"><i class="fas fa-comments"></i> الدردشة</a></li>
+                <li><a href="#" id="settings-link"><i class="fas fa-cog"></i> الإعدادات</a></li>
+                <li><a href="#" id="topics-link"><i class="fas fa-book"></i> المواضيع</a></li>
+            </ul>
+            <div class="auth-buttons" id="auth-buttons">
+                <button id="login-btn">تسجيل الدخول</button>
+                <button id="register-btn">إنشاء حساب</button>
+            </div>
+            <div class="user-profile" id="user-profile" style="display: none;">
+                <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="صورة المستخدم">
+                <span id="username-display"></span>
+                <button id="logout-btn">تسجيل الخروج</button>
+            </div>
+        </nav>
 
-        <main class="app-main">
-            <aside class="sidebar">
-                <div class="chat-history" id="chat-history">
-                    <div class="history-header">
-                        <h3>المحادثات السابقة</h3>
-                        <button id="clear-history" class="btn-text">مسح الكل</button>
-                    </div>
-                    <div class="history-items" id="history-items"></div>
-                </div>
-                <div class="sidebar-footer">
-                    <div class="user-profile">
-                        <img src="user-icon.png" alt="User" class="user-avatar">
-                        <span class="user-name">مستخدم</span>
-                    </div>
-                </div>
-            </aside>
-
-            <section class="chat-container">
+        <!-- محتوى الدردشة -->
+        <div class="content active" id="chat-content">
+            <div class="chat-container">
                 <div class="chat-header">
-                    <h2 id="current-chat-title">محادثة جديدة</h2>
-                    <div class="model-info">
-                        <span class="model-badge">Gemini 2.0</span>
-                        <span class="status-dot"></span>
-                        <span>متصل</span>
+                    <div class="ai-info">
+                        <img src="https://cdn-icons-png.flaticon.com/512/4712/4712035.png" alt="H.Ai Avatar">
+                        <h3>H.Ai المساعد الإسلامي الشامل</h3>
+                    </div>
+                    <div class="chat-actions">
+                        <button id="new-chat-btn"><i class="fas fa-plus"></i> محادثة جديدة</button>
+                        <button id="suggest-btn"><i class="fas fa-lightbulb"></i> اقتراحات</button>
                     </div>
                 </div>
                 <div class="chat-messages" id="chat-messages">
-                    <div class="welcome-message">
-                        <div class="welcome-content">
-                            <img src="ai-icon.png" alt="H.Ai" class="welcome-logo">
-                            <h3>مرحبًا بك في H.Ai</h3>
-                            <p>كيف يمكنني مساعدتك اليوم؟</p>
-                            <div class="quick-questions">
-                                <button class="quick-question">ما هي أركان الإسلام؟</button>
-                                <button class="quick-question">كيف أحل هذه المعادلة: 2x + 5 = 15؟</button>
-                                <button class="quick-question">ما هو تفسير آية الكرسي؟</button>
-                            </div>
+                    <div class="message ai-message">
+                        <img src="https://cdn-icons-png.flaticon.com/512/4712/4712035.png" alt="H.Ai Avatar">
+                        <div class="message-content">
+                            <p>السلام عليكم ورحمة الله وبركاته، أنا H.Ai المساعد الإسلامي الشامل. أسألني عن:</p>
+                            <ul class="suggestions-list">
+                                <li>أي موضوع ديني وفق منهج السلف الصالح</li>
+                                <li>أسئلة في الطب والتمريض</li>
+                                <li>مسائل في الفيزياء والكيمياء</li>
+                                <li>استفسارات في الأحياء والعلوم</li>
+                                <li>أو أي موضوع آخر وسأجيبك بأفضل ما لدي</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
-                <div class="chat-input-container">
-                    <div class="input-wrapper">
-                        <textarea id="user-input" placeholder="اكتب رسالتك هنا..." rows="1"></textarea>
-                        <button id="send-button" class="btn-send">
-                            <i class="fas fa-paper-plane"></i>
-                        </button>
-                    </div>
-                    <div class="input-footer">
-                        <span class="disclaimer">H.Ai قد يقدم معلومات غير دقيقة. يرجى التحقق من المصادر الشرعية.</span>
-                    </div>
+                <div class="chat-input">
+                    <textarea id="user-input" placeholder="اكتب سؤالك هنا..." rows="3"></textarea>
+                    <button id="send-btn"><i class="fas fa-paper-plane"></i> إرسال</button>
                 </div>
-            </section>
-        </main>
-    </div>
-
-    <!-- نافذة الإعدادات -->
-    <div id="settings-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>إعدادات H.Ai</h2>
-                <button class="close-btn">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="settings-tabs">
-                    <button class="tab-btn active" data-tab="general">عام</button>
-                    <button class="tab-btn" data-tab="api">API</button>
-                </div>
-                <div class="tab-content active" id="general-tab">
-                    <div class="setting-group">
-                        <h3>إعدادات المحادثة</h3>
-                        <label class="switch">
-                            <input type="checkbox" id="islamic-mode" checked>
-                            <span class="slider"></span>
-                            <span>الوضع الإسلامي السلفي</span>
-                        </label>
-                    </div>
-                </div>
-                <div class="tab-content" id="api-tab">
-                    <div class="setting-group">
-                        <h3>إعدادات Gemini API</h3>
-                        <label>
-                            مفتاح API
-                            <input type="password" id="api-key" value="AIzaSyAAY8gk9aOjJL3ABB_ZDQpcQfAWQRzCnQI">
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button id="save-settings" class="btn-primary">حفظ التغييرات</button>
-                <button class="btn-secondary close-btn">إلغاء</button>
             </div>
         </div>
-    </div>
 
-    <!-- نافذة تحميل -->
-    <div id="loading-modal" class="modal">
-        <div class="loading-content">
-            <div class="loading-spinner"></div>
-            <p>جاري معالجة طلبك...</p>
+        <!-- محتوى الإعدادات -->
+        <div class="content" id="settings-content">
+            <div class="settings-container">
+                <h2><i class="fas fa-cog"></i> الإعدادات</h2>
+                
+                <div class="settings-section">
+                    <h3>الحساب</h3>
+                    <div class="setting-item">
+                        <label>تغيير كلمة المرور</label>
+                        <button id="change-password-btn">تغيير</button>
+                    </div>
+                    <div class="setting-item">
+                        <label>صورة الحساب</label>
+                        <button id="change-avatar-btn">تغيير الصورة</button>
+                    </div>
+                </div>
+                
+                <div class="settings-section">
+                    <h3>روابط التواصل</h3>
+                    <div class="setting-item">
+                        <label>قناة اليوتيوب</label>
+                        <a href="https://youtube.com/@heshamtechzone?si=OHZ6A8ml9q6ZwE6c" target="_blank" class="social-link">
+                            <i class="fab fa-youtube"></i> Hesham Tech Zone
+                        </a>
+                    </div>
+                    <div class="setting-item">
+                        <label>قناة التلجرام</label>
+                        <a href="https://t.me/Hesham_Tech_Zone" target="_blank" class="social-link">
+                            <i class="fab fa-telegram"></i> Hesham Tech Zone
+                        </a>
+                    </div>
+                    <div class="setting-item">
+                        <label>موقع الويب</label>
+                        <a href="https://heshamtechzone.github.io/Hisham-Al-Mutawwar-/#home" target="_blank" class="social-link">
+                            <i class="fas fa-globe"></i> موقع هشام المتوور
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="settings-section">
+                    <h3>إعدادات الذكاء الاصطناعي</h3>
+                    <div class="setting-item">
+                        <label for="ai-style">أسلوب الرد:</label>
+                        <select id="ai-style">
+                            <option value="islamic">إسلامي سلفي</option>
+                            <option value="detailed">مفصل وشامل</option>
+                            <option value="simple">بسيط ومختصر</option>
+                            <option value="scientific">أكاديمي علمي</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <label for="ai-avatar">صورة الذكاء الاصطناعي:</label>
+                        <select id="ai-avatar">
+                            <option value="1">الصورة الافتراضية</option>
+                            <option value="2">صورة العالم</option>
+                            <option value="3">صورة الكتاب</option>
+                            <option value="4">صورة الطبيب</option>
+                            <option value="5">صورة العالم المسلم</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
 
-    <!-- إشعار الأخطاء -->
-    <div id="error-toast" class="toast">
-        <div class="toast-content">
-            <i class="fas fa-exclamation-circle"></i>
-            <span class="toast-message"></span>
+        <!-- محتوى المواضيع -->
+        <div class="content" id="topics-content">
+            <div class="topics-container">
+                <h2><i class="fas fa-book"></i> المواضيع المتاحة</h2>
+                
+                <div class="topics-section">
+                    <h3><i class="fas fa-mosque"></i> المواضيع الإسلامية</h3>
+                    <div class="topics-grid">
+                        <div class="topic-card" data-topic="aqeedah">
+                            <i class="fas fa-star"></i>
+                            <h4>العقيدة</h4>
+                            <p>أسئلة في التوحيد وأركان الإيمان</p>
+                        </div>
+                        <div class="topic-card" data-topic="fiqh">
+                            <i class="fas fa-pray"></i>
+                            <h4>الفقه</h4>
+                            <p>مسائل فقهية في العبادات والمعاملات</p>
+                        </div>
+                        <div class="topic-card" data-topic="quran">
+                            <i class="fas fa-quran"></i>
+                            <h4>القرآن الكريم</h4>
+                            <p>تفسير وتدبر آيات القرآن</p>
+                        </div>
+                        <div class="topic-card" data-topic="hadith">
+                            <i class="fas fa-book-open"></i>
+                            <h4>الحديث النبوي</h4>
+                            <p>شرح الأحاديث وعلوم الحديث</p>
+                        </div>
+                        <div class="topic-card" data-topic="seerah">
+                            <i class="fas fa-user-tie"></i>
+                            <h4>السيرة النبوية</h4>
+                            <p>حياة الرسول ﷺ وأصحابه</p>
+                        </div>
+                        <div class="topic-card" data-topic="history">
+                            <i class="fas fa-landmark"></i>
+                            <h4>التاريخ الإسلامي</h4>
+                            <p>أحداث التاريخ الإسلامي عبر العصور</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="topics-section">
+                    <h3><i class="fas fa-flask"></i> العلوم الطبيعية</h3>
+                    <div class="topics-grid">
+                        <div class="topic-card" data-topic="physics">
+                            <i class="fas fa-atom"></i>
+                            <h4>الفيزياء</h4>
+                            <p>قوانين الفيزياء وتطبيقاتها</p>
+                        </div>
+                        <div class="topic-card" data-topic="chemistry">
+                            <i class="fas fa-vial"></i>
+                            <h4>الكيمياء</h4>
+                            <p>تفاعلات كيميائية ونظريات</p>
+                        </div>
+                        <div class="topic-card" data-topic="biology">
+                            <i class="fas fa-dna"></i>
+                            <h4>علم الأحياء</h4>
+                            <p>دراسة الكائنات الحية ووظائفها</p>
+                        </div>
+                        <div class="topic-card" data-topic="medicine">
+                            <i class="fas fa-briefcase-medical"></i>
+                            <h4>الطب</h4>
+                            <p>تشخيص وأمراض وعلاجات</p>
+                        </div>
+                        <div class="topic-card" data-topic="nursing">
+                            <i class="fas fa-user-nurse"></i>
+                            <h4>التمريض</h4>
+                            <p>رعاية صحية وإسعافات أولية</p>
+                        </div>
+                        <div class="topic-card" data-topic="math">
+                            <i class="fas fa-square-root-alt"></i>
+                            <h4>الرياضيات</h4>
+                            <p>مسائل وحلول رياضية</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- نافذة تسجيل الدخول -->
+        <div class="modal" id="login-modal">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <h2><i class="fas fa-sign-in-alt"></i> تسجيل الدخول</h2>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="login-username">اسم المستخدم:</label>
+                        <input type="text" id="login-username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">كلمة المرور:</label>
+                        <input type="password" id="login-password" required>
+                    </div>
+                    <button type="submit">تسجيل الدخول</button>
+                </form>
+                <div class="auth-links">
+                    <p>ليس لديك حساب؟ <a href="#" id="show-register">إنشاء حساب جديد</a></p>
+                    <p><a href="#" id="forgot-password">نسيت كلمة المرور؟</a></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- نافذة إنشاء حساب -->
+        <div class="modal" id="register-modal">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <h2><i class="fas fa-user-plus"></i> إنشاء حساب جديد</h2>
+                <form id="register-form">
+                    <div class="form-group">
+                        <label for="register-username">اسم المستخدم:</label>
+                        <input type="text" id="register-username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-email">البريد الإلكتروني:</label>
+                        <input type="email" id="register-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-password">كلمة المرور:</label>
+                        <input type="password" id="register-password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-confirm-password">تأكيد كلمة المرور:</label>
+                        <input type="password" id="register-confirm-password" required>
+                    </div>
+                    <button type="submit">إنشاء حساب</button>
+                </form>
+                <div class="auth-links">
+                    <p>لديك حساب بالفعل؟ <a href="#" id="show-login">تسجيل الدخول</a></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- نافذة الاقتراحات -->
+        <div class="modal" id="suggestions-modal">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <h2><i class="fas fa-lightbulb"></i> اقتراحات أسئلة</h2>
+                <div class="suggestions-container" id="suggestions-container">
+                    <!-- سيتم ملؤها بالجافاسكربت -->
+                </div>
+            </div>
         </div>
     </div>
 
