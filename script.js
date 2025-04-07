@@ -328,7 +328,7 @@ const elements = {
     remindersModal: document.getElementById('reminders-modal'),
     tafsirModal: document.getElementById('tafsir-modal'),
     
-    // العناصر ا��أخرى
+    // العناصر الأخرى
     authButtons: document.getElementById('auth-buttons'),
     userProfile: document.getElementById('user-profile'),
     usernameDisplay: document.getElementById('username-display'),
@@ -362,7 +362,11 @@ const elements = {
     tafsirContent: document.getElementById('tafsir-content'),
     tafsirTabs: document.querySelectorAll('.tafsir-tab'),
     reminderItems: document.querySelectorAll('.reminder-item'),
-    setReminderBtns: document.querySelectorAll('.set-reminder')
+    setReminderBtns: document.querySelectorAll('.set-reminder'),
+    usernameInput: document.getElementById('username-input'),
+    emailInput: document.getElementById('email-input'),
+    passwordInput: document.getElementById('password-input'),
+    saveSettings: document.getElementById('save-settings')
 };
 
 // تهيئة التطبيق
@@ -387,6 +391,9 @@ function init() {
     
     // تحميل التذكيرات
     loadReminders();
+    
+    // ضبط الواجهة للهاتف
+    adjustForMobile();
 }
 
 // تحميل بيانات المستخدم
@@ -517,13 +524,18 @@ function setupEventListeners() {
     elements.loginForm.addEventListener('submit', handleLogin);
     elements.registerForm.addEventListener('submit', handleRegister);
     
-    // إغلاق النوافذ المنبثقة
-    document.querySelectorAll('.close-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            document.querySelectorAll('.modal').forEach(modal => {
-                modal.classList.remove('active');
-            });
+    // إغلاق النوافذ المنبثقة عند النقر خارج المحتوى
+    document.querySelectorAll('.modal').forEach(modal => {
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModals();
+            }
         });
+    });
+    
+    // إغلاق النوافذ عند النقر على زر الإغلاق
+    document.querySelectorAll('.close-btn').forEach(btn => {
+        btn.addEventListener('click', closeModals);
     });
     
     // الروابط بين النوافذ المنبثقة
@@ -557,6 +569,9 @@ function setupEventListeners() {
     
     // القائمة الجوالية
     elements.mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+    
+    // ضبط ارتفاع حقل النص تلقائياً
+    elements.userInput.addEventListener('input', adjustTextareaHeight);
 }
 
 // عرض المحتوى
@@ -604,12 +619,15 @@ function showModal(modal) {
     switch (modal) {
         case 'login':
             elements.loginModal.classList.add('active');
+            document.getElementById('login-username').focus();
             break;
         case 'register':
             elements.registerModal.classList.add('active');
+            document.getElementById('register-username').focus();
             break;
         case 'translate':
             elements.translateModal.classList.add('active');
+            document.getElementById('translate-input').focus();
             break;
         case 'reminders':
             elements.remindersModal.classList.add('active');
@@ -618,6 +636,17 @@ function showModal(modal) {
             elements.tafsirModal.classList.add('active');
             break;
     }
+    
+    // منع التمرير عند فتح النافذة المنبثقة
+    document.body.style.overflow = 'hidden';
+}
+
+// إغلاق النوافذ المنبثقة
+function closeModals() {
+    document.querySelectorAll('.modal').forEach(modal => {
+        modal.classList.remove('active');
+    });
+    document.body.style.overflow = '';
 }
 
 // تحميل قائمة السور
@@ -763,7 +792,7 @@ function loadScienceTopics(category) {
         law: ["القانون المدني", "القانون الجنائي", "القانون التجاري"],
         education: ["علم النفس التربوي", "طرق التدريس", "تقويم المناهج"],
         physics: ["الميكانيكا الكلاسيكية", "الكهرومغناطيسية", "النظرية النسبية"],
-        chemistry: ["الكيمياء العضوية", "الكيمياء غير العضوية", "الكيمياء التحليلية"]
+        chemistry: ["الكيمياء العضوية", "الكيمياء غير عضوية", "الكيمياء التحليلية"]
     };
     
     let html = `<h3>مواضيع ${getCategoryName(category)}</h3><ul>`;
@@ -991,7 +1020,7 @@ function getQuranResponse(prompt) {
     }
     
     if (prompt.includes("آية الكرسي")) {
-        return "آية الكرسي هي الآية 255 من سورة البقرة، وهي أعظم آية في القرآن. نصها: 'اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَن ذَا الَّذِي يَشْفَعُ عِندَهُ إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلَّا بِمَا شَاءَ ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ ۖ وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ'";
+        return "آية الكرسي هي الآية 255 من سورة البقرة، وهي أعظم آية في القرآن. نصها: 'اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَن ذَا الَّذِي يَشْفَعُ عِندَهُ إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلَّا بِمَا شَاء�� ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ ۖ وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ'";
     }
     
     return "يمكنك الذهاب إلى قسم القرآن الكريم لتلاوة أي سورة أو آية تريدها، كما يمكنك الاستماع إليها وقراءة تفسيرها.";
@@ -1110,8 +1139,13 @@ function saveSettings() {
 function handleLogin(e) {
     e.preventDefault();
     
-    const username = document.getElementById('login-username').value;
+    const username = document.getElementById('login-username').value.trim();
     const password = document.getElementById('login-password').value;
+    
+    if (!username || !password) {
+        showMessage('يرجى إدخال اسم المستخدم وكلمة المرور', 'error');
+        return;
+    }
     
     const users = JSON.parse(localStorage.getItem('HAi_users')) || [];
     const user = users.find(u => u.username === username && u.password === password);
@@ -1120,12 +1154,14 @@ function handleLogin(e) {
         app.currentUser = user;
         localStorage.setItem('HAi_user', JSON.stringify(user));
         updateAuthUI();
-        elements.loginModal.classList.remove('active');
+        closeModals();
         
         e.target.reset();
         showMessage('تم تسجيل الدخول بنجاح', 'success');
     } else {
         showMessage('اسم المستخدم أو كلمة المرور غير صحيحة', 'error');
+        document.getElementById('login-password').value = '';
+        document.getElementById('login-password').focus();
     }
 }
 
@@ -1133,19 +1169,41 @@ function handleLogin(e) {
 function handleRegister(e) {
     e.preventDefault();
     
-    const username = document.getElementById('register-username').value;
-    const email = document.getElementById('register-email').value;
+    const username = document.getElementById('register-username').value.trim();
+    const email = document.getElementById('register-email').value.trim();
     const password = document.getElementById('register-password').value;
     const confirmPassword = document.getElementById('register-confirm-password').value;
     
+    // التحقق من صحة المدخلات
+    if (!username || !email || !password || !confirmPassword) {
+        showMessage('يرجى ملء جميع الحقول', 'error');
+        return;
+    }
+    
     if (password !== confirmPassword) {
         showMessage('كلمة المرور وتأكيدها غير متطابقين', 'error');
+        document.getElementById('register-confirm-password').value = '';
+        document.getElementById('register-confirm-password').focus();
+        return;
+    }
+    
+    if (password.length < 6) {
+        showMessage('كلمة المرور يجب أن تكون 6 أحرف على الأقل', 'error');
         return;
     }
     
     const users = JSON.parse(localStorage.getItem('HAi_users')) || [];
     if (users.some(u => u.username === username)) {
         showMessage('اسم المستخدم موجود بالفعل', 'error');
+        document.getElementById('register-username').value = '';
+        document.getElementById('register-username').focus();
+        return;
+    }
+    
+    if (users.some(u => u.email === email)) {
+        showMessage('البريد الإلكتروني مستخدم بالفعل', 'error');
+        document.getElementById('register-email').value = '';
+        document.getElementById('register-email').focus();
         return;
     }
     
@@ -1162,7 +1220,7 @@ function handleRegister(e) {
     app.currentUser = newUser;
     localStorage.setItem('HAi_user', JSON.stringify(newUser));
     updateAuthUI();
-    elements.registerModal.classList.remove('active');
+    closeModals();
     
     e.target.reset();
     showMessage('تم إنشاء الحساب بنجاح', 'success');
@@ -1303,6 +1361,34 @@ function addExpandButton() {
 // تبديل القائمة الجوالية
 function toggleMobileMenu() {
     document.querySelector('.nav-links').classList.toggle('active');
+}
+
+// ضبط الواجهة للهاتف
+function adjustForMobile() {
+    if (window.innerWidth <= 768) {
+        // إخفاء بعض العناصر غير الضرورية على الهاتف
+        document.querySelectorAll('.chat-actions button span, .quran-controls button span').forEach(span => {
+            span.style.display = 'none';
+        });
+        
+        // تعديل حجم الخط
+        document.body.style.fontSize = '14px';
+        
+        // تعديل حجم عناصر الإدخال
+        document.querySelectorAll('input, select, textarea, button').forEach(el => {
+            el.style.fontSize = '14px';
+        });
+    } else {
+        // استعادة الإعدادات الأصلية
+        document.querySelectorAll('.chat-actions button span, .quran-controls button span').forEach(span => {
+            span.style.display = 'inline';
+        });
+        
+        document.body.style.fontSize = '';
+        document.querySelectorAll('input, select, textarea, button').forEach(el => {
+            el.style.fontSize = '';
+        });
+    }
 }
 
 // تهيئة التطبيق عند تحميل الصفحة
