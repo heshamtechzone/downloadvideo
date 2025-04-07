@@ -36,7 +36,21 @@ const knowledgeBase = {
         responses: [
             "القرآن الكريم هو كلام الله المنزل على محمد ﷺ المتعبد بتلاوته، المنقول إلينا بالتواتر. عدد سوره 114 سورة، أطولها سورة البقرة (286 آية)، وأقصرها سورة الكوثر (3 آيات). أول ما نزل من القرآن أول سورة العلق، وآخر ما نزل سورة النصر.",
             "أطول آية في القرآن هي آية الدين في سورة البقرة (آية 282). والسورة التي تسمى قلب القرآن هي سورة يس، كما ورد في الحديث: 'إن لكل شيء قلبًا، وقلب القرآن يس'."
-        ]
+        ],
+        surahs: [
+            {name: "الفاتحة", ayahs: 7, type: "مكية", startPage: 1},
+            {name: "البقرة", ayahs: 286, type: "مدنية", startPage: 2},
+            {name: "آل عمران", ayahs: 200, type: "مدنية", startPage: 50},
+            // ... يمكن إضافة بقية السور
+        ],
+        getAyahs: function(surahIndex) {
+            // في التطبيق الحقيقي، هنا سيتم جلب الآيات من قاعدة بيانات
+            const sampleAyahs = {
+                0: ["بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ", "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ", "الرَّحْمَٰنِ الرَّحِيمِ", "مَالِكِ يَوْمِ الدِّينِ", "إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ", "اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ", "صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ"],
+                1: ["الم", "ذَٰلِكَ الْكِتَابُ لَا رَيْبَ ۛ فِيهِ ۛ هُدًى لِّلْمُتَّقِينَ", "الَّذِينَ يُؤْمِنُونَ بِالْغَيْبِ وَيُقِيمُونَ الصَّلَاةَ وَمِمَّا رَزَقْنَاهُمْ يُنفِقُونَ"]
+            };
+            return sampleAyahs[surahIndex] || ["لا توجد آيات متاحة حاليًا"];
+        }
     },
     
     // الحديث النبوي (موسع)
@@ -61,7 +75,7 @@ const knowledgeBase = {
     history: {
         patterns: ["الخلفاء الراشدين", "فتح مكة", "غزوة بدر", "غزوة أحد", "غزوة الخندق", "كم سنة حكم الخلفاء الراشدون", "أول خليفة في الإسلام", "فتح الأندلس"],
         responses: [
-            "الخلفاء الراشدون هم أبو بكر الصديق (حكم سنتين)، وعمر بن الخطاب (10 سنوات)، وعثمان بن عفان (12 سنة)، وعلي بن أبي طالب (5 سنوات). وفتح مكة كان في السنة الثامنة للهجرة، وغزوة بدر في السنة الثانية، وأحد في الثالثة، والخندق في الخامسة.",
+            "الخلفاء الراشدون هم أبو بكر الصديق (��كم سنتين)، وعمر بن الخطاب (10 سنوات)، وعثمان بن عفان (12 سنة)، وعلي بن أبي طالب (5 سنوات). وفتح مكة كان في السنة الثامنة للهجرة، وغزوة بدر في السنة الثانية، وأحد في الثالثة، والخندق في الخامسة.",
             "فتح الأندلس كان في سنة 92هـ بقيادة طارق بن زياد وموسى بن نصير في عهد الوليد بن عبد الملك الأموي. واستمر الحكم الإسلامي في الأندلس أكثر من ثمانية قرون."
         ]
     },
@@ -80,7 +94,7 @@ const knowledgeBase = {
         patterns: ["ما هو الجدول الدوري", "ما هي الذرة", "ما هي الروابط الكيميائية", "ما هي الأحماض والقواعد", "ما هي التفاعلات الكيميائية", "ما هي الكيمياء العضوية"],
         responses: [
             "الجدول الدوري ترتيب للعناصر الكيميائية حسب عددها الذري (عدد البروتونات) وخواصها الكيميائية. الذرة تتكون من نواة (بروتونات ونيوترونات) وإلكترونات تدور حولها. الروابط الكيميائية أنواع: أيونية، وتشاركية، وفلزية.",
-            "الأحماض مواد تطلق أيونات الهيدروجين (H+) في المحاليل المائية، والقواعد تطلق أيونات الهيدروكسيد (OH-). التفاعلات الكيميائية أنواع: اتحاد، وتحلل، وتبادل مزدوج، واحتراق. الكيمياء العضوية تدرس مركبات الكربون."
+            "الأحماض مواد تطلق أيونات الهيدروجين (H+) في المحاليل المائية، والقواعد تطلق أيونات الهيدروكسيد (OH-). التفاعلات الكيميائية أنواع: اتحاد، وتحلل، وتبادل مزدوج، واحتراق. ال��يمياء العضوية تدرس مركبات الكربون."
         ]
     },
     
@@ -120,6 +134,81 @@ const knowledgeBase = {
         ]
     },
     
+    // علوم الحاسب (موسع)
+    computer: {
+        patterns: ["ما هي البرمجة", "ما هو الذكاء الاصطناعي", "ما هي لغة Python", "ما هي قواعد البيانات", "ما هو HTML", "ما هي الشبكات"],
+        responses: [
+            "البرمجة هي عملية كتابة تعليمات للحاسوب لتنفيذ مهام محددة. الذكاء الاصطناعي هو محاكاة الذكاء البشري في الآلات. Python لغة برمجة عالية المستوى سهلة التعلم.",
+            "HTML هي لغة ترميز تستخدم لإنشاء صفحات الويب. قواعد البيانات هي أنظمة لتخزين وإدارة البيانات بكفاءة. الشبكات تربط أجهزة الحاسوب لتبادل البيانات والموارد."
+        ]
+    },
+    
+    // الهندسة (موسع)
+    engineering: {
+        patterns: ["ما هي الهندسة المدنية", "ما هي الهندسة الميكانيكية", "ما هي الهندسة الكهربائية", "ما هي مواد البناء", "ما هو حساب الأحمال"],
+        responses: [
+            "الهندسة المدنية تختص بتصميم وتنفيذ البنية التحتية مثل الطرق والجسور. الهندسة الميكانيكية تهتم بتصميم الآلات والأنظمة الميكانيكية.",
+            "الهندسة الكهربائية تتعامل مع دراسة وتطبيق الكهرباء والإلكترونيات. مواد البناء تشمل الخرسانة، الحديد، الخشب، وغيرها. حساب الأحمال هو تحديد القوى المؤثرة على المنشآت."
+        ]
+    },
+    
+    // إدارة الأعمال (موسع)
+    business: {
+        patterns: ["ما هي إدارة الأعمال", "ما هو التسويق", "ما هي المحاسبة", "ما هي دراسة الجدوى", "ما هي إدارة المشاريع"],
+        responses: [
+            "إدارة الأعمال هي تنظيم الموارد لتحقيق أهداف المنظمة. التسويق هو عملية تعريف العملاء بالمنتجات والخدمات. المحاسبة هي تسجيل وتصنيف المعاملات المالية.",
+            "دراسة الجدوى تحليل لإمكانية نجاح المشروع. إدارة المشاريع هي تطبيق المعارف والمهارات لتحقيق أهداف المشروع ضمن الوقت والتكلفة المحددين."
+        ]
+    },
+    
+    // القانون (موسع)
+    law: {
+        patterns: ["ما هو القانون المدني", "ما هو القانون الجنائي", "ما هي المحكمة الدستورية", "ما هي الجريمة", "ما هي العقوبة"],
+        responses: [
+            "القانون المدني ينظم العلاقات بين الأفراد. القانون الجنائي يتناول الجرائم والعقوبات. المحكمة الدستورية تراقب دستورية القوانين.",
+            "الجريمة هي فعل محظور قانونًا يعاقب عليه. العقوبة هي الجزاء المقرر لمخالفة القانون، وتشمل السجن، الغرامة، وغيرها."
+        ]
+    },
+    
+    // التربية (موسع)
+    education: {
+        patterns: ["ما هي التربية", "ما هي طرق التدريس", "ما هي النظرية البنائية", "ما هو التعليم الإلكتروني", "ما هي صعوبات التعلم"],
+        responses: [
+            "التربية هي عملية تنمية الفرد وتوجيهه. طرق التدريس تشمل المحاضرة، المناقشة، التعلم النشط. النظرية البنائية ترى أن المعرفة تُبنى ولا تُنقل.",
+            "التعليم الإلكتروني هو استخدام التقنية في التعليم. صعوبات التعلم هي مشاكل في اكتساب المهارات الأكاديمية رغم الذكاء الطبيعي."
+        ]
+    },
+    
+    // الترجمة
+    translation: {
+        patterns: ["ترجم", "translate", "ماذا يعني", "ما معنى"],
+        responses: [
+            "يمكنك استخدام أداة الترجمة المدمجة لترجمة النصوص بين العربية والإنجليزية. اضغط على زر الترجمة في شريط الأدوات.",
+            "لترجمة أي نص، افتح نافذة الترجمة من الزر المخصص في واجهة الدردشة."
+        ]
+    },
+
+    // اللهجة العامية
+    colloquial: {
+        patterns: ["عايز", "مش عارف", "عندي سؤال", "فين", "ازاي", "ليه", "هتعمل ايه", "عامل ايه"],
+        responses: [
+            "أنا فهمت سؤالك، هحاول أجاوبك بأفضل طريقة ممكنة.",
+            "بالطبع، تقدر تسأل بأي طريقة تناسبك وهحاول أفهمك وأجاوبك.",
+            "مش مشكلة، هساعدك في أي حاجة محتاجها.",
+            "تمام، قول لي بالظبط إيه اللي محتاج تعرفه؟"
+        ],
+        answers: {
+            "عايز": ["تقصد بخصوص إيه بالظبط؟", "عايز مساعدة في حاجة معينة؟"],
+            "مش عارف": ["مش مشكلة، هساعدك تفهم", "إيه اللي مش عارفه؟"],
+            "عندي سؤال": ["تفضل، أنا مستعد للإجابة", "هات سؤالك وهشوف أزاي أساعدك"],
+            "فين": ["تقصد مكان معين؟", "ممكن توضح أكتر؟"],
+            "ازاي": ["هشرح لك الخطوات بالتفصيل", "عايز توضيح لطريقة عمل حاجة معينة؟"],
+            "ليه": ["هذا يعتمد على عدة عوامل...", "هناك أسباب متعددة..."],
+            "هتعمل ايه": ["هساعدك بحل المشكلة", "هقدم لك النصيحة المناسبة"],
+            "عامل ايه": ["الحمد لله، أنا بخير. إنت عامل إيه؟", "أنا دايماً جاهز لمساعدتك"]
+        }
+    },
+    
     // أسئلة عامة
     general: {
         patterns: ["من أنت", "ما هو اسمك", "ماذا تعرف", "ماذا تفعل", "ما هي قدراتك"],
@@ -140,24 +229,28 @@ const knowledgeBase = {
     }
 };
 
-// اقتراحات الأسئلة
-const suggestions = {
-    islamic: [
-        "ما هي أركان الإسلام؟",
-        "كيف أتوضأ للصلاة؟",
-        "ما هي شروط الصيام؟",
-        "ما هو حد الزنا في الإسلام؟",
-        "ما حكم الموسيقى في الإسلام؟",
-        "كيف أحج بيت الله الحرام؟"
-    ],
-    science: [
-        "ما هي قوانين نيوتن للحركة؟",
-        "كيف تحدث عملية البناء الضوئي؟",
-        "ما هي مكونات الذرة؟",
-        "كيف يعمل الجهاز الهضمي؟",
-        "ما هي أعراض مرض السكري؟",
-        "كيف أحل معادلة من الدرجة الثانية؟"
-    ]
+// بيانات الترجمة (مبسطة)
+const translationData = {
+    "hello": "مرحباً",
+    "thank you": "شكراً لك",
+    "how are you": "كيف حالك",
+    "what is your name": "ما هو اسمك",
+    "islam": "الإسلام",
+    "prayer": "الصلاة",
+    "quran": "القرآن الكريم",
+    "science": "العلم",
+    "medicine": "الطب",
+    "engineering": "الهندسة",
+    "computer": "الحاسوب",
+    "business": "إدارة الأعمال",
+    "law": "القانون",
+    "education": "التربية",
+    "الله أكبر": "God is great",
+    "الحمد لله": "Praise be to God",
+    "الصلاة": "Prayer",
+    "الصيام": "Fasting",
+    "الزكاة": "Zakat",
+    "الحج": "Hajj"
 };
 
 // متغيرات التطبيق
@@ -166,20 +259,25 @@ const app = {
     chatHistory: [],
     aiAvatar: "https://cdn-icons-png.flaticon.com/512/4712/4712035.png",
     aiStyle: "islamic",
-    currentTopic: null
+    currentTopic: null,
+    theme: "default",
+    currentSurah: null,
+    currentScienceCategory: null
 };
 
 // عناصر DOM
 const elements = {
     // الروابط
     chatLink: document.getElementById('chat-link'),
+    quranLink: document.getElementById('quran-link'),
+    scienceLink: document.getElementById('science-link'),
     settingsLink: document.getElementById('settings-link'),
-    topicsLink: document.getElementById('topics-link'),
     
     // المحتوى
     chatContent: document.getElementById('chat-content'),
+    quranContent: document.getElementById('quran-content'),
+    scienceContent: document.getElementById('science-content'),
     settingsContent: document.getElementById('settings-content'),
-    topicsContent: document.getElementById('topics-content'),
     
     // الأزرار
     loginBtn: document.getElementById('login-btn'),
@@ -187,7 +285,7 @@ const elements = {
     logoutBtn: document.getElementById('logout-btn'),
     sendBtn: document.getElementById('send-btn'),
     newChatBtn: document.getElementById('new-chat-btn'),
-    suggestBtn: document.getElementById('suggest-btn'),
+    translateBtn: document.getElementById('translate-btn'),
     
     // النماذج
     loginForm: document.getElementById('login-form'),
@@ -196,7 +294,7 @@ const elements = {
     // النوافذ المنبثقة
     loginModal: document.getElementById('login-modal'),
     registerModal: document.getElementById('register-modal'),
-    suggestionsModal: document.getElementById('suggestions-modal'),
+    translateModal: document.getElementById('translate-modal'),
     
     // العناصر الأخرى
     authButtons: document.getElementById('auth-buttons'),
@@ -206,8 +304,20 @@ const elements = {
     chatMessages: document.getElementById('chat-messages'),
     aiStyleSelect: document.getElementById('ai-style'),
     aiAvatarSelect: document.getElementById('ai-avatar'),
-    suggestionsContainer: document.getElementById('suggestions-container'),
-    topicCards: document.querySelectorAll('.topic-card')
+    themeSelect: document.getElementById('theme'),
+    surahSelect: document.getElementById('surah-select'),
+    playAyah: document.getElementById('play-ayah'),
+    surahName: document.getElementById('surah-name'),
+    surahMeta: document.getElementById('surah-meta'),
+    ayahsContainer: document.getElementById('ayahs-container'),
+    scienceCategories: document.querySelectorAll('.category-card'),
+    scienceTopics: document.getElementById('science-topics'),
+    translateInput: document.getElementById('translate-input'),
+    translateOutput: document.getElementById('translate-output'),
+    translateFrom: document.getElementById('translate-from'),
+    translateTo: document.getElementById('translate-to'),
+    doTranslate: document.getElementById('do-translate'),
+    copyTranslation: document.getElementById('copy-translation')
 };
 
 // تهيئة التطبيق
@@ -220,6 +330,12 @@ function init() {
     
     // عرض صفحة الدردشة افتراضيًا
     showContent('chat');
+    
+    // تحميل قائمة السور
+    loadSurahList();
+    
+    // تطبيق السمة المختارة
+    applyTheme();
 }
 
 // تحميل بيانات المستخدم
@@ -237,6 +353,14 @@ function updateAuthUI() {
         elements.authButtons.style.display = 'none';
         elements.userProfile.style.display = 'flex';
         elements.usernameDisplay.textContent = app.currentUser.username;
+        
+        // تعبئة بيانات المستخدم في الإعدادات
+        if (elements.usernameInput) {
+            elements.usernameInput.value = app.currentUser.username;
+        }
+        if (elements.emailInput) {
+            elements.emailInput.value = app.currentUser.email;
+        }
     } else {
         elements.authButtons.style.display = 'block';
         elements.userProfile.style.display = 'none';
@@ -251,14 +375,19 @@ function setupEventListeners() {
         showContent('chat');
     });
     
+    elements.quranLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        showContent('quran');
+    });
+    
+    elements.scienceLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        showContent('science');
+    });
+    
     elements.settingsLink.addEventListener('click', (e) => {
         e.preventDefault();
         showContent('settings');
-    });
-    
-    elements.topicsLink.addEventListener('click', (e) => {
-        e.preventDefault();
-        showContent('topics');
     });
     
     // أزرار المصادقة
@@ -278,10 +407,50 @@ function setupEventListeners() {
     // محادثة جديدة
     elements.newChatBtn.addEventListener('click', startNewChat);
     
-    // اقتراحات الأسئلة
-    elements.suggestBtn.addEventListener('click', showSuggestions);
+    // الترجمة
+    elements.translateBtn.addEventListener('click', () => showModal('translate'));
+    elements.doTranslate.addEventListener('click', translateText);
+    elements.copyTranslation.addEventListener('click', copyTranslation);
     
-    // نماذج المصادقة
+    // القرآن الكريم
+    elements.surahSelect.addEventListener('change', loadSurah);
+    elements.playAyah.addEventListener('click', playAyah);
+    
+    // العلوم
+    elements.scienceCategories.forEach(card => {
+        card.addEventListener('click', () => {
+            const category = card.getAttribute('data-category');
+            loadScienceTopics(category);
+        });
+    });
+    
+    // الإعدادات
+    elements.aiStyleSelect.addEventListener('change', (e) => {
+        app.aiStyle = e.target.value;
+    });
+    
+    elements.aiAvatarSelect.addEventListener('change', (e) => {
+        const avatarMap = {
+            '1': 'https://cdn-icons-png.flaticon.com/512/4712/4712035.png',
+            '2': 'https://cdn-icons-png.flaticon.com/512/201/201634.png',
+            '3': 'https://cdn-icons-png.flaticon.com/512/2785/2785473.png',
+            '4': 'https://cdn-icons-png.flaticon.com/512/1141/1141435.png',
+            '5': 'https://cdn-icons-png.flaticon.com/512/2936/2936886.png'
+        };
+        app.aiAvatar = avatarMap[e.target.value];
+        document.querySelectorAll('.ai-info img, .ai-message img').forEach(img => {
+            img.src = app.aiAvatar;
+        });
+    });
+    
+    elements.themeSelect.addEventListener('change', (e) => {
+        app.theme = e.target.value;
+        applyTheme();
+    });
+    
+    elements.saveSettings.addEventListener('click', saveSettings);
+    
+    // النماذج
     elements.loginForm.addEventListener('submit', handleLogin);
     elements.registerForm.addEventListener('submit', handleRegister);
     
@@ -304,75 +473,6 @@ function setupEventListeners() {
         e.preventDefault();
         showModal('login');
     });
-    
-    // تغيير إعدادات الذكاء الاصطناعي
-    elements.aiStyleSelect.addEventListener('change', (e) => {
-        app.aiStyle = e.target.value;
-    });
-    
-    elements.aiAvatarSelect.addEventListener('change', (e) => {
-        const avatarMap = {
-            '1': 'https://cdn-icons-png.flaticon.com/512/4712/4712035.png',
-            '2': 'https://cdn-icons-png.flaticon.com/512/201/201634.png',
-            '3': 'https://cdn-icons-png.flaticon.com/512/2702/2702602.png',
-            '4': 'https://cdn-icons-png.flaticon.com/512/2785/2785473.png',
-            '5': 'https://cdn-icons-png.flaticon.com/512/1141/1141435.png'
-        };
-        app.aiAvatar = avatarMap[e.target.value];
-        document.querySelectorAll('.ai-info img, .ai-message img').forEach(img => {
-            img.src = app.aiAvatar;
-        });
-    });
-    
-    // بطاقات المواضيع
-    elements.topicCards.forEach(card => {
-        card.addEventListener('click', () => {
-            const topic = card.getAttribute('data-topic');
-            app.currentTopic = topic;
-            let topicName = '';
-            
-            switch(topic) {
-                case 'aqeedah': topicName = 'العقيدة الإسلامية'; break;
-                case 'fiqh': topicName = 'الفقه الإسلامي'; break;
-                case 'quran': topicName = 'القرآن الكريم'; break;
-                case 'hadith': topicName = 'الحديث النبوي'; break;
-                case 'seerah': topicName = 'السيرة النبوية'; break;
-                case 'history': topicName = 'التاريخ الإسلامي'; break;
-                case 'physics': topicName = 'الفيزياء'; break;
-                case 'chemistry': topicName = 'الكيمياء'; break;
-                case 'biology': topicName = 'علم الأحياء'; break;
-                case 'medicine': topicName = 'الطب'; break;
-                case 'nursing': topicName = 'التمريض'; break;
-                case 'math': topicName = 'الرياضيات'; break;
-            }
-            
-            addMessageToChat(`أريد الاستفسار عن موضوع ${topicName}`, 'user');
-            
-            // إظهار رسالة "يكتب..." من الذكاء الاصطناعي
-            const typingIndicator = document.createElement('div');
-            typingIndicator.className = 'message ai-message typing';
-            typingIndicator.innerHTML = `
-                <img src="${app.aiAvatar}" alt="H.Ai Avatar">
-                <div class="message-content">
-                    <p>يكتب...</p>
-                </div>
-            `;
-            elements.chatMessages.appendChild(typingIndicator);
-            elements.chatMessages.scrollTop = elements.chatMessages.scrollHeight;
-            
-            // محاكاة انتظار الرد
-            setTimeout(() => {
-                // إزالة مؤشر الكتابة
-                document.querySelector('.typing').remove();
-                
-                // إضافة رد الذكاء الاصطناعي
-                addMessageToChat(`حسنًا، أنا مستعد للإجابة على أسئلتك حول ${topicName}. تفضل بطرح سؤالك.`, 'ai');
-                
-                // العودة إلى صفحة الدردشة
-                showContent('chat');
-            }, 1000 + Math.random() * 2000);
-        });
-    });
 }
 
 // عرض المحتوى
@@ -393,13 +493,17 @@ function showContent(page) {
             elements.chatContent.classList.add('active');
             elements.chatLink.classList.add('active');
             break;
+        case 'quran':
+            elements.quranContent.classList.add('active');
+            elements.quranLink.classList.add('active');
+            break;
+        case 'science':
+            elements.scienceContent.classList.add('active');
+            elements.scienceLink.classList.add('active');
+            break;
         case 'settings':
             elements.settingsContent.classList.add('active');
             elements.settingsLink.classList.add('active');
-            break;
-        case 'topics':
-            elements.topicsContent.classList.add('active');
-            elements.topicsLink.classList.add('active');
             break;
     }
 }
@@ -417,132 +521,135 @@ function showModal(modal) {
         case 'register':
             elements.registerModal.classList.add('active');
             break;
-        case 'suggestions':
-            elements.suggestionsModal.classList.add('active');
-            loadSuggestions();
+        case 'translate':
+            elements.translateModal.classList.add('active');
             break;
     }
 }
 
-// عرض اقتراحات الأسئلة
-function showSuggestions() {
-    showModal('suggestions');
+// تحميل قائمة السور
+function loadSurahList() {
+    knowledgeBase.quran.surahs.forEach((surah, index) => {
+        const option = document.createElement('option');
+        option.value = index;
+        option.textContent = `${surah.name} (${surah.type}) - ${surah.ayahs} آيات`;
+        elements.surahSelect.appendChild(option);
+    });
 }
 
-// تحميل اقتراحات الأسئلة
-function loadSuggestions() {
-    let html = '';
+// تحميل السورة المحددة
+function loadSurah() {
+    const surahIndex = elements.surahSelect.value;
+    if (!surahIndex) return;
     
-    // إضافة اقتراحات إسلامية
-    html += `
-        <div class="suggestion-category">
-            <h3><i class="fas fa-mosque"></i> اقتراحات إسلامية</h3>
-            <ul class="suggestion-list">
-                ${suggestions.islamic.map(item => `<li onclick="selectSuggestion('${item}')">${item}</li>`).join('')}
-            </ul>
-        </div>
-    `;
+    const surah = knowledgeBase.quran.surahs[surahIndex];
+    app.currentSurah = surah;
     
-    // إضافة اقتراحات علمية
-    html += `
-        <div class="suggestion-category">
-            <h3><i class="fas fa-flask"></i> اقتراحات علمية</h3>
-            <ul class="suggestion-list">
-                ${suggestions.science.map(item => `<li onclick="selectSuggestion('${item}')">${item}</li>`).join('')}
-            </ul>
-        </div>
-    `;
+    elements.surahName.textContent = `سورة ${surah.name}`;
+    elements.surahMeta.textContent = `${surah.type} - ${surah.ayahs} آية - الصفحة ${surah.startPage}`;
     
-    elements.suggestionsContainer.innerHTML = html;
+    const ayahs = knowledgeBase.quran.getAyahs(surahIndex);
+    elements.ayahsContainer.innerHTML = '';
+    
+    ayahs.forEach((ayah, index) => {
+        const ayahElement = document.createElement('div');
+        ayahElement.className = 'ayah';
+        ayahElement.innerHTML = `
+            <span class="ayah-text">${ayah}</span>
+            <span class="ayah-number">${index + 1}</span>
+        `;
+        elements.ayahsContainer.appendChild(ayahElement);
+    });
 }
 
-// اختيار اقتراح
-function selectSuggestion(suggestion) {
-    elements.userInput.value = suggestion;
-    elements.suggestionsModal.classList.remove('active');
+// تشغيل الآية (محاكاة)
+function playAyah() {
+    if (!app.currentSurah) return;
+    
+    showMessage('جاري تشغيل الآيات... سيتم تنزيل ميزة الاستماع الكاملة قريبًا', 'info');
 }
 
-// معالجة تسجيل الدخول
-function handleLogin(e) {
-    e.preventDefault();
+// تحميل مواضيع العلم
+function loadScienceTopics(category) {
+    app.currentScienceCategory = category;
     
-    const username = document.getElementById('login-username').value;
-    const password = document.getElementById('login-password').value;
-    
-    // هنا يجب التحقق من صحة بيانات المستخدم مع الخادم
-    // ولكن لأغراض العرض، سنستخدم تخزين محلي بسيط
-    
-    const users = JSON.parse(localStorage.getItem('HAi_users')) || [];
-    const user = users.find(u => u.username === username && u.password === password);
-    
-    if (user) {
-        app.currentUser = user;
-        localStorage.setItem('HAi_user', JSON.stringify(user));
-        updateAuthUI();
-        elements.loginModal.classList.remove('active');
-        
-        // إعادة تعيين الحقول
-        e.target.reset();
-        
-        // عرض رسالة نجاح
-        showMessage('تم تسجيل الدخول بنجاح', 'success');
-    } else {
-        showMessage('اسم المستخدم أو كلمة المرور غير صحيحة', 'error');
-    }
-}
-
-// معالجة التسجيل
-function handleRegister(e) {
-    e.preventDefault();
-    
-    const username = document.getElementById('register-username').value;
-    const email = document.getElementById('register-email').value;
-    const password = document.getElementById('register-password').value;
-    const confirmPassword = document.getElementById('register-confirm-password').value;
-    
-    // التحقق من صحة البيانات
-    if (password !== confirmPassword) {
-        showMessage('كلمة المرور وتأكيدها غير متطابقين', 'error');
-        return;
-    }
-    
-    // التحقق من عدم وجود مستخدم بنفس الاسم
-    const users = JSON.parse(localStorage.getItem('HAi_users')) || [];
-    if (users.some(u => u.username === username)) {
-        showMessage('اسم المستخدم موجود بالفعل', 'error');
-        return;
-    }
-    
-    // إنشاء مستخدم جديد
-    const newUser = {
-        username,
-        email,
-        password,
-        createdAt: new Date().toISOString()
+    // في التطبيق الحقيقي، هنا سيتم جلب المواضيع من قاعدة البيانات
+    const topics = {
+        medicine: ["التشريح", "الفزيولوجيا", "الكيمياء الحيوية", "علم الأدوية"],
+        engineering: ["الهندسة المدنية", "الهندسة الميكانيكية", "الهندسة الكهربائية"],
+        computer: ["البرمجة", "قواعد البيانات", "الذكاء الاصطناعي"],
+        business: ["المحاسبة", "التسويق", "الإدارة المالية"],
+        law: ["القانون المدني", "القانون الجنائي", "القانون التجاري"],
+        education: ["علم النفس التربوي", "طرق التدريس", "تقويم المناهج"]
     };
     
-    users.push(newUser);
-    localStorage.setItem('HAi_users', JSON.stringify(users));
+    let html = `<h3>مواضيع ${getCategoryName(category)}</h3><ul>`;
     
-    // تسجيل الدخول تلقائيًا
-    app.currentUser = newUser;
-    localStorage.setItem('HAi_user', JSON.stringify(newUser));
-    updateAuthUI();
-    elements.registerModal.classList.remove('active');
+    topics[category].forEach(topic => {
+        html += `<li onclick="askAboutTopic('${category}', '${topic}')">${topic}</li>`;
+    });
     
-    // إعادة تعيين الحقول
-    e.target.reset();
-    
-    // عرض رسالة نجاح
-    showMessage('تم إنشاء الحساب بنجاح', 'success');
+    html += '</ul>';
+    elements.scienceTopics.innerHTML = html;
 }
 
-// تسجيل الخروج
-function logout() {
-    app.currentUser = null;
-    localStorage.removeItem('HAi_user');
-    updateAuthUI();
-    showMessage('تم تسجيل الخروج بنجاح', 'success');
+// الحصول على اسم التخصص
+function getCategoryName(category) {
+    const names = {
+        medicine: "الطب البشري",
+        engineering: "الهندسة",
+        computer: "علوم الحاسب",
+        business: "إدارة الأعمال",
+        law: "القانون",
+        education: "التربية"
+    };
+    return names[category] || category;
+}
+
+// سؤال عن موضوع معين
+function askAboutTopic(category, topic) {
+    showContent('chat');
+    
+    const message = `أريد معلومات عن ${topic} في تخصص ${getCategoryName(category)}`;
+    addMessageToChat(message, 'user');
+    
+    // إظهار رسالة "يكتب..." من الذكاء الاصطناعي
+    const typingIndicator = document.createElement('div');
+    typingIndicator.className = 'message ai-message typing';
+    typingIndicator.innerHTML = `
+        <img src="${app.aiAvatar}" alt="H.Ai Avatar">
+        <div class="message-content">
+            <p>يكتب...</p>
+        </div>
+    `;
+    elements.chatMessages.appendChild(typingIndicator);
+    elements.chatMessages.scrollTop = elements.chatMessages.scrollHeight;
+    
+    // محاكاة انتظار الرد
+    setTimeout(() => {
+        // إزالة مؤشر الكتابة
+        document.querySelector('.typing').remove();
+        
+        // الحصول على الرد المناسب
+        const response = getScienceResponse(category, topic);
+        
+        // إضافة رد الذكاء الاصطناعي
+        addMessageToChat(response, 'ai');
+    }, 1000 + Math.random() * 2000);
+}
+
+// الحصول على رد علمي
+function getScienceResponse(category, topic) {
+    // في التطبيق الحقيقي، هنا سيتم جلب الإجابة من قاعدة البيانات
+    const responses = {
+        medicine: {
+            "التشريح": "علم التشريح يدرس تركيب الجسم البشري وأجهزته المختلفة. ينقسم إلى تشريح عياني (بالعين المجردة) وتشريح مجهري (بالمجهر).",
+            "الفزيولوجيا": "علم وظائف الأعضاء يدرس كيفية عمل أجهزة الجسم المختلفة مثل الجهاز الهضمي، العصبي، الدوري وغيرها."
+        },
+        // ... إجابات للتخصصات الأخرى
+    };
+    
+    return responses[category]?.[topic] || `ليس لدي معلومات كافية عن ${topic} حالياً. يمكنك طرح سؤال أكثر تحديداً.`;
 }
 
 // إرسال رسالة
@@ -578,7 +685,7 @@ function sendMessage() {
         
         // إضافة رد الذكاء الاصطناعي
         addMessageToChat(response, 'ai');
-    }, 1000 + Math.random() * 2000); // وقت انتظار عشوائي بين 1-3 ثواني
+    }, 1000 + Math.random() * 2000);
 }
 
 // إضافة رسالة إلى الدردشة
@@ -613,20 +720,20 @@ function startNewChat() {
             <div class="message ai-message">
                 <img src="${app.aiAvatar}" alt="H.Ai Avatar">
                 <div class="message-content">
-                    <p>السلام عليكم ورحمة الله وبركاته، أنا H.Ai المساعد الإسلامي الشامل. أسألني عن:</p>
+                    <p>السلام عليكم ورحمة الله وبركاته، أنا H.Ai المساعد الإسلامي الشامل. يمكنني:</p>
                     <ul class="suggestions-list">
-                        <li>أي موضوع ديني وفق منهج السلف الصالح</li>
-                        <li>أسئلة في الطب والتمريض</li>
-                        <li>مسائل في الفيزياء والكيمياء</li>
-                        <li>استفسارات في الأحياء والعلوم</li>
-                        <li>أو أي موضوع آخر وسأجيبك بأفضل ما لدي</li>
+                        <li>الرد على أسئلتك الشرعية وفق منهج السلف</li>
+                        <li>حل مسائل علمية في مختلف التخصصات</li>
+                        <li>تفسير آيات القرآن الكريم</li>
+                        <li>الترجمة بين العربية والإنجليزية</li>
+                        <li>الرد على الأسئلة باللهجة العامية</li>
                     </ul>
                 </div>
             </div>
         `;
         app.chatHistory = [{
             sender: 'ai',
-            message: 'السلام عليكم ورحمة الله وبركاته، أنا H.Ai المساعد الإسلامي الشامل. أسألني عن أي موضوع ديني أو علمي وسأجيبك بأفضل ما لدي.',
+            message: 'السلام عليكم ورحمة الله وبركاته، أنا H.Ai المساعد الإسلامي الشامل. يمكنني مساعدتك في العديد من المجالات الشرعية والعلمية.',
             timestamp: new Date().toISOString()
         }];
         app.currentTopic = null;
@@ -638,9 +745,14 @@ function getAIResponse(prompt) {
     // تحويل السؤال إلى أحرف صغيرة لإزالة الحساسية لحالة الأحرف
     const lowerPrompt = prompt.toLowerCase();
     
+    // التحقق من اللهجة العامية أولاً
+    if (isColloquial(prompt)) {
+        return getColloquialResponse(prompt);
+    }
+    
     // البحث عن تطابق في أنماط الأسئلة
     for (const category in knowledgeBase) {
-        if (category === 'default') continue;
+        if (category === 'default' || category === 'colloquial') continue;
         
         const patterns = knowledgeBase[category].patterns;
         for (const pattern of patterns) {
@@ -660,9 +772,158 @@ function getAIResponse(prompt) {
     return getRandomResponse(knowledgeBase.default.responses);
 }
 
+// التحقق من اللهجة العامية
+function isColloquial(message) {
+    for (const pattern of knowledgeBase.colloquial.patterns) {
+        if (message.includes(pattern)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+// الحصول على رد باللهجة العامية
+function getColloquialResponse(message) {
+    for (const [pattern, responses] of Object.entries(knowledgeBase.colloquial.answers)) {
+        if (message.includes(pattern)) {
+            return getRandomResponse(responses);
+        }
+    }
+    return getRandomResponse(knowledgeBase.colloquial.responses);
+}
+
 // الحصول على رد عشوائي من مجموعة الردود
 function getRandomResponse(responses) {
     return responses[Math.floor(Math.random() * responses.length)];
+}
+
+// الترجمة
+function translateText() {
+    const text = elements.translateInput.value.trim();
+    if (!text) return;
+    
+    const from = elements.translateFrom.value;
+    const to = elements.translateTo.value;
+    
+    const translated = translate(text, from, to);
+    elements.translateOutput.value = translated;
+}
+
+// دالة الترجمة الأساسية
+function translate(text, from, to) {
+    if (from === 'en' && to === 'ar') {
+        // ترجمة من الإنجليزية إلى العربية
+        return translationData[text.toLowerCase()] || "لا توجد ترجمة متاحة لهذه الكلمة";
+    } else if (from === 'ar' && to === 'en') {
+        // ترجمة من العربية إلى الإنجليزية
+        const entry = Object.entries(translationData).find(([key, val]) => val === text);
+        return entry ? entry[0] : "No translation available for this word";
+    }
+    return text;
+}
+
+// نسخ الترجمة
+function copyTranslation() {
+    elements.translateOutput.select();
+    document.execCommand('copy');
+    showMessage('تم نسخ الترجمة', 'success');
+}
+
+// تطبيق السمة المختارة
+function applyTheme() {
+    // إزالة جميع السمات الحالية
+    document.body.classList.remove('theme-default', 'theme-green', 'theme-purple', 'theme-dark');
+    
+    // إضافة السمة المختارة
+    document.body.classList.add(`theme-${app.theme}`);
+}
+
+// حفظ الإعدادات
+function saveSettings() {
+    if (!app.currentUser) return;
+    
+    const username = elements.usernameInput.value.trim();
+    const email = elements.emailInput.value.trim();
+    const password = elements.passwordInput.value.trim();
+    
+    if (username) app.currentUser.username = username;
+    if (email) app.currentUser.email = email;
+    if (password) app.currentUser.password = password;
+    
+    localStorage.setItem('HAi_user', JSON.stringify(app.currentUser));
+    updateAuthUI();
+    
+    showMessage('تم حفظ الإعدادات بنجاح', 'success');
+}
+
+// معالجة تسجيل الدخول
+function handleLogin(e) {
+    e.preventDefault();
+    
+    const username = document.getElementById('login-username').value;
+    const password = document.getElementById('login-password').value;
+    
+    const users = JSON.parse(localStorage.getItem('HAi_users')) || [];
+    const user = users.find(u => u.username === username && u.password === password);
+    
+    if (user) {
+        app.currentUser = user;
+        localStorage.setItem('HAi_user', JSON.stringify(user));
+        updateAuthUI();
+        elements.loginModal.classList.remove('active');
+        
+        e.target.reset();
+        showMessage('تم تسجيل الدخول بنجاح', 'success');
+    } else {
+        showMessage('اسم المستخدم أو كلمة المرور غير صحيحة', 'error');
+    }
+}
+
+// معالجة التسجيل
+function handleRegister(e) {
+    e.preventDefault();
+    
+    const username = document.getElementById('register-username').value;
+    const email = document.getElementById('register-email').value;
+    const password = document.getElementById('register-password').value;
+    const confirmPassword = document.getElementById('register-confirm-password').value;
+    
+    if (password !== confirmPassword) {
+        showMessage('كلمة المرور وتأكيدها غير متطابقين', 'error');
+        return;
+    }
+    
+    const users = JSON.parse(localStorage.getItem('HAi_users')) || [];
+    if (users.some(u => u.username === username)) {
+        showMessage('اسم المستخدم موجود بالفعل', 'error');
+        return;
+    }
+    
+    const newUser = {
+        username,
+        email,
+        password,
+        createdAt: new Date().toISOString()
+    };
+    
+    users.push(newUser);
+    localStorage.setItem('HAi_users', JSON.stringify(users));
+    
+    app.currentUser = newUser;
+    localStorage.setItem('HAi_user', JSON.stringify(newUser));
+    updateAuthUI();
+    elements.registerModal.classList.remove('active');
+    
+    e.target.reset();
+    showMessage('تم إنشاء الحساب بنجاح', 'success');
+}
+
+// تسجيل الخروج
+function logout() {
+    app.currentUser = null;
+    localStorage.removeItem('HAi_user');
+    updateAuthUI();
+    showMessage('تم تسجيل الخروج بنجاح', 'success');
 }
 
 // عرض رسالة للمستخدم
@@ -673,7 +934,6 @@ function showMessage(message, type) {
     
     document.body.appendChild(messageDiv);
     
-    // إزالة الرسالة بعد 3 ثوان
     setTimeout(() => {
         messageDiv.remove();
     }, 3000);
@@ -681,3 +941,7 @@ function showMessage(message, type) {
 
 // تهيئة التطبيق عند تحميل الصفحة
 document.addEventListener('DOMContentLoaded', init);
+
+// جعل الدوال متاحة عالمياً للاستدعاء من HTML
+window.askAboutTopic = askAboutTopic;
+window.copyTranslation = copyTranslation;
