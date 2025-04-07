@@ -30,7 +30,7 @@ const knowledgeBase = {
         ]
     },
     
-    // القرآن الكريم (موسع)
+    // القرآن الكريم (موسع مع تفسير الطبري)
     quran: {
         patterns: ["عدد سور القرآن", "أطول سورة في القرآن", "أقصر سورة في القرآن", "ما هو القرآن", "أول سورة نزلت", "آخر سورة نزلت", "أطول آية في القرآن", "ما هي السورة التي تسمى قلب القرآن"],
         responses: [
@@ -38,9 +38,9 @@ const knowledgeBase = {
             "أطول آية في القرآن هي آية الدين في سورة البقرة (آية 282). والسورة التي تسمى قلب القرآن هي سورة يس، كما ورد في الحديث: 'إن لكل شيء قلبًا، وقلب القرآن يس'."
         ],
         surahs: [
-            {name: "الفاتحة", ayahs: 7, type: "مكية", startPage: 1},
-            {name: "البقرة", ayahs: 286, type: "مدنية", startPage: 2},
-            {name: "آل عمران", ayahs: 200, type: "مدنية", startPage: 50},
+            {name: "الفاتحة", ayahs: 7, type: "مكية", startPage: 1, juz: 1},
+            {name: "البقرة", ayahs: 286, type: "مدنية", startPage: 2, juz: [1,2,3]},
+            {name: "آل عمران", ayahs: 200, type: "مدنية", startPage: 50, juz: [3,4]},
             // ... يمكن إضافة بقية السور
         ],
         getAyahs: function(surahIndex) {
@@ -50,6 +50,31 @@ const knowledgeBase = {
                 1: ["الم", "ذَٰلِكَ الْكِتَابُ لَا رَيْبَ ۛ فِيهِ ۛ هُدًى لِّلْمُتَّقِينَ", "الَّذِينَ يُؤْمِنُونَ بِالْغَيْبِ وَيُقِيمُونَ الصَّلَاةَ وَمِمَّا رَزَقْنَاهُمْ يُنفِقُونَ"]
             };
             return sampleAyahs[surahIndex] || ["لا توجد آيات متاحة حاليًا"];
+        },
+        getTafsir: function(surahIndex, ayahNumber, tafsirType) {
+            const tafsirs = {
+                "tabari": {
+                    0: {
+                        1: "تفسير الطبري للفاتحة: البسملة هي آية من الفاتحة ومن كل سورة، وهي استفتاح الكلام تبركًا بها.",
+                        2: "تفسير الطبري: الحمد لله ثناء على الله بما هو أهله، ورب العالمين أي مالك جميع الخلق."
+                    },
+                    1: {
+                        1: "تفسير الطبري: (الم) الله أعلم بمراده بهذه الحروف المقطعة.",
+                        2: "تفسير الطبري: ذلك الكتاب أي هذا القرآن لا ريب فيه أنه من عند الله."
+                    }
+                },
+                "ibn-kathir": {
+                    // تفسير ابن كثير
+                },
+                "qurtubi": {
+                    // تفسير القرطبي
+                },
+                "saadi": {
+                    // تفسير السعدي
+                }
+            };
+            
+            return tafsirs[tafsirType]?.[surahIndex]?.[ayahNumber] || "التفسير غير متوفر حاليًا لهذه الآية.";
         }
     },
     
@@ -75,7 +100,7 @@ const knowledgeBase = {
     history: {
         patterns: ["الخلفاء الراشدين", "فتح مكة", "غزوة بدر", "غزوة أحد", "غزوة الخندق", "كم سنة حكم الخلفاء الراشدون", "أول خليفة في الإسلام", "فتح الأندلس"],
         responses: [
-            "الخلفاء الراشدون هم أبو بكر الصديق (��كم سنتين)، وعمر بن الخطاب (10 سنوات)، وعثمان بن عفان (12 سنة)، وعلي بن أبي طالب (5 سنوات). وفتح مكة كان في السنة الثامنة للهجرة، وغزوة بدر في السنة الثانية، وأحد في الثالثة، والخندق في الخامسة.",
+            "الخلفاء الراشدون هم أبو بكر الصديق (حكم سنتين)، وعمر بن الخطاب (10 سنوات)، وعثمان بن عفان (12 سنة)، وعلي بن أبي طالب (5 سنوات). وفتح مكة كان في السنة الثامنة للهجرة، وغزوة بدر في السنة الثانية، وأحد في الثالثة، والخندق في الخامسة.",
             "فتح الأندلس كان في سنة 92هـ بقيادة طارق بن زياد وموسى بن نصير في عهد الوليد بن عبد الملك الأموي. واستمر الحكم الإسلامي في الأندلس أكثر من ثمانية قرون."
         ]
     },
@@ -94,7 +119,7 @@ const knowledgeBase = {
         patterns: ["ما هو الجدول الدوري", "ما هي الذرة", "ما هي الروابط الكيميائية", "ما هي الأحماض والقواعد", "ما هي التفاعلات الكيميائية", "ما هي الكيمياء العضوية"],
         responses: [
             "الجدول الدوري ترتيب للعناصر الكيميائية حسب عددها الذري (عدد البروتونات) وخواصها الكيميائية. الذرة تتكون من نواة (بروتونات ونيوترونات) وإلكترونات تدور حولها. الروابط الكيميائية أنواع: أيونية، وتشاركية، وفلزية.",
-            "الأحماض مواد تطلق أيونات الهيدروجين (H+) في المحاليل المائية، والقواعد تطلق أيونات الهيدروكسيد (OH-). التفاعلات الكيميائية أنواع: اتحاد، وتحلل، وتبادل مزدوج، واحتراق. ال��يمياء العضوية تدرس مركبات الكربون."
+            "الأحماض مواد تطلق أيونات الهيدروجين (H+) في المحاليل المائية، والقواعد تطلق أيونات الهيدروكسيد (OH-). التفاعلات الكيميائية أنواع: اتحاد، وتحلل، وتبادل مزدوج، واحتراق. الكيمياء العضوية تدرس مركبات الكربون."
         ]
     },
     
@@ -262,7 +287,10 @@ const app = {
     currentTopic: null,
     theme: "default",
     currentSurah: null,
-    currentScienceCategory: null
+    currentScienceCategory: null,
+    bookmarks: [],
+    reminders: [],
+    currentTafsir: "tabari"
 };
 
 // عناصر DOM
@@ -286,6 +314,8 @@ const elements = {
     sendBtn: document.getElementById('send-btn'),
     newChatBtn: document.getElementById('new-chat-btn'),
     translateBtn: document.getElementById('translate-btn'),
+    remindersBtn: document.getElementById('reminders-btn'),
+    mobileMenuBtn: document.getElementById('mobile-menu-btn'),
     
     // النماذج
     loginForm: document.getElementById('login-form'),
@@ -295,8 +325,10 @@ const elements = {
     loginModal: document.getElementById('login-modal'),
     registerModal: document.getElementById('register-modal'),
     translateModal: document.getElementById('translate-modal'),
+    remindersModal: document.getElementById('reminders-modal'),
+    tafsirModal: document.getElementById('tafsir-modal'),
     
-    // العناصر الأخرى
+    // العناصر ا��أخرى
     authButtons: document.getElementById('auth-buttons'),
     userProfile: document.getElementById('user-profile'),
     usernameDisplay: document.getElementById('username-display'),
@@ -306,9 +338,14 @@ const elements = {
     aiAvatarSelect: document.getElementById('ai-avatar'),
     themeSelect: document.getElementById('theme'),
     surahSelect: document.getElementById('surah-select'),
-    playAyah: document.getElementById('play-ayah'),
+    reciterSelect: document.getElementById('reciter-select'),
+    playSurah: document.getElementById('play-surah'),
+    tafsirBtn: document.getElementById('tafsir-btn'),
+    bookmarkBtn: document.getElementById('bookmark-btn'),
     surahName: document.getElementById('surah-name'),
-    surahMeta: document.getElementById('surah-meta'),
+    surahType: document.getElementById('surah-type'),
+    surahAyahs: document.getElementById('surah-ayahs'),
+    surahPage: document.getElementById('surah-page'),
     ayahsContainer: document.getElementById('ayahs-container'),
     scienceCategories: document.querySelectorAll('.category-card'),
     scienceTopics: document.getElementById('science-topics'),
@@ -317,7 +354,15 @@ const elements = {
     translateFrom: document.getElementById('translate-from'),
     translateTo: document.getElementById('translate-to'),
     doTranslate: document.getElementById('do-translate'),
-    copyTranslation: document.getElementById('copy-translation')
+    copyTranslation: document.getElementById('copy-translation'),
+    speakTranslation: document.getElementById('speak-translation'),
+    quranSearch: document.getElementById('quran-search'),
+    searchBtn: document.getElementById('search-btn'),
+    tafsirTitle: document.getElementById('tafsir-title'),
+    tafsirContent: document.getElementById('tafsir-content'),
+    tafsirTabs: document.querySelectorAll('.tafsir-tab'),
+    reminderItems: document.querySelectorAll('.reminder-item'),
+    setReminderBtns: document.querySelectorAll('.set-reminder')
 };
 
 // تهيئة التطبيق
@@ -336,6 +381,12 @@ function init() {
     
     // تطبيق السمة المختارة
     applyTheme();
+    
+    // تحميل الإشارات المرجعية
+    loadBookmarks();
+    
+    // تحميل التذكيرات
+    loadReminders();
 }
 
 // تحميل بيانات المستخدم
@@ -411,10 +462,22 @@ function setupEventListeners() {
     elements.translateBtn.addEventListener('click', () => showModal('translate'));
     elements.doTranslate.addEventListener('click', translateText);
     elements.copyTranslation.addEventListener('click', copyTranslation);
+    elements.speakTranslation.addEventListener('click', speakTranslation);
+    
+    // التذكيرات
+    elements.remindersBtn.addEventListener('click', () => showModal('reminders'));
     
     // القرآن الكريم
     elements.surahSelect.addEventListener('change', loadSurah);
-    elements.playAyah.addEventListener('click', playAyah);
+    elements.playSurah.addEventListener('click', playSurah);
+    elements.tafsirBtn.addEventListener('click', showSurahTafsir);
+    elements.bookmarkBtn.addEventListener('click', toggleBookmark);
+    elements.searchBtn.addEventListener('click', searchQuran);
+    elements.quranSearch.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            searchQuran();
+        }
+    });
     
     // العلوم
     elements.scienceCategories.forEach(card => {
@@ -473,6 +536,27 @@ function setupEventListeners() {
         e.preventDefault();
         showModal('login');
     });
+    
+    // تفسير القرآن
+    elements.tafsirTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            elements.tafsirTabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            app.currentTafsir = tab.getAttribute('data-tafsir');
+            updateTafsirContent();
+        });
+    });
+    
+    // التذكيرات
+    elements.setReminderBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const time = e.target.getAttribute('data-time');
+            setReminder(time);
+        });
+    });
+    
+    // القائمة الجوالية
+    elements.mobileMenuBtn.addEventListener('click', toggleMobileMenu);
 }
 
 // عرض المحتوى
@@ -506,6 +590,9 @@ function showContent(page) {
             elements.settingsLink.classList.add('active');
             break;
     }
+    
+    // إغلاق القائمة الجوالية إذا كانت مفتوحة
+    document.querySelector('.nav-links').classList.remove('active');
 }
 
 // عرض النافذة المنبثقة
@@ -523,6 +610,12 @@ function showModal(modal) {
             break;
         case 'translate':
             elements.translateModal.classList.add('active');
+            break;
+        case 'reminders':
+            elements.remindersModal.classList.add('active');
+            break;
+        case 'tafsir':
+            elements.tafsirModal.classList.add('active');
             break;
     }
 }
@@ -546,7 +639,9 @@ function loadSurah() {
     app.currentSurah = surah;
     
     elements.surahName.textContent = `سورة ${surah.name}`;
-    elements.surahMeta.textContent = `${surah.type} - ${surah.ayahs} آية - الصفحة ${surah.startPage}`;
+    elements.surahType.textContent = surah.type;
+    elements.surahAyahs.textContent = `${surah.ayahs} آيات`;
+    elements.surahPage.textContent = `الصفحة ${surah.startPage}`;
     
     const ayahs = knowledgeBase.quran.getAyahs(surahIndex);
     elements.ayahsContainer.innerHTML = '';
@@ -557,16 +652,102 @@ function loadSurah() {
         ayahElement.innerHTML = `
             <span class="ayah-text">${ayah}</span>
             <span class="ayah-number">${index + 1}</span>
+            <div class="ayah-actions">
+                <button class="ayah-btn" onclick="playAyah(${index + 1})">
+                    <i class="fas fa-play"></i>
+                </button>
+                <button class="ayah-btn" onclick="showAyahTafsir(${index + 1}, '${ayah.replace(/"/g, '&quot;')}')">
+                    <i class="fas fa-book-open"></i>
+                </button>
+                <button class="ayah-btn" onclick="copyAyah(${index + 1}, '${ayah.replace(/"/g, '&quot;')}')">
+                    <i class="fas fa-copy"></i>
+                </button>
+            </div>
         `;
         elements.ayahsContainer.appendChild(ayahElement);
     });
+    
+    // تحديث حالة الإشارة المرجعية
+    updateBookmarkButton();
+}
+
+// تشغيل السورة (محاكاة)
+function playSurah() {
+    if (!app.currentSurah) return;
+    
+    const reciter = elements.reciterSelect.value;
+    showMessage(`جاري تشغيل سورة ${app.currentSurah.name} بصوت القارئ ${getReciterName(reciter)}...`, 'info');
 }
 
 // تشغيل الآية (محاكاة)
-function playAyah() {
+function playAyah(ayahNumber) {
     if (!app.currentSurah) return;
     
-    showMessage('جاري تشغيل الآيات... سيتم تنزيل ميزة الاستماع الكاملة قريبًا', 'info');
+    const reciter = elements.reciterSelect.value;
+    showMessage(`جاري تشغيل الآية ${ayahNumber} من سورة ${app.currentSurah.name} بصوت القارئ ${getReciterName(reciter)}...`, 'info');
+}
+
+// الحصول على اسم القارئ
+function getReciterName(reciterCode) {
+    const reciters = {
+        'ar.alafasy': 'مشاري العفاسي',
+        'ar.abdulbasit': 'عبد الباسط عبد الصمد',
+        'ar.husary': 'محمود خليل الحصري'
+    };
+    return reciters[reciterCode] || reciterCode;
+}
+
+// عرض تفسير السورة
+function showSurahTafsir() {
+    if (!app.currentSurah) return;
+    
+    elements.tafsirTitle.textContent = `تفسير سورة ${app.currentSurah.name}`;
+    updateTafsirContent();
+    showModal('tafsir');
+}
+
+// عرض تفسير الآية
+function showAyahTafsir(ayahNumber, ayahText) {
+    elements.tafsirTitle.textContent = `تفسير الآية ${ayahNumber}: ${ayahText.substring(0, 30)}...`;
+    updateTafsirContent(ayahNumber);
+    showModal('tafsir');
+}
+
+// تحديث محتوى التفسير
+function updateTafsirContent(ayahNumber) {
+    const surahIndex = elements.surahSelect.value;
+    if (!surahIndex) return;
+    
+    let tafsirText = '';
+    
+    if (ayahNumber) {
+        tafsirText = knowledgeBase.quran.getTafsir(surahIndex, ayahNumber, app.currentTafsir);
+    } else {
+        // تفسير السورة كاملة
+        const ayahs = knowledgeBase.quran.getAyahs(surahIndex);
+        for (let i = 1; i <= ayahs.length; i++) {
+            const ayahTafsir = knowledgeBase.quran.getTafsir(surahIndex, i, app.currentTafsir);
+            if (ayahTafsir) {
+                tafsirText += `<p><strong>تفسير الآية ${i}:</strong> ${ayahTafsir}</p>`;
+            }
+        }
+    }
+    
+    elements.tafsirContent.innerHTML = tafsirText || "التفسير غير متوفر حاليًا لهذه الآية.";
+}
+
+// نسخ الآية
+function copyAyah(ayahNumber, ayahText) {
+    navigator.clipboard.writeText(ayahText);
+    showMessage(`تم نسخ الآية ${ayahNumber}`, 'success');
+}
+
+// البحث في القرآن
+function searchQuran() {
+    const query = elements.quranSearch.value.trim();
+    if (!query) return;
+    
+    showMessage(`جاري البحث عن "${query}" في القرآن الكريم...`, 'info');
 }
 
 // تحميل مواضيع العلم
@@ -580,7 +761,9 @@ function loadScienceTopics(category) {
         computer: ["البرمجة", "قواعد البيانات", "الذكاء الاصطناعي"],
         business: ["المحاسبة", "التسويق", "الإدارة المالية"],
         law: ["القانون المدني", "القانون الجنائي", "القانون التجاري"],
-        education: ["علم النفس التربوي", "طرق التدريس", "تقويم المناهج"]
+        education: ["علم النفس التربوي", "طرق التدريس", "تقويم المناهج"],
+        physics: ["الميكانيكا الكلاسيكية", "الكهرومغناطيسية", "النظرية النسبية"],
+        chemistry: ["الكيمياء العضوية", "الكيمياء غير العضوية", "الكيمياء التحليلية"]
     };
     
     let html = `<h3>مواضيع ${getCategoryName(category)}</h3><ul>`;
@@ -601,7 +784,9 @@ function getCategoryName(category) {
         computer: "علوم الحاسب",
         business: "إدارة الأعمال",
         law: "القانون",
-        education: "التربية"
+        education: "التربية",
+        physics: "الفيزياء",
+        chemistry: "الكيمياء"
     };
     return names[category] || category;
 }
@@ -613,28 +798,17 @@ function askAboutTopic(category, topic) {
     const message = `أريد معلومات عن ${topic} في تخصص ${getCategoryName(category)}`;
     addMessageToChat(message, 'user');
     
-    // إظهار رسالة "يكتب..." من الذكاء الاصطناعي
-    const typingIndicator = document.createElement('div');
-    typingIndicator.className = 'message ai-message typing';
-    typingIndicator.innerHTML = `
-        <img src="${app.aiAvatar}" alt="H.Ai Avatar">
-        <div class="message-content">
-            <p>يكتب...</p>
-        </div>
-    `;
-    elements.chatMessages.appendChild(typingIndicator);
-    elements.chatMessages.scrollTop = elements.chatMessages.scrollHeight;
+    showTypingIndicator();
     
-    // محاكاة انتظار الرد
     setTimeout(() => {
-        // إزالة مؤشر الكتابة
-        document.querySelector('.typing').remove();
+        removeTypingIndicator();
         
-        // الحصول على الرد المناسب
         const response = getScienceResponse(category, topic);
-        
-        // إضافة رد الذكاء الاصطناعي
         addMessageToChat(response, 'ai');
+        
+        if (response.length > 300) {
+            addExpandButton();
+        }
     }, 1000 + Math.random() * 2000);
 }
 
@@ -646,7 +820,13 @@ function getScienceResponse(category, topic) {
             "التشريح": "علم التشريح يدرس تركيب الجسم البشري وأجهزته المختلفة. ينقسم إلى تشريح عياني (بالعين المجردة) وتشريح مجهري (بالمجهر).",
             "الفزيولوجيا": "علم وظائف الأعضاء يدرس كيفية عمل أجهزة الجسم المختلفة مثل الجهاز الهضمي، العصبي، الدوري وغيرها."
         },
-        // ... إجابات للتخصصات الأخرى
+        physics: {
+            "الميكانيكا الكلاسيكية": "الميكانيكا الكلاسيكية تدرس حركة الأجسام تحت تأثير القوى، وتشمل ثلاث قوانين أساسية لنيوتن: 1) قانون القصور الذاتي، 2) قانون التسارع (F=ma)، 3) قانون الفعل ورد الفعل.",
+            "النظرية النسبية": "النظرية النسبية لأينشتاين نوعان: النسبية الخاصة (1905) وتدرس الأجسام المتحركة بسرعات ثابتة، والنسبية العامة (1915) وهي نظرية الجاذبية التي تصفها كتشوه في الزمكان."
+        },
+        chemistry: {
+            "الكيمياء العضوية": "الكيمياء العضوية تدرس مركبات الكربون باستثناء أكاسيد الكربون والكربونات. تشمل دراسة الهيدروكربونات، المجموعات الوظيفية، التفاعلات العضوية مثل الإضافة، الاستبدال، الحذف."
+        }
     };
     
     return responses[category]?.[topic] || `ليس لدي معلومات كافية عن ${topic} حالياً. يمكنك طرح سؤال أكثر تحديداً.`;
@@ -657,35 +837,24 @@ function sendMessage() {
     const message = elements.userInput.value.trim();
     if (!message) return;
     
-    // إضافة رسالة المستخدم إلى الدردشة
     addMessageToChat(message, 'user');
-    
-    // مسح حقل الإدخال
     elements.userInput.value = '';
+    adjustTextareaHeight();
     
-    // إظهار رسالة "يكتب..." من الذكاء الاصطناعي
-    const typingIndicator = document.createElement('div');
-    typingIndicator.className = 'message ai-message typing';
-    typingIndicator.innerHTML = `
-        <img src="${app.aiAvatar}" alt="H.Ai Avatar">
-        <div class="message-content">
-            <p>يكتب...</p>
-        </div>
-    `;
-    elements.chatMessages.appendChild(typingIndicator);
-    elements.chatMessages.scrollTop = elements.chatMessages.scrollHeight;
+    showTypingIndicator();
     
-    // محاكاة انتظار الرد
+    const delay = calculateTypingDelay(message);
+    
     setTimeout(() => {
-        // إزالة مؤشر الكتابة
-        document.querySelector('.typing').remove();
+        removeTypingIndicator();
         
-        // الحصول على الرد من قاعدة المعرفة
         const response = getAIResponse(message);
-        
-        // إضافة رد الذكاء الاصطناعي
         addMessageToChat(response, 'ai');
-    }, 1000 + Math.random() * 2000);
+        
+        if (response.length > 300) {
+            addExpandButton();
+        }
+    }, delay);
 }
 
 // إضافة رسالة إلى الدردشة
@@ -705,12 +874,35 @@ function addMessageToChat(message, sender) {
     elements.chatMessages.appendChild(messageDiv);
     elements.chatMessages.scrollTop = elements.chatMessages.scrollHeight;
     
-    // حفظ الرسالة في السجل
     app.chatHistory.push({
         sender,
         message,
         timestamp: new Date().toISOString()
     });
+}
+
+// عرض مؤشر الكتابة
+function showTypingIndicator() {
+    const typingDiv = document.createElement('div');
+    typingDiv.className = 'message ai-message typing-indicator';
+    typingDiv.innerHTML = `
+        <img src="${app.aiAvatar}" alt="H.Ai Avatar">
+        <div class="message-content">
+            <div class="typing-dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    `;
+    elements.chatMessages.appendChild(typingDiv);
+    elements.chatMessages.scrollTop = elements.chatMessages.scrollHeight;
+}
+
+// إزالة مؤشر الكتابة
+function removeTypingIndicator() {
+    const typing = document.querySelector('.typing-indicator');
+    if (typing) typing.remove();
 }
 
 // بدء محادثة جديدة
@@ -722,11 +914,12 @@ function startNewChat() {
                 <div class="message-content">
                     <p>السلام عليكم ورحمة الله وبركاته، أنا H.Ai المساعد الإسلامي الشامل. يمكنني:</p>
                     <ul class="suggestions-list">
+                        <li>تلاوة وتفسير أي آية من القرآن الكريم</li>
                         <li>الرد على أسئلتك الشرعية وفق منهج السلف</li>
                         <li>حل مسائل علمية في مختلف التخصصات</li>
-                        <li>تفسير آيات القرآن الكريم</li>
+                        <li>تفسير آيات القرآن بتفاسير متعددة</li>
                         <li>الترجمة بين العربية والإنجليزية</li>
-                        <li>الرد على الأسئلة باللهجة العامية</li>
+                        <li>تذكيرك بأوقات الصلاة والأذكار</li>
                     </ul>
                 </div>
             </div>
@@ -742,44 +935,76 @@ function startNewChat() {
 
 // الحصول على رد من الذكاء الاصطناعي
 function getAIResponse(prompt) {
-    // تحويل السؤال إلى أحرف صغيرة لإزالة الحساسية لحالة الأحرف
     const lowerPrompt = prompt.toLowerCase();
     
-    // التحقق من اللهجة العامية أولاً
+    // 1. التحقق من التحية أولاً
+    if (isGreeting(lowerPrompt)) {
+        return getRandomResponse(knowledgeBase.greeting.responses);
+    }
+    
+    // 2. التحقق من اللهجة العامية
     if (isColloquial(prompt)) {
         return getColloquialResponse(prompt);
     }
     
-    // البحث عن تطابق في أنماط الأسئلة
+    // 3. البحث في القرآن إذا طلب آية أو تفسير
+    if (prompt.includes("آية") || prompt.includes("سورة") || prompt.includes("قرآن")) {
+        return getQuranResponse(prompt);
+    }
+    
+    // 4. البحث في التخصصات العلمية إذا كان هناك تخصص محدد
+    if (app.currentScienceCategory) {
+        const scienceResponse = getScienceResponse(app.currentScienceCategory, prompt);
+        if (scienceResponse) return scienceResponse;
+    }
+    
+    // 5. البحث في قاعدة المعرفة العامة
     for (const category in knowledgeBase) {
-        if (category === 'default' || category === 'colloquial') continue;
+        if (category === 'default' || category === 'colloquial' || category === 'greeting') continue;
         
         const patterns = knowledgeBase[category].patterns;
         for (const pattern of patterns) {
             if (lowerPrompt.includes(pattern.toLowerCase())) {
                 app.currentTopic = category;
-                return getRandomResponse(knowledgeBase[category].responses);
+                return getContextualResponse(category, prompt);
             }
         }
     }
     
-    // إذا كان هناك موضوع حالى، حاول الرد ضمنه
+    // 6. إذا كان هناك موضوع حالى، حاول الرد ضمنه
     if (app.currentTopic && knowledgeBase[app.currentTopic]) {
-        return getRandomResponse(knowledgeBase[app.currentTopic].responses);
+        return getContextualResponse(app.currentTopic, prompt);
     }
     
-    // إذا لم يتم العثور على تطابق، استخدم الرد الافتراضي
+    // 7. الرد الافتراضي
     return getRandomResponse(knowledgeBase.default.responses);
+}
+
+// الحصول على رد متعلق بالقرآن
+function getQuranResponse(prompt) {
+    if (prompt.includes("تفسير")) {
+        return "يمكنك عرض تفسير أي آية أو سورة من خلال الذهاب إلى قسم القرآن واختيار السورة ثم النقر على زر التفسير.";
+    }
+    
+    if (prompt.includes("سورة الفاتحة")) {
+        return "سورة الفاتحة هي أعظم سورة في القرآن، وتسمى بأم الكتاب والسبع المثاني. تحتوي على 7 آيات وهي مكية. تبدأ بـ 'بسم الله الرحمن الرحيم' وتشمل الثناء على الله وطلب الهداية إلى الصراط المستقيم.";
+    }
+    
+    if (prompt.includes("آية الكرسي")) {
+        return "آية الكرسي هي الآية 255 من سورة البقرة، وهي أعظم آية في القرآن. نصها: 'اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَن ذَا الَّذِي يَشْفَعُ عِندَهُ إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلَّا بِمَا شَاءَ ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ ۖ وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ'";
+    }
+    
+    return "يمكنك الذهاب إلى قسم القرآن الكريم لتلاوة أي سورة أو آية تريدها، كما يمكنك الاستماع إليها وقراءة تفسيرها.";
+}
+
+// التحقق من التحية
+function isGreeting(message) {
+    return knowledgeBase.greeting.patterns.some(pattern => message.includes(pattern));
 }
 
 // التحقق من اللهجة العامية
 function isColloquial(message) {
-    for (const pattern of knowledgeBase.colloquial.patterns) {
-        if (message.includes(pattern)) {
-            return true;
-        }
-    }
-    return false;
+    return knowledgeBase.colloquial.patterns.some(pattern => message.includes(pattern));
 }
 
 // الحصول على رد باللهجة العامية
@@ -790,6 +1015,24 @@ function getColloquialResponse(message) {
         }
     }
     return getRandomResponse(knowledgeBase.colloquial.responses);
+}
+
+// الحصول على رد contextual
+function getContextualResponse(category, prompt) {
+    let response = getRandomResponse(knowledgeBase[category].responses);
+    
+    if (response.length < 150 && knowledgeBase[category].responses.length > 1) {
+        const additionalInfo = knowledgeBase[category].responses.find(r => r !== response);
+        if (additionalInfo) {
+            response += "\n\n" + additionalInfo;
+        }
+    }
+    
+    if (category === 'aqeedah' || category === 'fiqh' || category === 'hadith') {
+        response += "\n\n📚 المراجع:\n- كتاب التوحيد لابن خزيمة\n- فتح الباري لابن حجر\n- مجموع فتاوى ابن تيمية";
+    }
+    
+    return response;
 }
 
 // الحصول على رد عشوائي من مجموعة الردود
@@ -829,12 +1072,19 @@ function copyTranslation() {
     showMessage('تم نسخ الترجمة', 'success');
 }
 
+// نطق الترجمة
+function speakTranslation() {
+    const text = elements.translateOutput.value;
+    if (!text) return;
+    
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = elements.translateTo.value === 'ar' ? 'ar-SA' : 'en-US';
+    speechSynthesis.speak(utterance);
+}
+
 // تطبيق السمة المختارة
 function applyTheme() {
-    // إزالة جميع السمات الحالية
     document.body.classList.remove('theme-default', 'theme-green', 'theme-purple', 'theme-dark');
-    
-    // إضافة السمة المختارة
     document.body.classList.add(`theme-${app.theme}`);
 }
 
@@ -926,6 +1176,84 @@ function logout() {
     showMessage('تم تسجيل الخروج بنجاح', 'success');
 }
 
+// تحميل الإشارات المرجعية
+function loadBookmarks() {
+    const bookmarks = localStorage.getItem('HAi_bookmarks');
+    if (bookmarks) {
+        app.bookmarks = JSON.parse(bookmarks);
+    }
+}
+
+// حفظ الإشارات المرجعية
+function saveBookmarks() {
+    localStorage.setItem('HAi_bookmarks', JSON.stringify(app.bookmarks));
+}
+
+// تحديث زر الإشارة المرجعية
+function updateBookmarkButton() {
+    if (!app.currentSurah) return;
+    
+    const isBookmarked = app.bookmarks.some(b => b.surah === app.currentSurah.name);
+    elements.bookmarkBtn.innerHTML = isBookmarked ? 
+        '<i class="fas fa-bookmark"></i> إزالة من المحفوظات' : 
+        '<i class="fas fa-bookmark"></i> حفظ الموضع';
+}
+
+// تبديل الإشارة المرجعية
+function toggleBookmark() {
+    if (!app.currentSurah) return;
+    
+    const index = app.bookmarks.findIndex(b => b.surah === app.currentSurah.name);
+    
+    if (index === -1) {
+        app.bookmarks.push({
+            surah: app.currentSurah.name,
+            index: elements.surahSelect.value,
+            timestamp: new Date().toISOString()
+        });
+        showMessage(`تم إضافة سورة ${app.currentSurah.name} إلى المحفوظات`, 'success');
+    } else {
+        app.bookmarks.splice(index, 1);
+        showMessage(`تم إزالة سورة ${app.currentSurah.name} من المحفوظات`, 'info');
+    }
+    
+    saveBookmarks();
+    updateBookmarkButton();
+}
+
+// تحميل التذكيرات
+function loadReminders() {
+    const reminders = localStorage.getItem('HAi_reminders');
+    if (reminders) {
+        app.reminders = JSON.parse(reminders);
+    }
+}
+
+// حفظ التذكيرات
+function saveReminders() {
+    localStorage.setItem('HAi_reminders', JSON.stringify(app.reminders));
+}
+
+// تعيين تذكير
+function setReminder(time) {
+    if (time === 'adaptive') {
+        showMessage('سيتم تذكيرك بأذكار بعد الصلاة تلقائيًا عند دخول وقت الصلاة', 'info');
+        return;
+    }
+    
+    const reminder = {
+        type: 'أذكار',
+        time,
+        active: true,
+        createdAt: new Date().toISOString()
+    };
+    
+    app.reminders.push(reminder);
+    saveReminders();
+    
+    showMessage(`تم تعيين تذكير للأذكار الساعة ${time}`, 'success');
+}
+
 // عرض رسالة للمستخدم
 function showMessage(message, type) {
     const messageDiv = document.createElement('div');
@@ -939,9 +1267,50 @@ function showMessage(message, type) {
     }, 3000);
 }
 
+// ضبط ارتفاع حقل النص
+function adjustTextareaHeight() {
+    elements.userInput.style.height = 'auto';
+    elements.userInput.style.height = elements.userInput.scrollHeight + 'px';
+}
+
+// حساب وقت الكتابة
+function calculateTypingDelay(message) {
+    const words = message.split(/\s+/).length;
+    const baseDelay = 1000;
+    const wordDelay = 150;
+    const maxDelay = 5000;
+    
+    return Math.min(baseDelay + (words * wordDelay), maxDelay);
+}
+
+// إضافة زر التوسيع
+function addExpandButton() {
+    const lastMessage = elements.chatMessages.lastElementChild;
+    if (lastMessage && lastMessage.classList.contains('ai-message')) {
+        const expandBtn = document.createElement('button');
+        expandBtn.className = 'expand-btn';
+        expandBtn.innerHTML = '<i class="fas fa-expand"></i> عرض كامل الإجابة';
+        expandBtn.onclick = () => {
+            lastMessage.classList.toggle('expanded');
+            expandBtn.innerHTML = lastMessage.classList.contains('expanded') ? 
+                '<i class="fas fa-compress"></i> تصغير' : 
+                '<i class="fas fa-expand"></i> عرض كامل الإجابة';
+        };
+        lastMessage.querySelector('.message-content').appendChild(expandBtn);
+    }
+}
+
+// تبديل القائمة الجوالية
+function toggleMobileMenu() {
+    document.querySelector('.nav-links').classList.toggle('active');
+}
+
 // تهيئة التطبيق عند تحميل الصفحة
 document.addEventListener('DOMContentLoaded', init);
 
 // جعل الدوال متاحة عالمياً للاستدعاء من HTML
 window.askAboutTopic = askAboutTopic;
 window.copyTranslation = copyTranslation;
+window.playAyah = playAyah;
+window.showAyahTafsir = showAyahTafsir;
+window.copyAyah = copyAyah;
