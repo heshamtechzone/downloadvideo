@@ -41,15 +41,131 @@ const knowledgeBase = {
             {name: "الفاتحة", ayahs: 7, type: "مكية", startPage: 1, juz: 1},
             {name: "البقرة", ayahs: 286, type: "مدنية", startPage: 2, juz: [1,2,3]},
             {name: "آل عمران", ayahs: 200, type: "مدنية", startPage: 50, juz: [3,4]},
-            // ... يمكن إضافة بقية السور
+            {name: "النساء", ayahs: 176, type: "مدنية", startPage: 77, juz: [4,5,6]},
+            {name: "المائدة", ayahs: 120, type: "مدنية", startPage: 106, juz: [6,7]},
+            {name: "الأنعام", ayahs: 165, type: "مكية", startPage: 128, juz: [7,8]},
+            {name: "الأعراف", ayahs: 206, type: "مكية", startPage: 151, juz: [8,9]},
+            {name: "الأنفال", ayahs: 75, type: "مدنية", startPage: 177, juz: [9,10]},
+            {name: "التوبة", ayahs: 129, type: "مدنية", startPage: 187, juz: [10,11]},
+            {name: "يونس", ayahs: 109, type: "مكية", startPage: 208, juz: [11]},
+            {name: "هود", ayahs: 123, type: "مكية", startPage: 221, juz: [11,12]},
+            {name: "يوسف", ayahs: 111, type: "مكية", startPage: 235, juz: [12,13]},
+            {name: "الرعد", ayahs: 43, type: "مدنية", startPage: 249, juz: [13]},
+            {name: "إبراهيم", ayahs: 52, type: "مكية", startPage: 255, juz: [13]},
+            {name: "الحجر", ayahs: 99, type: "مكية", startPage: 262, juz: [14]},
+            {name: "النحل", ayahs: 128, type: "مكية", startPage: 267, juz: [14]},
+            {name: "الإسراء", ayahs: 111, type: "مكية", startPage: 282, juz: [15]},
+            {name: "الكهف", ayahs: 110, type: "مكية", startPage: 293, juz: [15,16]},
+            {name: "مريم", ayahs: 98, type: "مكية", startPage: 305, juz: [16]},
+            {name: "طه", ayahs: 135, type: "مكية", startPage: 312, juz: [16]},
+            {name: "الأنبياء", ayahs: 112, type: "مكية", startPage: 322, juz: [17]},
+            {name: "الحج", ayahs: 78, type: "مدنية", startPage: 332, juz: [17]},
+            {name: "المؤمنون", ayahs: 118, type: "مكية", startPage: 342, juz: [18]},
+            {name: "النور", ayahs: 64, type: "مدنية", startPage: 350, juz: [18]},
+            {name: "الفرقان", ayahs: 77, type: "مكية", startPage: 359, juz: [18,19]},
+            {name: "الشعراء", ayahs: 227, type: "مكية", startPage: 367, juz: [19]},
+            {name: "النمل", ayahs: 93, type: "مكية", startPage: 377, juz: [19,20]},
+            {name: "القصص", ayahs: 88, type: "مكية", startPage: 385, juz: [20]},
+            {name: "العنكبوت", ayahs: 69, type: "مكية", startPage: 396, juz: [20,21]},
+            {name: "الروم", ayahs: 60, type: "مكية", startPage: 404, juz: [21]},
+            {name: "لقمان", ayahs: 34, type: "مكية", startPage: 411, juz: [21]},
+            {name: "السجدة", ayahs: 30, type: "مكية", startPage: 415, juz: [21]},
+            {name: "الأحزاب", ayahs: 73, type: "مدنية", startPage: 418, juz: [21,22]},
+            {name: "سبأ", ayahs: 54, type: "مكية", startPage: 428, juz: [22]},
+            {name: "فاطر", ayahs: 45, type: "مكية", startPage: 434, juz: [22]},
+            {name: "يس", ayahs: 83, type: "مكية", startPage: 440, juz: [22,23]},
+            {name: "الصافات", ayahs: 182, type: "مكية", startPage: 446, juz: [23]},
+            {name: "ص", ayahs: 88, type: "مكية", startPage: 453, juz: [23]},
+            {name: "الزمر", ayahs: 75, type: "مكية", startPage: 458, juz: [23,24]},
+            {name: "غافر", ayahs: 85, type: "مكية", startPage: 467, juz: [24]},
+            {name: "فصلت", ayahs: 54, type: "مكية", startPage: 477, juz: [24,25]},
+            {name: "الشورى", ayahs: 53, type: "مكية", startPage: 483, juz: [25]},
+            {name: "الزخرف", ayahs: 89, type: "مكية", startPage: 489, juz: [25]},
+            {name: "الدخان", ayahs: 59, type: "مكية", startPage: 496, juz: [25]},
+            {name: "الجاثية", ayahs: 37, type: "مكية", startPage: 499, juz: [25]},
+            {name: "الأحقاف", ayahs: 35, type: "مكية", startPage: 502, juz: [26]},
+            {name: "محمد", ayahs: 38, type: "مدنية", startPage: 507, juz: [26]},
+            {name: "الفتح", ayahs: 29, type: "مدنية", startPage: 511, juz: [26]},
+            {name: "الحجرات", ayahs: 18, type: "مدنية", startPage: 515, juz: [26]},
+            {name: "ق", ayahs: 45, type: "مكية", startPage: 518, juz: [26]},
+            {name: "الذاريات", ayahs: 60, type: "مكية", startPage: 520, juz: [26,27]},
+            {name: "الطور", ayahs: 49, type: "مكية", startPage: 523, juz: [27]},
+            {name: "النجم", ayahs: 62, type: "مكية", startPage: 526, juz: [27]},
+            {name: "القمر", ayahs: 55, type: "مكية", startPage: 528, juz: [27]},
+            {name: "الرحمن", ayahs: 78, type: "مدنية", startPage: 531, juz: [27]},
+            {name: "الواقعة", ayahs: 96, type: "مكية", startPage: 534, juz: [27]},
+            {name: "الحديد", ayahs: 29, type: "مدنية", startPage: 537, juz: [27]},
+            {name: "المجادلة", ayahs: 22, type: "مدنية", startPage: 542, juz: [28]},
+            {name: "الحشر", ayahs: 24, type: "مدنية", startPage: 545, juz: [28]},
+            {name: "الممتحنة", ayahs: 13, type: "مدنية", startPage: 549, juz: [28]},
+            {name: "الصف", ayahs: 14, type: "مدنية", startPage: 551, juz: [28]},
+            {name: "الجمعة", ayahs: 11, type: "مدنية", startPage: 553, juz: [28]},
+            {name: "المنافقون", ayahs: 11, type: "مدنية", startPage: 554, juz: [28]},
+            {name: "التغابن", ayahs: 18, type: "مدنية", startPage: 556, juz: [28]},
+            {name: "الطلاق", ayahs: 12, type: "مدنية", startPage: 558, juz: [28]},
+            {name: "التحريم", ayahs: 12, type: "مدنية", startPage: 560, juz: [28]},
+            {name: "الملك", ayahs: 30, type: "مكية", startPage: 562, juz: [29]},
+            {name: "القلم", ayahs: 52, type: "مكية", startPage: 564, juz: [29]},
+            {name: "الحاقة", ayahs: 52, type: "مكية", startPage: 566, juz: [29]},
+            {name: "المعارج", ayahs: 44, type: "مكية", startPage: 568, juz: [29]},
+            {name: "نوح", ayahs: 28, type: "مكية", startPage: 570, juz: [29]},
+            {name: "الجن", ayahs: 28, type: "مكية", startPage: 572, juz: [29]},
+            {name: "المزمل", ayahs: 20, type: "مكية", startPage: 574, juz: [29]},
+            {name: "المدثر", ayahs: 56, type: "مكية", startPage: 575, juz: [29]},
+            {name: "القيامة", ayahs: 40, type: "مكية", startPage: 577, juz: [29]},
+            {name: "الإنسان", ayahs: 31, type: "مدنية", startPage: 578, juz: [29]},
+            {name: "المرسلات", ayahs: 50, type: "مكية", startPage: 580, juz: [29]},
+            {name: "النبأ", ayahs: 40, type: "مكية", startPage: 582, juz: [30]},
+            {name: "النازعات", ayahs: 46, type: "مكية", startPage: 583, juz: [30]},
+            {name: "عبس", ayahs: 42, type: "مكية", startPage: 585, juz: [30]},
+            {name: "التكوير", ayahs: 29, type: "مكية", startPage: 586, juz: [30]},
+            {name: "الانفطار", ayahs: 19, type: "مكية", startPage: 587, juz: [30]},
+            {name: "المطففين", ayahs: 36, type: "مكية", startPage: 587, juz: [30]},
+            {name: "الانشقاق", ayahs: 25, type: "مكية", startPage: 589, juz: [30]},
+            {name: "البروج", ayahs: 22, type: "مكية", startPage: 590, juz: [30]},
+            {name: "الطارق", ayahs: 17, type: "مكية", startPage: 591, juz: [30]},
+            {name: "الأعلى", ayahs: 19, type: "مكية", startPage: 591, juz: [30]},
+            {name: "الغاشية", ayahs: 26, type: "مكية", startPage: 592, juz: [30]},
+            {name: "الفجر", ayahs: 30, type: "مكية", startPage: 593, juz: [30]},
+            {name: "البلد", ayahs: 20, type: "مكية", startPage: 594, juz: [30]},
+            {name: "الشمس", ayahs: 15, type: "مكية", startPage: 595, juz: [30]},
+            {name: "الليل", ayahs: 21, type: "مكية", startPage: 595, juz: [30]},
+            {name: "الضحى", ayahs: 11, type: "مكية", startPage: 596, juz: [30]},
+            {name: "الشرح", ayahs: 8, type: "مكية", startPage: 596, juz: [30]},
+            {name: "التين", ayahs: 8, type: "مكية", startPage: 597, juz: [30]},
+            {name: "العلق", ayahs: 19, type: "مكية", startPage: 597, juz: [30]},
+            {name: "القدر", ayahs: 5, type: "مكية", startPage: 598, juz: [30]},
+            {name: "البينة", ayahs: 8, type: "مدنية", startPage: 598, juz: [30]},
+            {name: "الزلزلة", ayahs: 8, type: "مدنية", startPage: 599, juz: [30]},
+            {name: "العاديات", ayahs: 11, type: "مكية", startPage: 599, juz: [30]},
+            {name: "القارعة", ayahs: 11, type: "مكية", startPage: 600, juz: [30]},
+            {name: "التكاثر", ayahs: 8, type: "مكية", startPage: 600, juz: [30]},
+            {name: "العصر", ayahs: 3, type: "مكية", startPage: 601, juz: [30]},
+            {name: "الهمزة", ayahs: 9, type: "مكية", startPage: 601, juz: [30]},
+            {name: "الفيل", ayahs: 5, type: "مكية", startPage: 601, juz: [30]},
+            {name: "قريش", ayahs: 4, type: "مكية", startPage: 602, juz: [30]},
+            {name: "الماعون", ayahs: 7, type: "مكية", startPage: 602, juz: [30]},
+            {name: "الكوثر", ayahs: 3, type: "مكية", startPage: 602, juz: [30]},
+            {name: "الكافرون", ayahs: 6, type: "مكية", startPage: 603, juz: [30]},
+            {name: "النصر", ayahs: 3, type: "مدنية", startPage: 603, juz: [30]},
+            {name: "المسد", ayahs: 5, type: "مكية", startPage: 603, juz: [30]},
+            {name: "الإخلاص", ayahs: 4, type: "مكية", startPage: 604, juz: [30]},
+            {name: "الفلق", ayahs: 5, type: "مكية", startPage: 604, juz: [30]},
+            {name: "الناس", ayahs: 6, type: "مكية", startPage: 604, juz: [30]}
         ],
-        getAyahs: function(surahIndex) {
-            // في التطبيق الحقيقي، هنا سيتم جلب الآيات من قاعدة بيانات
-            const sampleAyahs = {
-                0: ["بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ", "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ", "الرَّحْمَٰنِ الرَّحِيمِ", "مَالِكِ يَوْمِ الدِّينِ", "إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ", "اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ", "صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ"],
-                1: ["الم", "ذَٰلِكَ الْكِتَابُ لَا رَيْبَ ۛ فِيهِ ۛ هُدًى لِّلْمُتَّقِينَ", "الَّذِينَ يُؤْمِنُونَ بِالْغَيْبِ وَيُقِيمُونَ الصَّلَاةَ وَمِمَّا رَزَقْنَاهُمْ يُنفِقُونَ"]
-            };
-            return sampleAyahs[surahIndex] || ["لا توجد آيات متاحة حاليًا"];
+        getAyahs: async function(surahNumber) {
+            try {
+                const response = await fetch(`https://api.alquran.cloud/v1/surah/${surahNumber}/ar.alafasy`);
+                const data = await response.json();
+                
+                if (data.code === 200 && data.status === "OK") {
+                    return data.data.ayahs.map(ayah => ayah.text);
+                }
+                return ["لا يمكن تحميل الآيات حالياً، يرجى المحاولة لاحقاً"];
+            } catch (error) {
+                console.error("Error fetching Quran:", error);
+                return ["حدث خطأ أثناء جلب الآيات"];
+            }
         },
         getTafsir: function(surahIndex, ayahNumber, tafsirType) {
             const tafsirs = {
@@ -64,13 +180,22 @@ const knowledgeBase = {
                     }
                 },
                 "ibn-kathir": {
-                    // تفسير ابن كثير
+                    0: {
+                        1: "تفسير ابن كثير: البسملة آية من الفاتحة، وهي من القرآن بإجماع العلماء.",
+                        2: "تفسير ابن كثير: الحمد لله ثناء أثنى به على نفسه، وفي ضمنه أمر عباده أن يثنوا عليه."
+                    }
                 },
                 "qurtubi": {
-                    // تفسير القرطبي
+                    0: {
+                        1: "تفسير القرطبي: البسملة آية من الفاتحة عند الشافعي، واجبة القراءة في الصلاة.",
+                        2: "تفسير القرطبي: الحمد لله هو الثناء باللسان على الجميل الاختياري."
+                    }
                 },
                 "saadi": {
-                    // تفسير السعدي
+                    0: {
+                        1: "تفسير السعدي: البسملة تذكير للعبد برحمة الله ولطفه قبل كل شيء.",
+                        2: "تفسير السعدي: الحمد لله هو الثناء على الله بصفات الكمال وبأفعاله الدائرة بين الفضل والعدل."
+                    }
                 }
             };
             
@@ -356,6 +481,7 @@ const elements = {
     doTranslate: document.getElementById('do-translate'),
     copyTranslation: document.getElementById('copy-translation'),
     speakTranslation: document.getElementById('speak-translation'),
+    translationStatus: document.getElementById('translation-status'),
     quranSearch: document.getElementById('quran-search'),
     searchBtn: document.getElementById('search-btn'),
     tafsirTitle: document.getElementById('tafsir-title'),
@@ -653,17 +779,18 @@ function closeModals() {
 function loadSurahList() {
     knowledgeBase.quran.surahs.forEach((surah, index) => {
         const option = document.createElement('option');
-        option.value = index;
+        option.value = index + 1; // لأن API يبدأ السور من 1
         option.textContent = `${surah.name} (${surah.type}) - ${surah.ayahs} آيات`;
         elements.surahSelect.appendChild(option);
     });
 }
 
 // تحميل السورة المحددة
-function loadSurah() {
-    const surahIndex = elements.surahSelect.value;
-    if (!surahIndex) return;
+async function loadSurah() {
+    const surahNumber = elements.surahSelect.value;
+    if (!surahNumber) return;
     
+    const surahIndex = surahNumber - 1; // لأن الفهرس يبدأ من 0
     const surah = knowledgeBase.quran.surahs[surahIndex];
     app.currentSurah = surah;
     
@@ -672,7 +799,10 @@ function loadSurah() {
     elements.surahAyahs.textContent = `${surah.ayahs} آيات`;
     elements.surahPage.textContent = `الصفحة ${surah.startPage}`;
     
-    const ayahs = knowledgeBase.quran.getAyahs(surahIndex);
+    elements.ayahsContainer.innerHTML = '<p>جاري تحميل الآيات...</p>';
+    
+    const ayahs = await knowledgeBase.quran.getAyahs(surahNumber);
+    
     elements.ayahsContainer.innerHTML = '';
     
     ayahs.forEach((ayah, index) => {
@@ -721,7 +851,8 @@ function getReciterName(reciterCode) {
     const reciters = {
         'ar.alafasy': 'مشاري العفاسي',
         'ar.abdulbasit': 'عبد الباسط عبد الصمد',
-        'ar.husary': 'محمود خليل الحصري'
+        'ar.husary': 'محمود خليل الحصري',
+        'ar.minshawi': 'محمد صديق المنشاوي'
     };
     return reciters[reciterCode] || reciterCode;
 }
@@ -744,8 +875,8 @@ function showAyahTafsir(ayahNumber, ayahText) {
 
 // تحديث محتوى التفسير
 function updateTafsirContent(ayahNumber) {
-    const surahIndex = elements.surahSelect.value;
-    if (!surahIndex) return;
+    const surahIndex = elements.surahSelect.value - 1;
+    if (surahIndex < 0) return;
     
     let tafsirText = '';
     
@@ -753,8 +884,8 @@ function updateTafsirContent(ayahNumber) {
         tafsirText = knowledgeBase.quran.getTafsir(surahIndex, ayahNumber, app.currentTafsir);
     } else {
         // تفسير السورة كاملة
-        const ayahs = knowledgeBase.quran.getAyahs(surahIndex);
-        for (let i = 1; i <= ayahs.length; i++) {
+        const surah = knowledgeBase.quran.surahs[surahIndex];
+        for (let i = 1; i <= surah.ayahs; i++) {
             const ayahTafsir = knowledgeBase.quran.getTafsir(surahIndex, i, app.currentTafsir);
             if (ayahTafsir) {
                 tafsirText += `<p><strong>تفسير الآية ${i}:</strong> ${ayahTafsir}</p>`;
@@ -1020,7 +1151,7 @@ function getQuranResponse(prompt) {
     }
     
     if (prompt.includes("آية الكرسي")) {
-        return "آية الكرسي هي الآية 255 من سورة البقرة، وهي أعظم آية في القرآن. نصها: 'اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَن ذَا الَّذِي يَشْفَعُ عِندَهُ إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلَّا بِمَا شَاء�� ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ ۖ وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ'";
+        return "آية الكرسي هي الآية 255 من سورة البقرة، وهي أعظم آية في القرآن. نصها: 'اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَن ذَا الَّذِي يَشْفَعُ عِندَهُ إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلَّا بِمَا شَاءَ ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ ۖ وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ'";
     }
     
     return "يمكنك الذهاب إلى قسم القرآن الكريم لتلاوة أي سورة أو آية تريدها، كما يمكنك الاستماع إليها وقراءة تفسيرها.";
@@ -1070,18 +1201,44 @@ function getRandomResponse(responses) {
 }
 
 // الترجمة
-function translateText() {
+async function translateText() {
     const text = elements.translateInput.value.trim();
     if (!text) return;
     
     const from = elements.translateFrom.value;
     const to = elements.translateTo.value;
     
-    const translated = translate(text, from, to);
-    elements.translateOutput.value = translated;
+    elements.translationStatus.textContent = "جاري الترجمة...";
+    
+    try {
+        const response = await fetch('https://libretranslate.de/translate', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                q: text,
+                source: from,
+                target: to
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok && data.translatedText) {
+            elements.translateOutput.value = data.translatedText;
+            elements.translationStatus.textContent = "تمت الترجمة بنجاح";
+        } else {
+            elements.translationStatus.textContent = "فشل في الترجمة، جرب مرة أخرى";
+        }
+    } catch (error) {
+        console.error("Translation error:", error);
+        elements.translationStatus.textContent = "حدث خطأ أثناء الترجمة";
+        elements.translateOutput.value = translate(text, from, to); // استخدام الترجمة المحلية كبديل
+    }
 }
 
-// دالة الترجمة الأساسية
+// دالة الترجمة الأساسية (محلية)
 function translate(text, from, to) {
     if (from === 'en' && to === 'ar') {
         // ترجمة من الإنجليزية إلى العربية
