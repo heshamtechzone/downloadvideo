@@ -57,7 +57,6 @@
                     <div class="message ai-message">
                         <img src="https://cdn-icons-png.flaticon.com/512/4712/4712035.png" alt="H.Ai Avatar">
                         <div class="message-content">
-                         
                             <p>السلام عليكم ورحمة الله وبركاته، أنا H.Ai المساعد الإسلامي الشامل. يمكنني:</p>
                             <ul class="suggestions-list">
                                 <li>تلاوة وتفسير أي آية من القرآن الكريم</li>
@@ -103,7 +102,6 @@
                             <option value="ar.abdulbasit">عبد الباسط</option>
                             <option value="ar.husary">الحصري</option>
                             <option value="ar.minshawi">المنشاوي</option>
-                            <option value="ar.sudais">السديس</option>
                         </select>
                         <button id="play-surah"><i class="fas fa-play"></i> استماع</button>
                     </div>
@@ -230,7 +228,7 @@
                 <div class="settings-section">
                     <h3><i class="fas fa-robot"></i> إعدادات الذكاء الاصطناعي</h3>
                     <div class="setting-item">
-                        <label for="ai-style">أسلوب ا��رد:</label>
+                        <label for="ai-style">أسلوب الرد:</label>
                         <select id="ai-style">
                             <option value="islamic">إسلامي سلفي</option>
                             <option value="detailed">مفصل وشامل</option>
@@ -366,8 +364,6 @@
                             <option value="en">الإنجليزية</option>
                             <option value="fr">الفرنسية</option>
                             <option value="ur">الأردية</option>
-                            <option value="es">الإسبانية</option>
-                            <option value="de">الألمانية</option>
                         </select>
                     </div>
                     <button id="do-translate" class="translate-btn">
@@ -380,8 +376,6 @@
                             <option value="ar">العربية</option>
                             <option value="fr">الفرنسية</option>
                             <option value="ur">الأردية</option>
-                            <option value="es">الإسبانية</option>
-                            <option value="de">الألمانية</option>
                         </select>
                     </div>
                 </div>
@@ -392,6 +386,7 @@
                     <button id="speak-translation" class="speak-btn">
                         <i class="fas fa-volume-up"></i> نطق الترجمة
                     </button>
+                    <div class="translation-status" id="translation-status"></div>
                 </div>
             </div>
         </div>
@@ -448,4 +443,4 @@
 
     <script src="script.js"></script>
 </body>
-</html>
+                        </html>
