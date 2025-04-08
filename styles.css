@@ -1,4 +1,4 @@
-/* الأ��اسيات المحدثة */
+/* الأساسيات المحدثة */
 :root {
     --primary-color: #2563eb;
     --secondary-color: #1d4ed8;
@@ -1049,6 +1049,14 @@ body {
     background-color: #4f46e5;
 }
 
+.translation-status {
+    width: 100%;
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--primary-color);
+    margin-top: 0.5rem;
+}
+
 /* نافذة التفسير */
 .tafsir-tabs {
     display: flex;
@@ -1266,4 +1274,4 @@ body {
     .chat-messages {
         max-height: 60vh;
     }
-    }
+}
