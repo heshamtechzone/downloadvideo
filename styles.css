@@ -1,16 +1,27 @@
+/* CSS Reset */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* المتغيرات */
 :root {
     --primary-color: #1E5B5A;
     --secondary-color: #D5E8E4;
     --accent-color: #2D7D7A;
-    --text-color: #333;
+    --text-color: #333333;
     --light-color: #f5f5f5;
     --bg-color: #f8f4e8;
-    --card-color: white;
-    --border-color: #eee;
+    --card-color: #ffffff;
+    --border-color: #eeeeee;
     --input-bg: #f9f9f9;
     --shadow-color: rgba(0, 0, 0, 0.1);
+    --error-color: #e74c3c;
+    --success-color: #2ecc71;
 }
 
+/* الوضع الداكن */
 [data-theme="dark"] {
     --primary-color: #2D7D7A;
     --secondary-color: #1E3B38;
@@ -19,44 +30,554 @@
     --light-color: #121212;
     --bg-color: #121212;
     --card-color: #1e1e1e;
-    --border-color: #333;
+    --border-color: #333333;
     --input-bg: #2a2a2a;
     --shadow-color: rgba(0, 0, 0, 0.3);
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Tajawal', sans-serif;
-    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-}
-
+/* العناصر الأساسية */
 body {
+    font-family: 'Tajawal', 'Segoe UI', sans-serif;
     background-color: var(--bg-color);
-    background-image: url('https://www.transparenttextures.com/patterns/arabesque.png');
     color: var(--text-color);
-    line-height: 1.8;
+    line-height: 1.6;
+    min-height: 100vh;
+    transition: background-color 0.3s, color 0.3s;
 }
 
-/* أنماط الصفحات والمكونات */
+/* صفحة المصادقة */
 .auth-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    padding: 20px;
-    background-color: rgba(0, 0, 0, 0.5);
+    padding: 1rem;
+    background-color: rgba(0, 0, 0, 0.03);
 }
 
-.container {
-    max-width: 100%;
-    margin: 0 auto;
-    padding: 0;
+.auth-tabs {
     display: flex;
+    width: 100%;
+    max-width: 400px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.auth-tab {
+    flex: 1;
+    padding: 1rem;
+    text-align: center;
+    background-color: var(--card-color);
+    border: 1px solid var(--border-color);
+    border-bottom: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.auth-tab:first-child {
+    border-top-left-radius: 8px;
+}
+
+.auth-tab:last-child {
+    border-top-right-radius: 8px;
+}
+
+.auth-tab.active {
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--primary-color);
+    font-weight: 700;
+}
+
+.auth-box {
+    background-color: var(--card-color);
+    padding: 2rem;
+    border-radius: 0 8px 8px 8px;
+    box-shadow: 0 4px 6px var(--shadow-color);
+    width: 100%;
+    max-width: 400px;
+    border: 1px solid var(--border-color);
+    border-top: none;
+}
+
+.auth-title {
+    font-size: 1.75rem;
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.auth-logo {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.5rem;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+}
+
+.auth-logo img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.auth-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 25px;
+    font-size: 1rem;
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.auth-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(30, 91, 90, 0.2);
+}
+
+.auth-button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.auth-button:hover {
+    background-color: var(--accent-color);
+    transform: translateY(-2px);
+}
+
+.auth-button:active {
+    transform: translateY(0);
+}
+
+.auth-footer {
+    text-align: center;
+    margin-top: 1.5rem;
+    color: var(--text-color);
+    opacity: 0.8;
+    font-size: 0.9rem;
+}
+
+.auth-link {
+    color: var(--primary-color);
+    cursor: pointer;
+    text-decoration: underline;
+    font-weight: 500;
+}
+
+/* صفحة الدردشة الرئيسية */
+.container {
+    display: none;
     flex-direction: column;
     height: 100vh;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-/* باقي الأنماط... */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.25rem;
+    background-color: var(--card-color);
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 2px 4px var(--shadow-color);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    background-color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.logo img {
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    object-fit: cover;
+}
+
+h1 {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+}
+
+.header-buttons {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.settings-btn, .theme-btn {
+    background: none;
+    border: none;
+    font-size: 1.3rem;
+    color: var(--primary-color);
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s;
+}
+
+.settings-btn:hover, .theme-btn:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.chat-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bg-color);
+    overflow: hidden;
+}
+
+.chat-messages {
+    flex: 1;
+    padding: 1.25rem;
+    overflow-y: auto;
+    background-color: var(--bg-color);
+}
+
+.message {
+    margin-bottom: 1.25rem;
+    display: flex;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.message-ai {
+    flex-direction: row;
+}
+
+.message-user {
+    flex-direction: row-reverse;
+}
+
+.avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background-color: var(--secondary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 0.75rem;
+    color: var(--primary-color);
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.message-content {
+    max-width: calc(100% - 100px);
+    padding: 0.75rem 1.25rem;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    word-wrap: break-word;
+}
+
+.ai-content {
+    background-color: var(--card-color);
+    border: 1px solid var(--border-color);
+    border-bottom-right-radius: 5px;
+    color: var(--text-color);
+    box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+.user-content {
+    background-color: var(--primary-color);
+    color: white;
+    border-bottom-left-radius: 5px;
+    box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+.chat-input-container {
+    display: flex;
+    padding: 1rem;
+    border-top: 1px solid var(--border-color);
+    background-color: var(--card-color);
+    position: sticky;
+    bottom: 0;
+    gap: 0.5rem;
+}
+
+#user-input {
+    flex: 1;
+    padding: 0.75rem 1.25rem;
+    border: 1px solid var(--border-color);
+    border-radius: 25px;
+    outline: none;
+    font-size: 1.05rem;
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    transition: all 0.3s;
+}
+
+#user-input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(30, 91, 90, 0.1);
+}
+
+.input-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.voice-btn, #send-button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    transition: all 0.3s;
+    flex-shrink: 0;
+}
+
+.voice-btn:hover, #send-button:hover {
+    background-color: var(--accent-color);
+    transform: translateY(-2px);
+}
+
+.voice-btn:active, #send-button:active {
+    transform: translateY(0);
+}
+
+.typing-indicator {
+    display: none;
+    padding: 0.75rem 1.125rem;
+    background-color: var(--card-color);
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    width: fit-content;
+    margin-right: 3.375rem;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 5px var(--shadow-color);
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.typing-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    margin: 0 3px;
+    animation: typingAnimation 1.4s infinite ease-in-out;
+}
+
+.typing-dot:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.typing-dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.typing-dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes typingAnimation {
+    0%, 60%, 100% {
+        transform: translateY(0);
+    }
+    30% {
+        transform: translateY(-5px);
+    }
+}
+
+/* نافذة الإعدادات */
+.settings-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.settings-box {
+    background-color: var(--card-color);
+    width: 90%;
+    max-width: 500px;
+    border-radius: 15px;
+    padding: 1.5rem;
+    box-shadow: 0 5px 15px var(--shadow-color);
+    border: 1px solid var(--border-color);
+}
+
+.settings-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.25rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1rem;
+}
+
+.settings-title {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+}
+
+.close-settings {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--text-color);
+    opacity: 0.7;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.close-settings:hover {
+    opacity: 1;
+}
+
+.social-links {
+    margin-top: 1.5rem;
+}
+
+.social-link {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.625rem;
+    background-color: var(--input-bg);
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--text-color);
+    transition: all 0.3s;
+}
+
+.social-link:hover {
+    background-color: var(--secondary-color);
+    transform: translateX(-5px);
+}
+
+.social-icon {
+    font-size: 1.5rem;
+    margin-left: 0.625rem;
+    color: var(--primary-color);
+}
+
+.social-text {
+    font-size: 1.1rem;
+}
+
+/* التكيف مع الشاشات الصغيرة */
+@media (max-width: 768px) {
+    .auth-box {
+        padding: 1.25rem;
+    }
+    
+    .message-content {
+        max-width: calc(100% - 70px);
+        font-size: 1rem;
+        padding: 0.75rem 1rem;
+    }
+    
+    .settings-box {
+        width: 95%;
+        padding: 1rem;
+    }
+    
+    .chat-messages, .chat-input-container {
+        padding-left: 0.625rem;
+        padding-right: 0.625rem;
+    }
+    
+    .chat-input-container {
+        gap: 0.3rem;
+    }
+    
+    .voice-btn, #send-button {
+        width: 45px;
+        height: 45px;
+        font-size: 1.1rem;
+    }
+}
+
+/* تحسينات إضافية */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--input-bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-color);
+}
+
+/* الرسائل المتحركة */
+@keyframes messageIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.message {
+    animation: messageIn 0.3s ease-out forwards;
+}
