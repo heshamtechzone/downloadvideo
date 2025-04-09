@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>H.Ai - المساعد الإسلامي الذكي</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -15,6 +16,7 @@
             <div class="auth-tab" id="register-tab">تسجيل حساب</div>
         </div>
         
+        <!-- نموذج تسجيل الدخول -->
         <div class="auth-box" id="login-box">
             <div class="auth-logo">
                 <img src="https://cdn-icons-png.flaticon.com/512/4712/4712139.png" alt="H.Ai Logo">
@@ -28,6 +30,7 @@
             </div>
         </div>
         
+        <!-- نموذج تسجيل الحساب -->
         <div class="auth-box" id="register-box" style="display: none;">
             <div class="auth-logo">
                 <img src="https://cdn-icons-png.flaticon.com/512/4712/4712139.png" alt="H.Ai Logo">
@@ -45,8 +48,8 @@
         </div>
     </div>
     
-    <!-- صفحة الدردشة -->
-    <div class="container" id="main-container" style="display: none;">
+    <!-- صفحة الدردشة الرئيسية -->
+    <div class="container" id="main-container">
         <header>
             <div class="header-left">
                 <div class="logo">
@@ -66,7 +69,7 @@
         
         <div class="chat-container">
             <div class="chat-messages" id="chat-messages">
-                <!-- الرسائل تظهر هنا -->
+                <!-- الرسائل ستظهر هنا ديناميكيًا -->
             </div>
             
             <div class="typing-indicator" id="typing-indicator">
@@ -104,10 +107,12 @@
                     <i class="fab fa-youtube social-icon"></i>
                     <span class="social-text">قناة اليوتيوب</span>
                 </a>
+                
                 <a href="https://t.me/Hesham_Tech_Zone" class="social-link" target="_blank">
                     <i class="fab fa-telegram social-icon"></i>
                     <span class="social-text">قناة التليجرام</span>
                 </a>
+                
                 <a href="https://heshamtechzone.github.io/Hisham-Al-Mutawwar-/" class="social-link" target="_blank">
                     <i class="fas fa-globe social-icon"></i>
                     <span class="social-text">موقع الويب</span>
