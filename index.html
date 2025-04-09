@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>H.Ai - المساعد الإسلامي الذكي</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-color: #1E5B5A;
@@ -47,7 +48,6 @@
             line-height: 1.8;
         }
         
-        /* صفحة تسجيل الدخول */
         .auth-container {
             display: flex;
             flex-direction: column;
@@ -170,7 +170,6 @@
             text-decoration: underline;
         }
         
-        /* صفحة الدردشة الرئيسية */
         .container {
             max-width: 100%;
             margin: 0 auto;
@@ -421,7 +420,6 @@
             }
         }
         
-        /* نافذة الإعدادات */
         .settings-overlay {
             position: fixed;
             top: 0;
@@ -535,10 +533,38 @@
                 font-size: 1.1rem;
             }
         }
+
+        .error-message {
+            color: #e74c3c;
+            text-align: center;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+
+        .success-message {
+            color: #2ecc71;
+            text-align: center;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+
+        .api-key-input {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .api-key-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: var(--primary-color);
+        }
     </style>
 </head>
 <body>
-    <!-- صفحة المصادقة (تسجيل دخول/تسجيل حساب) -->
+    <!-- صفحة المصادقة -->
     <div class="auth-container" id="auth-container">
         <div class="auth-tabs">
             <div class="auth-tab active" id="login-tab">تسجيل الدخول</div>
@@ -552,8 +578,14 @@
             </div>
             <h2 class="auth-title">تسجيل الدخول</h2>
             <input type="text" class="auth-input" id="login-username" placeholder="اسم المستخدم">
-            <input type="password" class="auth-input" id="login-password" placeholder="كلمة المرور">
+            <div class="api-key-input">
+                <input type="password" class="auth-input" id="login-password" placeholder="كلمة المرور">
+                <span class="api-key-toggle" id="toggle-password">
+                    <i class="fas fa-eye"></i>
+                </span>
+            </div>
             <button class="auth-button" id="login-btn">دخول</button>
+            <div id="login-error" class="error-message"></div>
             <div class="auth-footer">
                 ليس لديك حساب؟ <span class="auth-link" id="show-register">سجل الآن</span>
             </div>
@@ -568,9 +600,21 @@
             <input type="text" class="auth-input" id="register-name" placeholder="الاسم الكامل">
             <input type="text" class="auth-input" id="register-username" placeholder="اسم المستخدم">
             <input type="email" class="auth-input" id="register-email" placeholder="البريد الإلكتروني">
-            <input type="password" class="auth-input" id="register-password" placeholder="كلمة المرور">
-            <input type="password" class="auth-input" id="register-confirm-password" placeholder="تأكيد كلمة المرور">
+            <div class="api-key-input">
+                <input type="password" class="auth-input" id="register-password" placeholder="كلمة المرور">
+                <span class="api-key-toggle" id="toggle-register-password">
+                    <i class="fas fa-eye"></i>
+                </span>
+            </div>
+            <div class="api-key-input">
+                <input type="password" class="auth-input" id="register-confirm-password" placeholder="تأكيد كلمة المرور">
+                <span class="api-key-toggle" id="toggle-confirm-password">
+                    <i class="fas fa-eye"></i>
+                </span>
+            </div>
             <button class="auth-button" id="register-btn">تسجيل</button>
+            <div id="register-error" class="error-message"></div>
+            <div id="register-success" class="success-message"></div>
             <div class="auth-footer">
                 لديك حساب بالفعل؟ <span class="auth-link" id="show-login">سجل دخول</span>
             </div>
@@ -658,399 +702,12 @@
     </div>
 
     <script>
-        const API_KEY = 'AIzaSyChJ6xacAytY92-g-O2laC9V15MOo_EIuw';
-        const authContainer = document.getElementById('auth-container');
-        const mainContainer = document.getElementById('main-container');
-        const loginBox = document.getElementById('login-box');
-        const registerBox = document.getElementById('register-box');
-        const loginTab = document.getElementById('login-tab');
-        const registerTab = document.getElementById('register-tab');
-        const showRegister = document.getElementById('show-register');
-        const showLogin = document.getElementById('show-login');
-        const loginBtn = document.getElementById('login-btn');
-        const registerBtn = document.getElementById('register-btn');
-        const chatMessages = document.getElementById('chat-messages');
-        const userInput = document.getElementById('user-input');
-        const sendButton = document.getElementById('send-button');
-        const voiceBtn = document.getElementById('voice-btn');
-        const typingIndicator = document.getElementById('typing-indicator');
-        const settingsBtn = document.getElementById('settings-btn');
-        const settingsOverlay = document.getElementById('settings-overlay');
-        const closeSettings = document.getElementById('close-settings');
-        const themeBtn = document.getElementById('theme-btn');
-        const themeIcon = document.getElementById('theme-icon');
-        
-        // تعريف متغير للتعرف على الكلام
-        let recognition;
-        let isListening = false;
-        
-        // تحميل الرسائل السابقة من localStorage
-        let messages = JSON.parse(localStorage.getItem('h-ai-messages')) || [
-            {
-                role: "ai",
-                content: "السلام عليكم ورحمة الله وبركاته\n\nأنا H.Ai، مساعدك الذكي الذي يقدم معلومات مفيدة وموثوقة وفقًا للمنهج الإسلامي الصحيح.\n\nكيف يمكنني مساعدتك اليوم؟"
-            }
-        ];
-        
-        // إدارة الوضع الداكن
-        function initTheme() {
-            const savedTheme = localStorage.getItem('h-ai-theme');
-            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            
-            if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
-                document.documentElement.setAttribute('data-theme', 'dark');
-                themeIcon.classList.remove('fa-moon');
-                themeIcon.classList.add('fa-sun');
-            } else {
-                document.documentElement.setAttribute('data-theme', 'light');
-                themeIcon.classList.remove('fa-sun');
-                themeIcon.classList.add('fa-moon');
-            }
-        }
-        
-        function toggleTheme() {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            if (currentTheme === 'dark') {
-                document.documentElement.setAttribute('data-theme', 'light');
-                localStorage.setItem('h-ai-theme', 'light');
-                themeIcon.classList.remove('fa-sun');
-                themeIcon.classList.add('fa-moon');
-            } else {
-                document.documentElement.setAttribute('data-theme', 'dark');
-                localStorage.setItem('h-ai-theme', 'dark');
-                themeIcon.classList.remove('fa-moon');
-                themeIcon.classList.add('fa-sun');
-            }
-        }
-        
-        // عرض الرسائل
-        function renderMessages() {
-            chatMessages.innerHTML = '';
-            messages.forEach(message => {
-                const messageDiv = document.createElement('div');
-                messageDiv.className = `message message-${message.role}`;
-                
-                const avatarDiv = document.createElement('div');
-                avatarDiv.className = 'avatar';
-                avatarDiv.textContent = message.role === 'ai' ? 'H' : 'أنت';
-                
-                const contentDiv = document.createElement('div');
-                contentDiv.className = `message-content ${message.role}-content`;
-                
-                // الحفاظ على فواصل الأسطر في النص
-                const contentWithBreaks = message.content.replace(/\n/g, '<br>');
-                contentDiv.innerHTML = contentWithBreaks;
-                
-                messageDiv.appendChild(avatarDiv);
-                messageDiv.appendChild(contentDiv);
-                chatMessages.appendChild(messageDiv);
-            });
-            
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-        
-        // تهيئة التعرف على الكلام
-        function initSpeechRecognition() {
-            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            
-            if (SpeechRecognition) {
-                recognition = new SpeechRecognition();
-                recognition.lang = 'ar-SA';
-                recognition.interimResults = false;
-                
-                recognition.onstart = () => {
-                    isListening = true;
-                    voiceBtn.innerHTML = '<i class="fas fa-microphone-slash"></i>';
-                    voiceBtn.style.backgroundColor = '#e74c3c';
-                };
-                
-                recognition.onend = () => {
-                    isListening = false;
-                    voiceBtn.innerHTML = '<i class="fas fa-microphone"></i>';
-                    voiceBtn.style.backgroundColor = '';
-                };
-                
-                recognition.onresult = (event) => {
-                    const transcript = event.results[0][0].transcript;
-                    userInput.value = transcript;
-                    sendMessage();
-                };
-                
-                recognition.onerror = (event) => {
-                    console.error('Speech recognition error', event.error);
-                    messages.push({
-                        role: "ai",
-                        content: "حدث خطأ في التعرف على الصوت. يرجى المحاولة مرة أخرى أو استخدام الكتابة."
-                    });
-                    renderMessages();
-                };
-            } else {
-                voiceBtn.style.display = 'none';
-                console.warn('Speech recognition not supported in this browser');
-            }
-        }
-        
-        // تبديل حالة الاستماع للصوت
-        function toggleSpeechRecognition() {
-            if (!recognition) {
-                messages.push({
-                    role: "ai",
-                    content: "المتصفح لا يدعم ميزة التعرف على الصوت. يرجى استخدام متصفح حديث مثل Chrome."
-                });
-                renderMessages();
-                return;
-            }
-            
-            if (isListening) {
-                recognition.stop();
-            } else {
-                try {
-                    recognition.start();
-                } catch (error) {
-                    console.error('Error starting speech recognition:', error);
-                }
-            }
-        }
-        
-        // إرسال الرسالة
-        async function sendMessage() {
-            const userMessage = userInput.value.trim();
-            if (!userMessage) return;
-            
-            // إضافة رسالة المستخدم إلى المحادثة
-            messages.push({
-                role: "user",
-                content: userMessage
-            });
-            localStorage.setItem('h-ai-messages', JSON.stringify(messages));
-            renderMessages();
-            userInput.value = '';
-            
-            // عرض مؤشر الكتابة
-            typingIndicator.style.display = 'block';
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-            
-            try {
-                // تحضير النص مع السياق الإسلامي
-                let prompt = `أنت مساعد ذكي إسلامي يسمى H.Ai. يجب أن تلتزم بالآداب الإسلامية في الردود.
-عند السؤال عن الدين: "أنا ذكاء اصطناعي، ولكني أفضل دين الإسلام".
-يجب أن تكون الإجابات متوافقة مع منهج السلف الصالح.
-المحادثة الحالية:\n`;
-                
-                messages.forEach(msg => {
-                    prompt += `${msg.role === 'user' ? 'المستخدم' : 'H.Ai'}: ${msg.content}\n`;
-                });
-                
-                prompt += `الرد المناسب الآن هو:`;
-                
-                // استدعاء API مع URL محدث
-                const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=${API_KEY}`;
-                
-                const response = await fetch(API_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        contents: [{
-                            parts: [{
-                                text: prompt
-                            }]
-                        }],
-                        safetySettings: [
-                            {
-                                "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
-                                "threshold": "BLOCK_ONLY_HIGH"
-                            }
-                        ],
-                        generationConfig: {
-                            "temperature": 0.7,
-                            "topP": 0.9,
-                            "topK": 40,
-                            "maxOutputTokens": 2048
-                        }
-                    })
-                });
-                
-                if (!response.ok) {
-                    throw new Error(`خطأ في الخادم (${response.status}): ${response.statusText}`);
-                }
-                
-                const data = await response.json();
-                
-                // معالجة الاستجابة
-                let aiResponse = "عذرًا، لم أتمكن من معالجة طلبك";
-                if (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts) {
-                    aiResponse = data.candidates[0].content.parts[0].text;
-                } else if (data.error) {
-                    aiResponse = `خطأ في API: ${data.error.message}`;
-                } else if (data.message) {
-                    aiResponse = `خطأ: ${data.message}`;
-                }
-                
-                // إضافة رد الذكاء الاصطناعي إلى المحادثة
-                messages.push({
-                    role: "ai",
-                    content: aiResponse
-                });
-                localStorage.setItem('h-ai-messages', JSON.stringify(messages));
-                
-            } catch (error) {
-                console.error('Error:', error);
-                messages.push({
-                    role: "ai",
-                    content: `حدث خطأ تقني. يرجى التأكد من:
-1- اتصال الإنترنت يعمل
-2- مفتاح API صحيح
-3- المحاولة لاحقًا
-الخطأ التفصيلي: ${error.message}`
-                });
-                localStorage.setItem('h-ai-messages', JSON.stringify(messages));
-            } finally {
-                typingIndicator.style.display = 'none';
-                renderMessages();
-            }
-        }
-        
-        // تبديل بين تسجيل الدخول وتسجيل الحساب
-        showRegister.addEventListener('click', () => {
-            loginBox.style.display = 'none';
-            registerBox.style.display = 'block';
-            loginTab.classList.remove('active');
-            registerTab.classList.add('active');
+        // الكود JavaScript سيتم تحميله من ملف منفصل
+        document.addEventListener('DOMContentLoaded', function() {
+            const script = document.createElement('script');
+            script.src = 'app.js?' + new Date().getTime();
+            document.body.appendChild(script);
         });
-        
-        showLogin.addEventListener('click', () => {
-            registerBox.style.display = 'none';
-            loginBox.style.display = 'block';
-            registerTab.classList.remove('active');
-            loginTab.classList.add('active');
-        });
-        
-        loginTab.addEventListener('click', () => {
-            registerBox.style.display = 'none';
-            loginBox.style.display = 'block';
-            registerTab.classList.remove('active');
-            loginTab.classList.add('active');
-        });
-        
-        registerTab.addEventListener('click', () => {
-            loginBox.style.display = 'none';
-            registerBox.style.display = 'block';
-            loginTab.classList.remove('active');
-            registerTab.classList.add('active');
-        });
-        
-        // تسجيل الدخول
-        loginBtn.addEventListener('click', () => {
-            const username = document.getElementById('login-username').value.trim();
-            const password = document.getElementById('login-password').value.trim();
-            
-            if (username && password) {
-                // هنا يمكنك إضافة التحقق من اسم المستخدم وكلمة المرور
-                authContainer.style.display = 'none';
-                mainContainer.style.display = 'flex';
-                
-                // تهيئة التعرف على الصوت بعد تسجيل الدخول
-                initSpeechRecognition();
-                
-                // عرض الرسائل
-                renderMessages();
-            } else {
-                alert('الرجاء إدخال اسم المستخدم وكلمة المرور');
-            }
-        });
-        
-        // تسجيل حساب جديد
-        registerBtn.addEventListener('click', () => {
-            const name = document.getElementById('register-name').value.trim();
-            const username = document.getElementById('register-username').value.trim();
-            const email = document.getElementById('register-email').value.trim();
-            const password = document.getElementById('register-password').value.trim();
-            const confirmPassword = document.getElementById('register-confirm-password').value.trim();
-            
-            if (!name || !username || !email || !password || !confirmPassword) {
-                alert('الرجاء ملء جميع الحقول');
-                return;
-            }
-            
-            if (password !== confirmPassword) {
-                alert('كلمة المرور وتأكيدها غير متطابقين');
-                return;
-            }
-            
-            // هنا يمكنك إضافة إرسال البيانات إلى الخادم
-            alert('تم تسجيل الحساب بنجاح! يمكنك الآن تسجيل الدخول');
-            
-            // الانتقال إلى صفحة تسجيل الدخول
-            registerBox.style.display = 'none';
-            loginBox.style.display = 'block';
-            registerTab.classList.remove('active');
-            loginTab.classList.add('active');
-            
-            // تعبئة بيانات تسجيل الدخول تلقائياً
-            document.getElementById('login-username').value = username;
-            document.getElementById('login-password').value = password;
-        });
-        
-        // السماح بتسجيل الدخول بالضغط على Enter
-        document.getElementById('login-password').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                loginBtn.click();
-            }
-        });
-        
-        // السماح بتسجيل الحساب بالضغط على Enter
-        document.getElementById('register-confirm-password').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                registerBtn.click();
-            }
-        });
-        
-        // إرسال الرسالة بالضغط على Enter
-        userInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                sendMessage();
-            }
-        });
-        
-        // إرسال الرسالة بالضغط على الزر
-        sendButton.addEventListener('click', sendMessage);
-        
-        // تفعيل/إي��اف الميكروفون
-        voiceBtn.addEventListener('click', toggleSpeechRecognition);
-        
-        // فتح إغلاق الإعدادات
-        settingsBtn.addEventListener('click', () => {
-            settingsOverlay.style.display = 'flex';
-        });
-        
-        closeSettings.addEventListener('click', () => {
-            settingsOverlay.style.display = 'none';
-        });
-        
-        // إغلاق الإعدادات بالنقر خارج الصندوق
-        settingsOverlay.addEventListener('click', (e) => {
-            if (e.target === settingsOverlay) {
-                settingsOverlay.style.display = 'none';
-            }
-        });
-        
-        // تبديل الوضع الداكن
-        themeBtn.addEventListener('click', toggleTheme);
-        
-        // مسح سجل المحادثة بعد 24 ساعة
-        setInterval(() => {
-            localStorage.removeItem('h-ai-messages');
-            messages = [{
-                role: "ai",
-                content: "السلام عليكم ورحمة الله وبركاته\n\nأنا H.Ai، مساعدك الذكي الذي يقدم معلومات مفيدة وموثوقة وفقًا للمنهج الإسلامي الصحيح.\n\nكيف يمكنني مساعدتك اليوم؟"
-            }];
-            renderMessages();
-        }, 24 * 60 * 60 * 1000);
-        
-        // تهيئة الوضع الداكن عند التحميل
-        initTheme();
     </script>
 </body>
-    </html>
+</html>
