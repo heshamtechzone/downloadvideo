@@ -3,444 +3,1054 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>H.Ai - الذكاء الاصطناعي الإسلامي الشامل</title>
+    <title>H.Ai - المساعد الإسلامي الذكي</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/4712/4712035.png" type="image/png">
+    <style>
+        :root {
+            --primary-color: #1E5B5A;
+            --secondary-color: #D5E8E4;
+            --accent-color: #2D7D7A;
+            --text-color: #333;
+            --light-color: #f5f5f5;
+            --bg-color: #f8f4e8;
+            --card-color: white;
+            --border-color: #eee;
+            --input-bg: #f9f9f9;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #2D7D7A;
+            --secondary-color: #1E3B38;
+            --accent-color: #3A9B7B;
+            --text-color: #f0f0f0;
+            --light-color: #121212;
+            --bg-color: #121212;
+            --card-color: #1e1e1e;
+            --border-color: #333;
+            --input-bg: #2a2a2a;
+            --shadow-color: rgba(0, 0, 0, 0.3);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            background-image: url('https://www.transparenttextures.com/patterns/arabesque.png');
+            color: var(--text-color);
+            line-height: 1.8;
+        }
+        
+        /* صفحة تسجيل الدخول */
+        .auth-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        
+        .auth-tabs {
+            display: flex;
+            width: 100%;
+            max-width: 400px;
+            margin-bottom: -1px;
+        }
+        
+        .auth-tab {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+            background-color: var(--card-color);
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: all 0.3s;
+            color: var(--text-color);
+        }
+        
+        .auth-tab:first-child {
+            border-radius: 10px 0 0 0;
+        }
+        
+        .auth-tab:last-child {
+            border-radius: 0 10px 0 0;
+        }
+        
+        .auth-tab.active {
+            background-color: var(--card-color);
+            border-bottom: 1px solid var(--card-color);
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        .auth-box {
+            background-color: var(--card-color);
+            padding: 30px;
+            border-radius: 0 10px 10px 10px;
+            box-shadow: 0 5px 15px var(--shadow-color);
+            width: 100%;
+            max-width: 400px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .auth-title {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .auth-logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        .auth-logo img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .auth-input {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 25px;
+            font-size: 1rem;
+            outline: none;
+            background-color: var(--input-bg);
+            color: var(--text-color);
+        }
+        
+        .auth-button {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+        
+        .auth-button:hover {
+            background-color: var(--accent-color);
+        }
+        
+        .auth-footer {
+            text-align: center;
+            margin-top: 20px;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+        
+        .auth-link {
+            color: var(--primary-color);
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        
+        /* صفحة الدردشة الرئيسية */
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            display: none;
+        }
+        
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+            background-color: var(--card-color);
+            box-shadow: 0 2px 10px var(--shadow-color);
+            position: relative;
+            z-index: 10;
+        }
+        
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background-color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 15px;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .logo img {
+            width: 100%;
+            height: 100%;
+            border-radius: 12px;
+            object-fit: cover;
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+        }
+        
+        .header-buttons {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .settings-btn, .theme-btn {
+            background: none;
+            border: none;
+            font-size: 1.3rem;
+            color: var(--primary-color);
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+        
+        .settings-btn:hover, .theme-btn:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+        
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--bg-color);
+            overflow: hidden;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background-color: var(--bg-color);
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        .message {
+            margin-bottom: 20px;
+            display: flex;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .message-ai {
+            flex-direction: row;
+        }
+        
+        .message-user {
+            flex-direction: row-reverse;
+        }
+        
+        .avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background-color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 12px;
+            color: var(--primary-color);
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .message-content {
+            max-width: calc(100% - 100px);
+            padding: 15px 20px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+        
+        .ai-content {
+            background-color: var(--card-color);
+            border: 1px solid var(--border-color);
+            border-bottom-right-radius: 5px;
+            color: var(--text-color);
+            box-shadow: 0 2px 10px var(--shadow-color);
+        }
+        
+        .user-content {
+            background-color: var(--primary-color);
+            color: white;
+            border-bottom-left-radius: 5px;
+            box-shadow: 0 2px 10px var(--shadow-color);
+        }
+        
+        .chat-input-container {
+            display: flex;
+            padding: 15px;
+            border-top: 1px solid var(--border-color);
+            background-color: var(--card-color);
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            gap: 10px;
+        }
+        
+        #user-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 25px;
+            outline: none;
+            font-size: 1.05rem;
+            background-color: var(--input-bg);
+            color: var(--text-color);
+            transition: all 0.3s;
+        }
+        
+        #user-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(30, 91, 90, 0.1);
+        }
+        
+        .input-buttons {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .voice-btn, #send-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            flex-shrink: 0;
+        }
+        
+        .voice-btn:hover, #send-button:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+        
+        .typing-indicator {
+            display: none;
+            padding: 12px 18px;
+            background-color: var(--card-color);
+            border-radius: 12px;
+            margin-bottom: 15px;
+            width: fit-content;
+            margin-right: 54px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 5px var(--shadow-color);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .typing-dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            margin: 0 3px;
+            animation: typingAnimation 1.4s infinite ease-in-out;
+        }
+        
+        .typing-dot:nth-child(1) {
+            animation-delay: 0s;
+        }
+        
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        @keyframes typingAnimation {
+            0%, 60%, 100% {
+                transform: translateY(0);
+            }
+            30% {
+                transform: translateY(-5px);
+            }
+        }
+        
+        /* نافذة الإعدادات */
+        .settings-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .settings-box {
+            background-color: var(--card-color);
+            width: 90%;
+            max-width: 500px;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px var(--shadow-color);
+            border: 1px solid var(--border-color);
+        }
+        
+        .settings-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+        }
+        
+        .settings-title {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+        
+        .close-settings {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-color);
+            opacity: 0.7;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+        
+        .close-settings:hover {
+            opacity: 1;
+        }
+        
+        .social-links {
+            margin-top: 25px;
+        }
+        
+        .social-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            background-color: var(--input-bg);
+            border-radius: 10px;
+            text-decoration: none;
+            color: var(--text-color);
+            transition: all 0.3s;
+        }
+        
+        .social-link:hover {
+            background-color: var(--secondary-color);
+            transform: translateX(-5px);
+        }
+        
+        .social-icon {
+            font-size: 1.5rem;
+            margin-left: 10px;
+            color: var(--primary-color);
+        }
+        
+        .social-text {
+            font-size: 1.1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .auth-box {
+                padding: 20px;
+            }
+            
+            .message-content {
+                max-width: calc(100% - 70px);
+                font-size: 1rem;
+                padding: 12px 16px;
+            }
+            
+            .settings-box {
+                width: 95%;
+                padding: 15px;
+            }
+            
+            .chat-messages, .chat-input-container {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+            
+            .chat-input-container {
+                gap: 5px;
+            }
+            
+            .voice-btn, #send-button {
+                width: 45px;
+                height: 45px;
+                font-size: 1.1rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <!-- شريط التنقل المحدث -->
-        <nav class="navbar">
-            <div class="nav-container">
+    <!-- صفحة المصادقة (تسجيل دخول/تسجيل حساب) -->
+    <div class="auth-container" id="auth-container">
+        <div class="auth-tabs">
+            <div class="auth-tab active" id="login-tab">تسجيل الدخول</div>
+            <div class="auth-tab" id="register-tab">تسجيل حساب</div>
+        </div>
+        
+        <!-- نموذج تسجيل الدخول -->
+        <div class="auth-box" id="login-box">
+            <div class="auth-logo">
+                <img src="https://cdn-icons-png.flaticon.com/512/4712/4712139.png" alt="H.Ai Logo">
+            </div>
+            <h2 class="auth-title">تسجيل الدخول</h2>
+            <input type="text" class="auth-input" id="login-username" placeholder="اسم المستخدم">
+            <input type="password" class="auth-input" id="login-password" placeholder="كلمة المرور">
+            <button class="auth-button" id="login-btn">دخول</button>
+            <div class="auth-footer">
+                ليس لديك حساب؟ <span class="auth-link" id="show-register">سجل الآن</span>
+            </div>
+        </div>
+        
+        <!-- نموذج تسجيل الحساب -->
+        <div class="auth-box" id="register-box" style="display: none;">
+            <div class="auth-logo">
+                <img src="https://cdn-icons-png.flaticon.com/512/4712/4712139.png" alt="H.Ai Logo">
+            </div>
+            <h2 class="auth-title">تسجيل حساب جديد</h2>
+            <input type="text" class="auth-input" id="register-name" placeholder="الاسم الكامل">
+            <input type="text" class="auth-input" id="register-username" placeholder="اسم المستخدم">
+            <input type="email" class="auth-input" id="register-email" placeholder="البريد الإلكتروني">
+            <input type="password" class="auth-input" id="register-password" placeholder="كلمة المرور">
+            <input type="password" class="auth-input" id="register-confirm-password" placeholder="تأكيد كلمة المرور">
+            <button class="auth-button" id="register-btn">تسجيل</button>
+            <div class="auth-footer">
+                لديك حساب بالفعل؟ <span class="auth-link" id="show-login">سجل دخول</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- صفحة الدردشة الرئيسية -->
+    <div class="container" id="main-container">
+        <header>
+            <div class="header-left">
                 <div class="logo">
-                    <img src="https://cdn-icons-png.flaticon.com/512/4712/4712035.png" alt="H.Ai Logo">
-                    <span>H.Ai</span>
+                    <img src="https://cdn-icons-png.flaticon.com/512/4712/4712139.png" alt="H.Ai Logo">
                 </div>
-                <ul class="nav-links">
-                    <li><a href="#" id="chat-link" class="active"><i class="fas fa-comments"></i> <span>الدردشة</span></a></li>
-                    <li><a href="#" id="quran-link"><i class="fas fa-book-quran"></i> <span>القرآن</span></a></li>
-                    <li><a href="#" id="science-link"><i class="fas fa-flask"></i> <span>العلوم</span></a></li>
-                    <li><a href="#" id="settings-link"><i class="fas fa-cog"></i> <span>الإعدادات</span></a></li>
-                </ul>
-                <div class="auth-buttons" id="auth-buttons">
-                    <button id="login-btn">تسجيل الدخول</button>
-                    <button id="register-btn">إنشاء حساب</button>
-                </div>
-                <div class="user-profile" id="user-profile" style="display: none;">
-                    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="صورة المستخدم">
-                    <span id="username-display"></span>
-                    <button id="logout-btn">تسجيل الخروج</button>
-                </div>
-                <div class="mobile-menu-btn" id="mobile-menu-btn">
-                    <i class="fas fa-bars"></i>
-                </div>
+                <h1>H.Ai</h1>
             </div>
-        </nav>
-
-        <!-- محتوى الدردشة المحدث -->
-        <div class="content active" id="chat-content">
-            <div class="chat-container">
-                <div class="chat-header">
-                    <div class="ai-info">
-                        <img src="https://cdn-icons-png.flaticon.com/512/4712/4712035.png" alt="H.Ai Avatar">
-                        <h3>H.Ai المساعد الإسلامي الشامل</h3>
-                    </div>
-                    <div class="chat-actions">
-                        <button id="new-chat-btn"><i class="fas fa-plus"></i> <span>جديد</span></button>
-                        <button id="translate-btn"><i class="fas fa-language"></i> <span>ترجمة</span></button>
-                        <button id="reminders-btn"><i class="fas fa-bell"></i> <span>تذكيرات</span></button>
-                    </div>
-                </div>
-                <div class="chat-messages" id="chat-messages">
-                    <div class="message ai-message">
-                        <img src="https://cdn-icons-png.flaticon.com/512/4712/4712035.png" alt="H.Ai Avatar">
-                        <div class="message-content">
-                            <p>السلام عليكم ورحمة الله وبركاته، أنا H.Ai المساعد الإسلامي الشامل. يمكنني:</p>
-                            <ul class="suggestions-list">
-                                <li>تلاوة وتفسير أي آية من القرآن الكريم</li>
-                                <li>الرد على أسئلتك الشرعية وفق منهج السلف</li>
-                                <li>حل مسائل علمية في مختلف التخصصات</li>
-                                <li>تفسير آيات القرآن بتفاسير متعددة</li>
-                                <li>الترجمة بين العربية والإنجليزية</li>
-                                <li>تذكيرك بأوقات الصلاة والأذكار</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="chat-input-container">
-                    <div class="chat-input">
-                        <textarea id="user-input" placeholder="اكتب سؤالك هنا..." rows="1"></textarea>
-                        <button id="send-btn" class="send-button">
-                            <i class="fas fa-paper-plane"></i>
-                        </button>
-                    </div>
-                    <div class="input-hint">
-                        <span>مثال: اقرأ سورة الفاتحة، ما معنى آية الكرسي؟، كيف أصلي؟، ما هي قوانين نيوتن؟</span>
+            <div class="header-buttons">
+                <button class="theme-btn" id="theme-btn">
+                    <i class="fas fa-moon" id="theme-icon"></i>
+                </button>
+                <button class="settings-btn" id="settings-btn">
+                    <i class="fas fa-cog"></i>
+                </button>
+            </div>
+        </header>
+        
+        <div class="chat-container">
+            <div class="chat-messages" id="chat-messages">
+                <div class="message message-ai">
+                    <div class="avatar">H</div>
+                    <div class="message-content ai-content">
+                        السلام عليكم ورحمة الله وبركاته<br><br>
+                        أنا H.Ai، مساعدك الذكي الذي يقدم معلومات مفيدة وموثوقة وفقًا للمنهج الإسلامي الصحيح.<br><br>
+                        كيف يمكنني مساعدتك اليوم؟
                     </div>
                 </div>
             </div>
-        </div>
-
-        <!-- محتوى القرآن الكريم -->
-        <div class="content" id="quran-content">
-            <div class="quran-container">
-                <div class="quran-header">
-                    <h2><i class="fas fa-book-quran"></i> القرآن الكريم</h2>
-                    <div class="quran-controls">
-                        <div class="search-container">
-                            <input type="text" id="quran-search" placeholder="ابحث في القرآن...">
-                            <button id="search-btn"><i class="fas fa-search"></i></button>
-                        </div>
-                        <select id="surah-select">
-                            <option value="">اختر سورة</option>
-                            <!-- سيتم ملؤها بالجافاسكربت -->
-                        </select>
-                        <select id="reciter-select">
-                            <option value="ar.alafasy">العفاسي</option>
-                            <option value="ar.abdulbasit">عبد الباسط</option>
-                            <option value="ar.husary">الحصري</option>
-                            <option value="ar.minshawi">المنشاوي</option>
-                        </select>
-                        <button id="play-surah"><i class="fas fa-play"></i> استماع</button>
-                    </div>
-                </div>
-                <div class="quran-viewer" id="quran-viewer">
-                    <div class="surah-info" id="surah-info">
-                        <h3 id="surah-name"></h3>
-                        <div class="surah-meta">
-                            <span id="surah-type"></span>
-                            <span id="surah-ayahs"></span>
-                            <span id="surah-page"></span>
-                        </div>
-                        <div class="surah-actions">
-                            <button id="tafsir-btn"><i class="fas fa-book-open"></i> تفسير السورة</button>
-                            <button id="bookmark-btn"><i class="fas fa-bookmark"></i> حفظ الموضع</button>
-                        </div>
-                    </div>
-                    <div class="ayahs-container" id="ayahs-container">
-                        <!-- سيتم ملؤها بالجافاسكربت -->
-                    </div>
-                </div>
+            
+            <div class="typing-indicator" id="typing-indicator">
+                <span class="typing-dot"></span>
+                <span class="typing-dot"></span>
+                <span class="typing-dot"></span>
             </div>
-        </div>
-
-        <!-- محتوى العلوم -->
-        <div class="content" id="science-content">
-            <div class="science-container">
-                <h2><i class="fas fa-flask"></i> العلوم الجامعية</h2>
-                
-                <div class="science-categories">
-                    <div class="category-card" data-category="medicine">
-                        <div class="category-icon">
-                            <i class="fas fa-briefcase-medical"></i>
-                        </div>
-                        <h3>الطب البشري</h3>
-                        <p>تشريح، فيزيولوجيا، صيدلة، أمراض</p>
-                    </div>
-                    
-                    <div class="category-card" data-category="engineering">
-                        <div class="category-icon">
-                            <i class="fas fa-cogs"></i>
-                        </div>
-                        <h3>الهندسة</h3>
-                        <p>مدني، ميكانيكية، كهربائية، حاسوب</p>
-                    </div>
-                    
-                    <div class="category-card" data-category="computer">
-                        <div class="category-icon">
-                            <i class="fas fa-laptop-code"></i>
-                        </div>
-                        <h3>علوم الحاسب</h3>
-                        <p>برمجة، ذكاء اصطناعي، قواعد بيانات</p>
-                    </div>
-                    
-                    <div class="category-card" data-category="business">
-                        <div class="category-icon">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
-                        <h3>إدارة الأعمال</h3>
-                        <p>محاسبة، تسويق، اقتصاد، تمويل</p>
-                    </div>
-                    
-                    <div class="category-card" data-category="law">
-                        <div class="category-icon">
-                            <i class="fas fa-gavel"></i>
-                        </div>
-                        <h3>القانون</h3>
-                        <p>جنائي، مدني، تجاري، دولي</p>
-                    </div>
-                    
-                    <div class="category-card" data-category="education">
-                        <div class="category-icon">
-                            <i class="fas fa-graduation-cap"></i>
-                        </div>
-                        <h3>التربية</h3>
-                        <p>مناهج، طرق تدريس، علم نفس تربوي</p>
-                    </div>
-                    
-                    <div class="category-card" data-category="physics">
-                        <div class="category-icon">
-                            <i class="fas fa-atom"></i>
-                        </div>
-                        <h3>الفيزياء</h3>
-                        <p>ميكانيكا، كهرومغناطيسية، فيزياء حديثة</p>
-                    </div>
-                    
-                    <div class="category-card" data-category="chemistry">
-                        <div class="category-icon">
-                            <i class="fas fa-flask"></i>
-                        </div>
-                        <h3>الكيمياء</h3>
-                        <p>عضوية، غير عضوية، تحليلية، فيزيائية</p>
-                    </div>
-                </div>
-                
-                <div class="science-topics" id="science-topics">
-                    <!-- سيتم ملؤها بالجافاسكربت -->
-                </div>
-            </div>
-        </div>
-
-        <!-- محتوى الإعدادات المحدث -->
-        <div class="content" id="settings-content">
-            <div class="settings-container">
-                <h2><i class="fas fa-cog"></i> الإعدادات</h2>
-                
-                <div class="settings-section">
-                    <h3><i class="fas fa-user-cog"></i> إعدادات الحساب</h3>
-                    <div class="setting-item">
-                        <label>اسم المستخدم</label>
-                        <input type="text" id="username-input" placeholder="اسم المستخدم">
-                    </div>
-                    <div class="setting-item">
-                        <label>البريد الإلكتروني</label>
-                        <input type="email" id="email-input" placeholder="البريد الإلكتروني">
-                    </div>
-                    <div class="setting-item">
-                        <label>كلمة المرور</label>
-                        <input type="password" id="password-input" placeholder="كلمة المرور الجديدة">
-                    </div>
-                    <button id="save-settings" class="save-btn">حفظ التغييرات</button>
-                </div>
-                
-                <div class="settings-section">
-                    <h3><i class="fas fa-robot"></i> إعدادات الذكاء الاصطناعي</h3>
-                    <div class="setting-item">
-                        <label for="ai-style">أسلوب الرد:</label>
-                        <select id="ai-style">
-                            <option value="islamic">إسلامي سلفي</option>
-                            <option value="detailed">مفصل وشامل</option>
-                            <option value="simple">بسيط ومختصر</option>
-                            <option value="scientific">أكاديمي علمي</option>
-                            <option value="colloquial">عامي مبسط</option>
-                        </select>
-                    </div>
-                    <div class="setting-item">
-                        <label for="ai-avatar">شكل المساعد:</label>
-                        <select id="ai-avatar">
-                            <option value="1">عالم دين</option>
-                            <option value="2">عالم علوم</option>
-                            <option value="3">طبيب</option>
-                            <option value="4">مهندس</option>
-                            <option value="5">معلم</option>
-                        </select>
-                    </div>
-                    <div class="setting-item">
-                        <label for="theme">السمة:</label>
-                        <select id="theme">
-                            <option value="default">افتراضي (أزرق)</option>
-                            <option value="green">إسلامي (أخضر)</option>
-                            <option value="purple">علمي (بنفسجي)</option>
-                            <option value="dark">ليلي (داكن)</option>
-                        </select>
-                    </div>
-                </div>
-                
-                <div class="settings-section">
-                    <h3><i class="fas fa-pray"></i> الإعدادات الدينية</h3>
-                    <div class="setting-item">
-                        <label for="prayer-method">طريقة حساب الصلاة:</label>
-                        <select id="prayer-method">
-                            <option value="egypt">مصر</option>
-                            <option value="saudi">السعودية</option>
-                            <option value="kuwait">الكويت</option>
-                            <option value="qatar">قطر</option>
-                        </select>
-                    </div>
-                    <div class="setting-item">
-                        <label for="hijri-date">التاريخ الهجري:</label>
-                        <select id="hijri-date">
-                            <option value="umalqura">أم القرى</option>
-                            <option value="isna">الجمعية الإسلامية لأمريكا الشمالية</option>
-                        </select>
-                    </div>
-                    <div class="setting-item">
-                        <label for="reminder-time">وقت التذكيرات:</label>
-                        <input type="time" id="reminder-time" value="07:00">
-                    </div>
-                </div>
-                
-                <div class="settings-section">
-                    <h3><i class="fas fa-share-alt"></i> روابط التواصل</h3>
-                    <div class="social-links">
-                        <a href="https://youtube.com/@heshamtechzone?si=OHZ6A8ml9q6ZwE6c" target="_blank" class="social-link">
-                            <i class="fab fa-youtube"></i> يوتيوب
-                        </a>
-                        <a href="https://t.me/Hesham_Tech_Zone" target="_blank" class="social-link">
-                            <i class="fab fa-telegram"></i> تلجرام
-                        </a>
-                        <a href="https://heshamtechzone.github.io/Hisham-Al-Mutawwar-/#home" target="_blank" class="social-link">
-                            <i class="fas fa-globe"></i> موقع الويب
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- نوافذ منبثقة -->
-        <div class="modal" id="login-modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2><i class="fas fa-sign-in-alt"></i> تسجيل الدخول</h2>
-                    <span class="close-btn">&times;</span>
-                </div>
-                <form id="login-form">
-                    <div class="form-group">
-                        <label for="login-username">اسم المستخدم</label>
-                        <input type="text" id="login-username" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="login-password">كلمة المرور</label>
-                        <input type="password" id="login-password" required>
-                    </div>
-                    <button type="submit" class="submit-btn">تسجيل الدخول</button>
-                    <p class="form-footer">ليس لديك حساب؟ <a href="#" id="show-register">إنشاء حساب</a></p>
-                </form>
-            </div>
-        </div>
-
-        <div class="modal" id="register-modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2><i class="fas fa-user-plus"></i> إنشاء حساب</h2>
-                    <span class="close-btn">&times;</span>
-                </div>
-                <form id="register-form">
-                    <div class="form-group">
-                        <label for="register-username">اسم المستخدم</label>
-                        <input type="text" id="register-username" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="register-email">البريد الإلكتروني</label>
-                        <input type="email" id="register-email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="register-password">كلمة المرور</label>
-                        <input type="password" id="register-password" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="register-confirm-password">تأكيد كلمة المرور</label>
-                        <input type="password" id="register-confirm-password" required>
-                    </div>
-                    <button type="submit" class="submit-btn">إنشاء حساب</button>
-                    <p class="form-footer">لديك حساب بالفعل؟ <a href="#" id="show-login">تسجيل الدخول</a></p>
-                </form>
-            </div>
-        </div>
-
-        <div class="modal" id="translate-modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2><i class="fas fa-language"></i> ترجمة النص</h2>
-                    <span class="close-btn">&times;</span>
-                </div>
-                <div class="translate-container">
-                    <div class="translate-box">
-                        <textarea id="translate-input" placeholder="النص المطلوب ترجمته"></textarea>
-                        <select id="translate-from">
-                            <option value="ar">العربية</option>
-                            <option value="en">الإنجليزية</option>
-                            <option value="fr">الفرنسية</option>
-                            <option value="ur">الأردية</option>
-                        </select>
-                    </div>
-                    <button id="do-translate" class="translate-btn">
-                        <i class="fas fa-exchange-alt"></i> ترجمة
+            
+            <div class="chat-input-container">
+                <div class="input-buttons">
+                    <button class="voice-btn" id="voice-btn">
+                        <i class="fas fa-microphone"></i>
                     </button>
-                    <div class="translate-box">
-                        <textarea id="translate-output" placeholder="النص المترجم" readonly></textarea>
-                        <select id="translate-to">
-                            <option value="en">الإنجليزية</option>
-                            <option value="ar">العربية</option>
-                            <option value="fr">الفرنسية</option>
-                            <option value="ur">الأردية</option>
-                        </select>
-                    </div>
                 </div>
-                <div class="translate-actions">
-                    <button id="copy-translation" class="copy-btn">
-                        <i class="fas fa-copy"></i> نسخ الترجمة
-                    </button>
-                    <button id="speak-translation" class="speak-btn">
-                        <i class="fas fa-volume-up"></i> نطق الترجمة
-                    </button>
-                    <div class="translation-status" id="translation-status"></div>
-                </div>
+                <input type="text" id="user-input" placeholder="اكتب رسالتك هنا..." autocomplete="off">
+                <button id="send-button">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
             </div>
         </div>
-
-        <div class="modal" id="reminders-modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2><i class="fas fa-bell"></i> التذكيرات الدينية</h2>
-                    <span class="close-btn">&times;</span>
-                </div>
-                <div class="reminders-list">
-                    <div class="reminder-item">
-                        <h3><i class="fas fa-sun"></i> أذكار الصباح</h3>
-                        <p>أصبحنا وأصبح الملك لله، والحمد لله، لا إله إلا الله وحده لا شريك له...</p>
-                        <button class="set-reminder" data-time="07:00">تعيين تذكير</button>
-                    </div>
-                    <div class="reminder-item">
-                        <h3><i class="fas fa-moon"></i> أذكار المساء</h3>
-                        <p>أمسينا وأمسى الملك لله، والحمد لله، لا إله إلا الله وحده لا شريك له...</p>
-                        <button class="set-reminder" data-time="18:00">تعيين تذكير</button>
-                    </div>
-                    <div class="reminder-item">
-                        <h3><i class="fas fa-bed"></i> أذكار النوم</h3>
-                        <p>باسمك اللهم أموت وأحيا، إذا أوى أحدكم إلى فراشه فلينفض فراشه...</p>
-                        <button class="set-reminder" data-time="22:00">تعيين تذكير</button>
-                    </div>
-                    <div class="reminder-item">
-                        <h3><i class="fas fa-pray"></i> أذكار بعد الصلاة</h3>
-                        <p>أستغفر الله (3 مرات)، اللهم أنت السلام ومنك السلام تباركت يا ذا الجلال والإكرام...</p>
-                        <button class="set-reminder" data-time="adaptive">تعيين تذكير بعد الصلوات</button>
-                    </div>
-                </div>
+    </div>
+    
+    <!-- نافذة الإعدادات -->
+    <div class="settings-overlay" id="settings-overlay">
+        <div class="settings-box">
+            <div class="settings-header">
+                <h2 class="settings-title">الإعدادات</h2>
+                <button class="close-settings" id="close-settings">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
-        </div>
-
-        <div class="modal" id="tafsir-modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 id="tafsir-title"><i class="fas fa-book-open"></i> تفسير الآية</h2>
-                    <span class="close-btn">&times;</span>
-                </div>
-                <div class="tafsir-tabs">
-                    <button class="tafsir-tab active" data-tafsir="tabari">تفسير الطبري</button>
-                    <button class="tafsir-tab" data-tafsir="ibn-kathir">تفسير ابن كثير</button>
-                    <button class="tafsir-tab" data-tafsir="qurtubi">تفسير القرطبي</button>
-                    <button class="tafsir-tab" data-tafsir="saadi">تفسير السعدي</button>
-                </div>
-                <div class="tafsir-content" id="tafsir-content">
-                    <!-- سيتم ملؤها بالجافاسكربت -->
-                </div>
+            
+            <div class="social-links">
+                <a href="https://youtube.com/@heshamtechzone?si=BnISbOFKHI7a-07m" class="social-link" target="_blank">
+                    <i class="fab fa-youtube social-icon"></i>
+                    <span class="social-text">قناة اليوتيوب</span>
+                </a>
+                
+                <a href="https://t.me/Hesham_Tech_Zone" class="social-link" target="_blank">
+                    <i class="fab fa-telegram social-icon"></i>
+                    <span class="social-text">قناة التليجرام</span>
+                </a>
+                
+                <a href="https://heshamtechzone.github.io/Hisham-Al-Mutawwar-/" class="social-link" target="_blank">
+                    <i class="fas fa-globe social-icon"></i>
+                    <span class="social-text">موقع الويب</span>
+                </a>
             </div>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        const API_KEY = 'AIzaSyChJ6xacAytY92-g-O2laC9V15MOo_EIuw';
+        const authContainer = document.getElementById('auth-container');
+        const mainContainer = document.getElementById('main-container');
+        const loginBox = document.getElementById('login-box');
+        const registerBox = document.getElementById('register-box');
+        const loginTab = document.getElementById('login-tab');
+        const registerTab = document.getElementById('register-tab');
+        const showRegister = document.getElementById('show-register');
+        const showLogin = document.getElementById('show-login');
+        const loginBtn = document.getElementById('login-btn');
+        const registerBtn = document.getElementById('register-btn');
+        const chatMessages = document.getElementById('chat-messages');
+        const userInput = document.getElementById('user-input');
+        const sendButton = document.getElementById('send-button');
+        const voiceBtn = document.getElementById('voice-btn');
+        const typingIndicator = document.getElementById('typing-indicator');
+        const settingsBtn = document.getElementById('settings-btn');
+        const settingsOverlay = document.getElementById('settings-overlay');
+        const closeSettings = document.getElementById('close-settings');
+        const themeBtn = document.getElementById('theme-btn');
+        const themeIcon = document.getElementById('theme-icon');
+        
+        // تعريف متغير للتعرف على الكلام
+        let recognition;
+        let isListening = false;
+        
+        // تحميل الرسائل السابقة من localStorage
+        let messages = JSON.parse(localStorage.getItem('h-ai-messages')) || [
+            {
+                role: "ai",
+                content: "السلام عليكم ورحمة الله وبركاته\n\nأنا H.Ai، مساعدك الذكي الذي يقدم معلومات مفيدة وموثوقة وفقًا للمنهج الإسلامي الصحيح.\n\nكيف يمكنني مساعدتك اليوم؟"
+            }
+        ];
+        
+        // إدارة الوضع الداكن
+        function initTheme() {
+            const savedTheme = localStorage.getItem('h-ai-theme');
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+        }
+        
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'light');
+                localStorage.setItem('h-ai-theme', 'light');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('h-ai-theme', 'dark');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            }
+        }
+        
+        // عرض الرسائل
+        function renderMessages() {
+            chatMessages.innerHTML = '';
+            messages.forEach(message => {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message message-${message.role}`;
+                
+                const avatarDiv = document.createElement('div');
+                avatarDiv.className = 'avatar';
+                avatarDiv.textContent = message.role === 'ai' ? 'H' : 'أنت';
+                
+                const contentDiv = document.createElement('div');
+                contentDiv.className = `message-content ${message.role}-content`;
+                
+                // الحفاظ على فواصل الأسطر في النص
+                const contentWithBreaks = message.content.replace(/\n/g, '<br>');
+                contentDiv.innerHTML = contentWithBreaks;
+                
+                messageDiv.appendChild(avatarDiv);
+                messageDiv.appendChild(contentDiv);
+                chatMessages.appendChild(messageDiv);
+            });
+            
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        // تهيئة التعرف على الكلام
+        function initSpeechRecognition() {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            
+            if (SpeechRecognition) {
+                recognition = new SpeechRecognition();
+                recognition.lang = 'ar-SA';
+                recognition.interimResults = false;
+                
+                recognition.onstart = () => {
+                    isListening = true;
+                    voiceBtn.innerHTML = '<i class="fas fa-microphone-slash"></i>';
+                    voiceBtn.style.backgroundColor = '#e74c3c';
+                };
+                
+                recognition.onend = () => {
+                    isListening = false;
+                    voiceBtn.innerHTML = '<i class="fas fa-microphone"></i>';
+                    voiceBtn.style.backgroundColor = '';
+                };
+                
+                recognition.onresult = (event) => {
+                    const transcript = event.results[0][0].transcript;
+                    userInput.value = transcript;
+                    sendMessage();
+                };
+                
+                recognition.onerror = (event) => {
+                    console.error('Speech recognition error', event.error);
+                    messages.push({
+                        role: "ai",
+                        content: "حدث خطأ في التعرف على الصوت. يرجى المحاولة مرة أخرى أو استخدام الكتابة."
+                    });
+                    renderMessages();
+                };
+            } else {
+                voiceBtn.style.display = 'none';
+                console.warn('Speech recognition not supported in this browser');
+            }
+        }
+        
+        // تبديل حالة الاستماع للصوت
+        function toggleSpeechRecognition() {
+            if (!recognition) {
+                messages.push({
+                    role: "ai",
+                    content: "المتصفح لا يدعم ميزة التعرف على الصوت. يرجى استخدام متصفح حديث مثل Chrome."
+                });
+                renderMessages();
+                return;
+            }
+            
+            if (isListening) {
+                recognition.stop();
+            } else {
+                try {
+                    recognition.start();
+                } catch (error) {
+                    console.error('Error starting speech recognition:', error);
+                }
+            }
+        }
+        
+        // إرسال الرسالة
+        async function sendMessage() {
+            const userMessage = userInput.value.trim();
+            if (!userMessage) return;
+            
+            // إضافة رسالة المستخدم إلى المحادثة
+            messages.push({
+                role: "user",
+                content: userMessage
+            });
+            localStorage.setItem('h-ai-messages', JSON.stringify(messages));
+            renderMessages();
+            userInput.value = '';
+            
+            // عرض مؤشر الكتابة
+            typingIndicator.style.display = 'block';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+            try {
+                // تحضير النص مع السياق الإسلامي
+                let prompt = `أنت مساعد ذكي إسلامي يسمى H.Ai. يجب أن تلتزم بالآداب الإسلامية في الردود.
+عند السؤال عن الدين: "أنا ذكاء اصطناعي، ولكني أفضل دين الإسلام".
+يجب أن تكون الإجابات متوافقة مع منهج السلف الصالح.
+المحادثة الحالية:\n`;
+                
+                messages.forEach(msg => {
+                    prompt += `${msg.role === 'user' ? 'المستخدم' : 'H.Ai'}: ${msg.content}\n`;
+                });
+                
+                prompt += `الرد المناسب الآن هو:`;
+                
+                // استدعاء API مع URL محدث
+                const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=${API_KEY}`;
+                
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [{
+                                text: prompt
+                            }]
+                        }],
+                        safetySettings: [
+                            {
+                                "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
+                                "threshold": "BLOCK_ONLY_HIGH"
+                            }
+                        ],
+                        generationConfig: {
+                            "temperature": 0.7,
+                            "topP": 0.9,
+                            "topK": 40,
+                            "maxOutputTokens": 2048
+                        }
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`خطأ في الخادم (${response.status}): ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                
+                // معالجة الاستجابة
+                let aiResponse = "عذرًا، لم أتمكن من معالجة طلبك";
+                if (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts) {
+                    aiResponse = data.candidates[0].content.parts[0].text;
+                } else if (data.error) {
+                    aiResponse = `خطأ في API: ${data.error.message}`;
+                } else if (data.message) {
+                    aiResponse = `خطأ: ${data.message}`;
+                }
+                
+                // إضافة رد الذكاء الاصطناعي إلى المحادثة
+                messages.push({
+                    role: "ai",
+                    content: aiResponse
+                });
+                localStorage.setItem('h-ai-messages', JSON.stringify(messages));
+                
+            } catch (error) {
+                console.error('Error:', error);
+                messages.push({
+                    role: "ai",
+                    content: `حدث خطأ تقني. يرجى التأكد من:
+1- اتصال الإنترنت يعمل
+2- مفتاح API صحيح
+3- المحاولة لاحقًا
+الخطأ التفصيلي: ${error.message}`
+                });
+                localStorage.setItem('h-ai-messages', JSON.stringify(messages));
+            } finally {
+                typingIndicator.style.display = 'none';
+                renderMessages();
+            }
+        }
+        
+        // تبديل بين تسجيل الدخول وتسجيل الحساب
+        showRegister.addEventListener('click', () => {
+            loginBox.style.display = 'none';
+            registerBox.style.display = 'block';
+            loginTab.classList.remove('active');
+            registerTab.classList.add('active');
+        });
+        
+        showLogin.addEventListener('click', () => {
+            registerBox.style.display = 'none';
+            loginBox.style.display = 'block';
+            registerTab.classList.remove('active');
+            loginTab.classList.add('active');
+        });
+        
+        loginTab.addEventListener('click', () => {
+            registerBox.style.display = 'none';
+            loginBox.style.display = 'block';
+            registerTab.classList.remove('active');
+            loginTab.classList.add('active');
+        });
+        
+        registerTab.addEventListener('click', () => {
+            loginBox.style.display = 'none';
+            registerBox.style.display = 'block';
+            loginTab.classList.remove('active');
+            registerTab.classList.add('active');
+        });
+        
+        // تسجيل الدخول
+        loginBtn.addEventListener('click', () => {
+            const username = document.getElementById('login-username').value.trim();
+            const password = document.getElementById('login-password').value.trim();
+            
+            if (username && password) {
+                // هنا يمكنك إضافة التحقق من اسم المستخدم وكلمة المرور
+                authContainer.style.display = 'none';
+                mainContainer.style.display = 'flex';
+                
+                // تهيئة التعرف على الصوت بعد تسجيل الدخول
+                initSpeechRecognition();
+                
+                // عرض الرسائل
+                renderMessages();
+            } else {
+                alert('الرجاء إدخال اسم المستخدم وكلمة المرور');
+            }
+        });
+        
+        // تسجيل حساب جديد
+        registerBtn.addEventListener('click', () => {
+            const name = document.getElementById('register-name').value.trim();
+            const username = document.getElementById('register-username').value.trim();
+            const email = document.getElementById('register-email').value.trim();
+            const password = document.getElementById('register-password').value.trim();
+            const confirmPassword = document.getElementById('register-confirm-password').value.trim();
+            
+            if (!name || !username || !email || !password || !confirmPassword) {
+                alert('الرجاء ملء جميع الحقول');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                alert('كلمة المرور وتأكيدها غير متطابقين');
+                return;
+            }
+            
+            // هنا يمكنك إضافة إرسال البيانات إلى الخادم
+            alert('تم تسجيل الحساب بنجاح! يمكنك الآن تسجيل الدخول');
+            
+            // الانتقال إلى صفحة تسجيل الدخول
+            registerBox.style.display = 'none';
+            loginBox.style.display = 'block';
+            registerTab.classList.remove('active');
+            loginTab.classList.add('active');
+            
+            // تعبئة بيانات تسجيل الدخول تلقائياً
+            document.getElementById('login-username').value = username;
+            document.getElementById('login-password').value = password;
+        });
+        
+        // السماح بتسجيل الدخول بالضغط على Enter
+        document.getElementById('login-password').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                loginBtn.click();
+            }
+        });
+        
+        // السماح بتسجيل الحساب بالضغط على Enter
+        document.getElementById('register-confirm-password').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                registerBtn.click();
+            }
+        });
+        
+        // إرسال الرسالة بالضغط على Enter
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+        
+        // إرسال الرسالة بالضغط على الزر
+        sendButton.addEventListener('click', sendMessage);
+        
+        // تفعيل/إي��اف الميكروفون
+        voiceBtn.addEventListener('click', toggleSpeechRecognition);
+        
+        // فتح إغلاق الإعدادات
+        settingsBtn.addEventListener('click', () => {
+            settingsOverlay.style.display = 'flex';
+        });
+        
+        closeSettings.addEventListener('click', () => {
+            settingsOverlay.style.display = 'none';
+        });
+        
+        // إغلاق الإعدادات بالنقر خارج الصندوق
+        settingsOverlay.addEventListener('click', (e) => {
+            if (e.target === settingsOverlay) {
+                settingsOverlay.style.display = 'none';
+            }
+        });
+        
+        // تبديل الوضع الداكن
+        themeBtn.addEventListener('click', toggleTheme);
+        
+        // مسح سجل المحادثة بعد 24 ساعة
+        setInterval(() => {
+            localStorage.removeItem('h-ai-messages');
+            messages = [{
+                role: "ai",
+                content: "السلام عليكم ورحمة الله وبركاته\n\nأنا H.Ai، مساعدك الذكي الذي يقدم معلومات مفيدة وموثوقة وفقًا للمنهج الإسلامي الصحيح.\n\nكيف يمكنني مساعدتك اليوم؟"
+            }];
+            renderMessages();
+        }, 24 * 60 * 60 * 1000);
+        
+        // تهيئة الوضع الداكن عند التحميل
+        initTheme();
+    </script>
 </body>
-                        </html>
+    </html>
