@@ -1,43 +1,39 @@
 require('dotenv').config();
 const express = require('express');
-const axios = require('axios');
 const cors = require('cors');
-const app = express();
+const axios = require('axios');
 
-// Middleware
+const app = express();
+const PORT = process.env.PORT || 3000;
+
 app.use(cors());
 app.use(express.json());
 
-// المسار الآمن للدردشة
-app.post('/api/chat', async (req, res) => {
+app.post('/api/generate', async (req, res) => {
     try {
-        const { message, messages } = req.body;
-        const API_KEY = process.env.GOOGLE_API_KEY; // من ملف .env
+        const { prompt } = req.body;
         
         const response = await axios.post(
-            `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${API_KEY}`,
+            `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${process.env.GEMINI_API_KEY}`,
             {
                 contents: [{
-                    parts: [{ text: message }]
-                }],
-                safetySettings: [
-                    {
-                        category: "HARM_CATEGORY_DANGEROUS_CONTENT",
-                        threshold: "BLOCK_ONLY_HIGH"
-                    }
-                ]
+                    parts: [{ text: prompt }]
+                }]
+            },
+            {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             }
         );
-
-        const aiResponse = response.data.candidates[0].content.parts[0].text;
-        res.json({ response: aiResponse });
+        
+        res.json(response.data);
     } catch (error) {
-        console.error('Error:', error);
-        res.status(500).json({ error: error.message });
+        console.error('Error:', error.response?.data || error.message);
+        res.status(500).json({ error: 'An error occurred while processing your request' });
     }
 });
 
-const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
