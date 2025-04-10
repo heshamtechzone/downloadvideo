@@ -3,55 +3,278 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>H.Ai - المساعد الإسلامي الذكي</title>
+    <title>H.Ai - المساعد الذكي الإسلامي</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --primary-color: #2E7D32;
+            --secondary-color: #1B5E20;
+            --text-color: #333;
+            --bg-color: #f5f5f5;
+            --message-bg: #fff;
+            --ai-message-bg: #E8F5E9;
+            --user-message-bg: #4CAF50;
+            --border-color: #ddd;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #388E3C;
+            --secondary-color: #1B5E20;
+            --text-color: #f5f5f5;
+            --bg-color: #121212;
+            --message-bg: #1e1e1e;
+            --ai-message-bg: #1B3A20;
+            --user-message-bg: #2E7D32;
+            --border-color: #444;
+            --shadow-color: rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+            background-color: var(--message-bg);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .theme-btn, .settings-btn {
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: var(--primary-color);
+            cursor: pointer;
+        }
+
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .message-ai {
+            justify-content: flex-start;
+        }
+
+        .message-user {
+            justify-content: flex-end;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .message-content {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            line-height: 1.6;
+        }
+
+        .ai-content {
+            background-color: var(--ai-message-bg);
+            color: var(--text-color);
+            border-bottom-left-radius: 5px;
+        }
+
+        .user-content {
+            background-color: var(--user-message-bg);
+            color: white;
+            border-bottom-right-radius: 5px;
+        }
+
+        .chat-input-container {
+            display: flex;
+            padding: 15px;
+            background-color: var(--message-bg);
+            border-top: 1px solid var(--border-color);
+        }
+
+        #user-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 25px;
+            outline: none;
+            font-size: 16px;
+            background-color: var(--message-bg);
+            color: var(--text-color);
+        }
+
+        #send-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #send-button:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .typing-indicator {
+            display: none;
+            padding: 10px 20px;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            animation: typingAnimation 1.4s infinite ease-in-out;
+        }
+
+        .typing-dot:nth-child(1) { animation-delay: 0s; }
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typingAnimation {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-5px); }
+        }
+
+        .ayah {
+            color: #2E7D32;
+            font-weight: bold;
+        }
+
+        .hadith-ref {
+            color: #1B5E20;
+            font-style: italic;
+        }
+
+        .settings-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .settings-box {
+            background-color: var(--message-bg);
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .settings-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .close-settings {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .social-links {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text-color);
+        }
+
+        .social-icon {
+            font-size: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .message-content {
+                max-width: 90%;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- صفحة المصادقة -->
-    <div class="auth-container" id="auth-container">
-        <div class="auth-tabs">
-            <div class="auth-tab active" id="login-tab">تسجيل الدخول</div>
-            <div class="auth-tab" id="register-tab">تسجيل حساب</div>
-        </div>
-        
-        <!-- نموذج تسجيل الدخول -->
-        <div class="auth-box" id="login-box">
-            <div class="auth-logo">
-                <img src="https://cdn-icons-png.flaticon.com/512/4712/4712139.png" alt="H.Ai Logo">
-            </div>
-            <h2 class="auth-title">تسجيل الدخول</h2>
-            <input type="text" class="auth-input" id="login-username" placeholder="اسم المستخدم">
-            <input type="password" class="auth-input" id="login-password" placeholder="كلمة المرور">
-            <button class="auth-button" id="login-btn">دخول</button>
-            <div class="auth-footer">
-                ليس لديك حساب؟ <span class="auth-link" id="show-register">سجل الآن</span>
-            </div>
-        </div>
-        
-        <!-- نموذج تسجيل الحساب -->
-        <div class="auth-box" id="register-box" style="display: none;">
-            <div class="auth-logo">
-                <img src="https://cdn-icons-png.flaticon.com/512/4712/4712139.png" alt="H.Ai Logo">
-            </div>
-            <h2 class="auth-title">تسجيل حساب جديد</h2>
-            <input type="text" class="auth-input" id="register-name" placeholder="الاسم الكامل">
-            <input type="text" class="auth-input" id="register-username" placeholder="اسم المستخدم">
-            <input type="email" class="auth-input" id="register-email" placeholder="البريد الإلكتروني">
-            <input type="password" class="auth-input" id="register-password" placeholder="كلمة المرور">
-            <input type="password" class="auth-input" id="register-confirm-password" placeholder="تأكيد كلمة المرور">
-            <button class="auth-button" id="register-btn">تسجيل</button>
-            <div class="auth-footer">
-                لديك حساب بالفعل؟ <span class="auth-link" id="show-login">سجل دخول</span>
-            </div>
-        </div>
-    </div>
-    
-    <!-- صفحة الدردشة الرئيسية -->
     <div class="container" id="main-container">
         <header>
-            <div class="header-left">
+            <div class="logo-container">
                 <div class="logo">
                     <img src="https://cdn-icons-png.flaticon.com/512/4712/4712139.png" alt="H.Ai Logo">
                 </div>
@@ -69,7 +292,14 @@
         
         <div class="chat-container">
             <div class="chat-messages" id="chat-messages">
-                <!-- الرسائل ستظهر هنا ديناميكيًا -->
+                <div class="message message-ai">
+                    <div class="avatar">H</div>
+                    <div class="message-content ai-content">
+                        السلام عليكم ورحمة الله وبركاته<br><br>
+                        أنا H.Ai، مساعدك الذكي الإسلامي الذي يجيب على جميع أسئلتك.<br><br>
+                        يمكنك سؤالي عن أي شيء، سواء كان شرعيًا أو علميًا أو عامًا.
+                    </div>
+                </div>
             </div>
             
             <div class="typing-indicator" id="typing-indicator">
@@ -79,11 +309,6 @@
             </div>
             
             <div class="chat-input-container">
-                <div class="input-buttons">
-                    <button class="voice-btn" id="voice-btn">
-                        <i class="fas fa-microphone"></i>
-                    </button>
-                </div>
                 <input type="text" id="user-input" placeholder="اكتب رسالتك هنا..." autocomplete="off">
                 <button id="send-button">
                     <i class="fas fa-paper-plane"></i>
@@ -92,7 +317,6 @@
         </div>
     </div>
     
-    <!-- نافذة الإعدادات -->
     <div class="settings-overlay" id="settings-overlay">
         <div class="settings-box">
             <div class="settings-header">
@@ -121,6 +345,275 @@
         </div>
     </div>
 
-    <script src="main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // العناصر
+            const chatMessages = document.getElementById('chat-messages');
+            const userInput = document.getElementById('user-input');
+            const sendButton = document.getElementById('send-button');
+            const themeBtn = document.getElementById('theme-btn');
+            const themeIcon = document.getElementById('theme-icon');
+            const settingsBtn = document.getElementById('settings-btn');
+            const settingsOverlay = document.getElementById('settings-overlay');
+            const closeSettings = document.getElementById('close-settings');
+            const typingIndicator = document.getElementById('typing-indicator');
+
+            // المتغيرات
+            const API_ENDPOINT = '/api/chat';
+            let messages = JSON.parse(localStorage.getItem('h-ai-messages')) || [
+                {
+                    role: "ai",
+                    content: "السلام عليكم ورحمة الله وبركاته\n\nأنا H.Ai، مساعدك الذكي الإسلامي الذي يجيب على جميع أسئلتك.\n\nيمكنك سؤالي عن أي شيء، سواء كان شرعيًا أو علميًا أو عامًا."
+                }
+            ];
+
+            // قاعدة المعرفة الإسلامية
+            const islamicKnowledge = {
+                "الله|الرحمن|الرب": {
+                    answer: "الله تعالى هو الإله الحق الذي لا إله إلا هو، له الأسماء الحسنى والصفات العلى، وهو المستحق للعبادة وحده لا شريك له.",
+                    references: [
+                        "قال تعالى: ﴿قُلْ هُوَ اللَّهُ أَحَدٌ﴾ [الإخلاص:1]",
+                        "قال ابن تيمية: 'أصل الدين معرفة الله وإفراده بالعبادة'"
+                    ]
+                },
+                "اين الله|مكان الله": {
+                    answer: "الله تعالى فوق السماوات مستو على عرشه استواء يليق بجلاله، كما قال تعالى: ﴿الرَّحْمَٰنُ عَلَى الْعَرْشِ اسْتَوَى﴾ [طه:5]، وهذا مذهب السلف الصالح.",
+                    references: [
+                        "روى مسلم أن النبي ﷺ سأل الجارية: أ��ن الله؟ قالت: في السماء، فأقرها",
+                        "قال الإمام مالك: 'الاستواء معلوم والكيف مجهول'"
+                    ]
+                }
+            };
+
+            // تهيئة الوضع الداكن
+            function initTheme() {
+                const savedTheme = localStorage.getItem('h-ai-theme');
+                const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                
+                if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    themeIcon.classList.replace('fa-moon', 'fa-sun');
+                }
+            }
+
+            // تبديل الوضع الداكن
+            function toggleTheme() {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                if (currentTheme === 'dark') {
+                    document.documentElement.setAttribute('data-theme', 'light');
+                    localStorage.setItem('h-ai-theme', 'light');
+                    themeIcon.classList.replace('fa-sun', 'fa-moon');
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('h-ai-theme', 'dark');
+                    themeIcon.classList.replace('fa-moon', 'fa-sun');
+                }
+            }
+
+            // عرض الرسائل
+            function renderMessages() {
+                chatMessages.innerHTML = '';
+                messages.forEach(message => {
+                    const messageDiv = document.createElement('div');
+                    messageDiv.className = `message message-${message.role}`;
+                    
+                    const avatarDiv = document.createElement('div');
+                    avatarDiv.className = 'avatar';
+                    avatarDiv.textContent = message.role === 'ai' ? 'H' : 'أنت';
+                    
+                    const contentDiv = document.createElement('div');
+                    contentDiv.className = `message-content ${message.role}-content`;
+                    contentDiv.innerHTML = formatText(message.content);
+                    
+                    messageDiv.appendChild(avatarDiv);
+                    messageDiv.appendChild(contentDiv);
+                    chatMessages.appendChild(messageDiv);
+                });
+                
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            // تنسيق النص
+            function formatText(text) {
+                return text
+                    .replace(/﴿(.*?)﴾/g, '<span class="ayah">$1</span>')
+                    .replace(/(رواه \w+)/g, '<em class="hadith-ref">$1</em>')
+                    .replace(/(قال \w+:)/g, '<strong>$1</strong>')
+                    .replace(/\n/g, '<br>');
+            }
+
+            // إضافة رسالة جديدة
+            function addMessage(role, content) {
+                messages.push({ role, content });
+                localStorage.setItem('h-ai-messages', JSON.stringify(messages));
+                renderMessages();
+            }
+
+            // مؤشر الكتابة
+            function showTyping() {
+                typingIndicator.style.display = 'flex';
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            function hideTyping() {
+                typingIndicator.style.display = 'none';
+            }
+
+            // معالجة الأسئلة العامة
+            function handleGeneralQuestion(question) {
+                const lowerQuestion = question.toLowerCase();
+                
+                // الأسئلة الرياضية
+                if (/^[\d\+\-\*\/\s\.\(\)]+$/.test(question)) {
+                    try {
+                        const result = eval(question.replace(/\s/g, ''));
+                        return `نتيجة ${question} = ${result}`;
+                    } catch {
+                        return "لا يمكن حل هذه العملية الحسابية";
+                    }
+                }
+                
+                // أسئلة عامة أخرى
+                const generalAnswers = {
+                    "اسمك|شسمك|مين انت": "أنا H.Ai، المساعد الذكي الإسلامي",
+                    "الوقت|الساعة|الساعه كام": `الساعة الآن: ${new Date().toLocaleTimeString('ar-EG')}`,
+                    "التاريخ|تاريخ|ايه التاريخ": `اليوم: ${new Date().toLocaleDateString('ar-EG', {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})}`,
+                    "hello|hi|مرحبا|اهلا": "مرحباً بك! كيف يمكنني مساعدتك؟",
+                    "شكرا|متشكر|thanks": "العفو! تفضل بطرح أي سؤال آخر"
+                };
+                
+                for (const [keywords, answer] of Object.entries(generalAnswers)) {
+                    const regex = new RegExp(keywords.split('|').join('|'), 'i');
+                    if (regex.test(lowerQuestion)) {
+                        return answer;
+                    }
+                }
+                
+                return null;
+            }
+
+            // البحث في القاعدة الإسلامية
+            function getIslamicAnswer(question) {
+                const lowerQuestion = question.toLowerCase();
+                
+                for (const [keywords, data] of Object.entries(islamicKnowledge)) {
+                    const regex = new RegExp(keywords.split('|').join('|'), 'i');
+                    if (regex.test(lowerQuestion)) {
+                        const randomRef = data.references[Math.floor(Math.random() * data.references.length)];
+                        return `${data.answer}<br><br><em>${randomRef}</em>`;
+                    }
+                }
+                
+                return null;
+            }
+
+            // الحصول على رد من API
+            async function getAIResponse(question) {
+                try {
+                    const response = await fetch(API_ENDPOINT, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            prompt: `أنت مساعد ذكي إسلامي يسمى H.Ai. أجب على السؤال التالي:
+                            ${question}
+                            
+                            التعليمات:
+                            1. إذا كان السؤال شرعيًا أجب وفق منهج السلف الصالح
+                            2. إذا كان السؤال علميًا أو عامًا أجب بإجابة دقيقة
+                            3. إذا كان السؤال شخصيًا أجب بطريقة لطيفة
+                            4. استخدم لغة عربية فصيحة`,
+                            messages: messages
+                        })
+                    });
+
+                    const data = await response.json();
+                    return data.candidates?.[0]?.content?.parts?.[0]?.text || "عذرًا، لا يمكن الإجابة على هذا السؤال الآن";
+                } catch (error) {
+                    console.error('Error:', error);
+                    return "حدث خطأ في الاتصال بالخادم";
+                }
+            }
+
+            // إرسال الرسالة
+            async function sendMessage() {
+                const question = userInput.value.trim();
+                if (!question) return;
+                
+                addMessage('user', question);
+                userInput.value = '';
+                showTyping();
+                
+                try {
+                    // 1. التحقق من الأسئلة العامة
+                    const generalAnswer = handleGeneralQuestion(question);
+                    if (generalAnswer) {
+                        addMessage('ai', generalAnswer);
+                        return;
+                    }
+                    
+                    // 2. البحث في القاعدة الإسلامية
+                    const islamicAnswer = getIslamicAnswer(question);
+                    if (islamicAnswer) {
+                        addMessage('ai', islamicAnswer);
+                        return;
+                    }
+                    
+                    // 3. استخدام API للأسئلة الأخرى
+                    const aiResponse = await getAIResponse(question);
+                    addMessage('ai', aiResponse);
+                    
+                } catch (error) {
+                    console.error('Error:', error);
+                    addMessage('ai', "حدث خطأ في معالجة سؤالك");
+                } finally {
+                    hideTyping();
+                }
+            }
+
+            // إعداد الأحداث
+            function setupEventListeners() {
+                // إرسال الرسالة
+                sendButton.addEventListener('click', sendMessage);
+                userInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') sendMessage();
+                });
+
+                // الوضع الداكن
+                themeBtn.addEventListener('click', toggleTheme);
+
+                // الإعدادات
+                settingsBtn.addEventListener('click', () => {
+                    settingsOverlay.style.display = 'flex';
+                });
+                closeSettings.addEventListener('click', () => {
+                    settingsOverlay.style.display = 'none';
+                });
+                settingsOverlay.addEventListener('click', (e) => {
+                    if (e.target === settingsOverlay) {
+                        settingsOverlay.style.display = 'none';
+                    }
+                });
+            }
+
+            // تهيئة التطبيق
+            function initApp() {
+                initTheme();
+                setupEventListeners();
+                renderMessages();
+                
+                // الكشف التلقائي عن الوضع المظلم
+                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                    const darkMode = e.matches;
+                    document.documentElement.setAttribute('data-theme', darkMode ? 'dark' : 'light');
+                    themeIcon.className = darkMode ? 'fas fa-sun' : 'fas fa-moon';
+                });
+            }
+
+            // بدء التطبيق
+            initApp();
+        });
+    </script>
 </body>
 </html>
