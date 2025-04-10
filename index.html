@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>H.Ai - المساعد الذكي الإسلامي</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/4712/4712035.png">
     <style>
         :root {
             --primary-color: #2E7D32;
@@ -35,7 +35,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Tajawal', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
@@ -47,18 +47,19 @@
         .container {
             display: flex;
             flex-direction: column;
-            height: 100vh;
+            min-height: 100vh;
             max-width: 1200px;
             margin: 0 auto;
+            padding: 20px;
         }
 
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 20px;
+            padding: 10px 0;
             border-bottom: 1px solid var(--border-color);
-            background-color: var(--message-bg);
+            margin-bottom: 20px;
         }
 
         .logo-container {
@@ -72,96 +73,89 @@
             height: 40px;
         }
 
-        .header-buttons {
-            display: flex;
-            gap: 10px;
+        h1 {
+            font-size: 24px;
+            color: var(--primary-color);
         }
 
-        .theme-btn, .settings-btn {
-            background: none;
-            border: none;
+        .theme-toggle {
+            cursor: pointer;
             font-size: 20px;
             color: var(--primary-color);
-            cursor: pointer;
         }
 
         .chat-container {
             flex: 1;
             display: flex;
             flex-direction: column;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
             overflow: hidden;
+            box-shadow: 0 2px 10px var(--shadow-color);
         }
 
         .chat-messages {
             flex: 1;
             padding: 20px;
             overflow-y: auto;
+            background-color: var(--bg-color);
         }
 
         .message {
             margin-bottom: 15px;
             display: flex;
-            gap: 10px;
-        }
-
-        .message-ai {
-            justify-content: flex-start;
-        }
-
-        .message-user {
-            justify-content: flex-end;
-        }
-
-        .avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: var(--primary-color);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
         }
 
         .message-content {
             max-width: 80%;
-            padding: 12px 16px;
+            padding: 10px 15px;
             border-radius: 18px;
-            line-height: 1.6;
+            line-height: 1.5;
         }
 
-        .ai-content {
-            background-color: var(--ai-message-bg);
-            color: var(--text-color);
-            border-bottom-left-radius: 5px;
+        .user-message {
+            justify-content: flex-end;
         }
 
-        .user-content {
+        .user-message .message-content {
             background-color: var(--user-message-bg);
             color: white;
             border-bottom-right-radius: 5px;
         }
 
-        .chat-input-container {
+        .ai-message {
+            justify-content: flex-start;
+        }
+
+        .ai-message .message-content {
+            background-color: var(--ai-message-bg);
+            color: var(--text-color);
+            border-bottom-left-radius: 5px;
+        }
+
+        .input-container {
             display: flex;
             padding: 15px;
             background-color: var(--message-bg);
             border-top: 1px solid var(--border-color);
         }
 
-        #user-input {
+        textarea {
             flex: 1;
             padding: 12px 15px;
             border: 1px solid var(--border-color);
             border-radius: 25px;
+            resize: none;
             outline: none;
             font-size: 16px;
             background-color: var(--message-bg);
             color: var(--text-color);
+            transition: height 0.2s;
+            max-height: 150px;
+            overflow-y: auto;
         }
 
-        #send-button {
+        button {
             background-color: var(--primary-color);
             color: white;
             border: none;
@@ -173,98 +167,34 @@
             transition: background-color 0.3s;
         }
 
-        #send-button:hover {
+        button:hover {
             background-color: var(--secondary-color);
         }
 
-        .typing-indicator {
-            display: none;
-            padding: 10px 20px;
-            justify-content: center;
-            gap: 5px;
-        }
-
-        .typing-dot {
-            width: 8px;
-            height: 8px;
-            background-color: var(--primary-color);
-            border-radius: 50%;
-            animation: typingAnimation 1.4s infinite ease-in-out;
-        }
-
-        .typing-dot:nth-child(1) { animation-delay: 0s; }
-        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
-        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
-
-        @keyframes typingAnimation {
-            0%, 60%, 100% { transform: translateY(0); }
-            30% { transform: translateY(-5px); }
-        }
-
-        .ayah {
-            color: #2E7D32;
-            font-weight: bold;
-        }
-
-        .hadith-ref {
-            color: #1B5E20;
-            font-style: italic;
-        }
-
-        .settings-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0,0,0,0.5);
-            z-index: 100;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .settings-box {
-            background-color: var(--message-bg);
-            padding: 20px;
-            border-radius: 10px;
-            width: 90%;
-            max-width: 500px;
-        }
-
-        .settings-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .close-settings {
-            background: none;
-            border: none;
-            font-size: 20px;
-            cursor: pointer;
-        }
-
-        .social-links {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .social-link {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
+        footer {
+            text-align: center;
+            padding: 15px 0;
+            font-size: 14px;
             color: var(--text-color);
+            margin-top: 20px;
+            border-top: 1px solid var(--border-color);
         }
 
-        .social-icon {
-            font-size: 20px;
+        /* تحسينات للواجهة العربية */
+        textarea {
+            text-align: right;
+            direction: rtl;
+        }
+
+        .message-content {
+            text-align: right;
         }
 
         @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
             .message-content {
                 max-width: 90%;
             }
@@ -272,347 +202,254 @@
     </style>
 </head>
 <body>
-    <div class="container" id="main-container">
+    <div class="container">
         <header>
             <div class="logo-container">
-                <div class="logo">
-                    <img src="https://cdn-icons-png.flaticon.com/512/4712/4712139.png" alt="H.Ai Logo">
-                </div>
+                <img src="https://cdn-icons-png.flaticon.com/512/4712/4712035.png" alt="H.Ai Logo" class="logo">
                 <h1>H.Ai</h1>
             </div>
-            <div class="header-buttons">
-                <button class="theme-btn" id="theme-btn">
-                    <i class="fas fa-moon" id="theme-icon"></i>
-                </button>
-                <button class="settings-btn" id="settings-btn">
-                    <i class="fas fa-cog"></i>
-                </button>
+            <div class="theme-toggle">
+                <i class="fas fa-moon" id="theme-icon"></i>
             </div>
         </header>
-        
+
         <div class="chat-container">
             <div class="chat-messages" id="chat-messages">
-                <div class="message message-ai">
-                    <div class="avatar">H</div>
-                    <div class="message-content ai-content">
-                        السلام عليكم ورحمة الله وبركاته<br><br>
-                        أنا H.Ai، مساعدك الذكي الإسلامي الذي يجيب على جميع أسئلتك.<br><br>
-                        يمكنك سؤالي عن أي شيء، سواء كان شرعيًا أو علميًا أو عامًا.
+                <div class="message ai-message">
+                    <div class="message-content">
+                        <p>السلام عليكم ورحمة الله وبركاته<br><br>أنا H.Ai، مساعدك الذكي الذي يقدم معلومات مفيدة وموثوقة وفقًا للمنهج الإسلامي الصحيح.<br><br>كيف يمكنني مساعدتك اليوم؟</p>
                     </div>
                 </div>
             </div>
-            
-            <div class="typing-indicator" id="typing-indicator">
-                <span class="typing-dot"></span>
-                <span class="typing-dot"></span>
-                <span class="typing-dot"></span>
-            </div>
-            
-            <div class="chat-input-container">
-                <input type="text" id="user-input" placeholder="اكتب رسالتك هنا..." autocomplete="off">
-                <button id="send-button">
-                    <i class="fas fa-paper-plane"></i>
-                </button>
+
+            <div class="input-container">
+                <textarea id="user-input" placeholder="اكتب رسالتك هنا..." rows="1"></textarea>
+                <button id="send-button"><i class="fas fa-paper-plane"></i></button>
             </div>
         </div>
-    </div>
-    
-    <div class="settings-overlay" id="settings-overlay">
-        <div class="settings-box">
-            <div class="settings-header">
-                <h2 class="settings-title">الإعدادات</h2>
-                <button class="close-settings" id="close-settings">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            
-            <div class="social-links">
-                <a href="https://youtube.com/@heshamtechzone" class="social-link" target="_blank">
-                    <i class="fab fa-youtube social-icon"></i>
-                    <span class="social-text">قناة اليوتيوب</span>
-                </a>
-                
-                <a href="https://t.me/Hesham_Tech_Zone" class="social-link" target="_blank">
-                    <i class="fab fa-telegram social-icon"></i>
-                    <span class="social-text">قناة التليجرام</span>
-                </a>
-                
-                <a href="https://heshamtechzone.github.io/Hisham-Al-Mutawwar-/" class="social-link" target="_blank">
-                    <i class="fas fa-globe social-icon"></i>
-                    <span class="social-text">موقع الويب</span>
-                </a>
-            </div>
-        </div>
+
+        <footer>
+            <p>H.Ai - مساعد ذكي يقدم معلومات دقيقة وفق منهج السلف الصالح</p>
+        </footer>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // العناصر
             const chatMessages = document.getElementById('chat-messages');
             const userInput = document.getElementById('user-input');
             const sendButton = document.getElementById('send-button');
-            const themeBtn = document.getElementById('theme-btn');
             const themeIcon = document.getElementById('theme-icon');
-            const settingsBtn = document.getElementById('settings-btn');
-            const settingsOverlay = document.getElementById('settings-overlay');
-            const closeSettings = document.getElementById('close-settings');
-            const typingIndicator = document.getElementById('typing-indicator');
-
-            // المتغيرات
-            const API_ENDPOINT = '/api/chat';
-            let messages = JSON.parse(localStorage.getItem('h-ai-messages')) || [
-                {
-                    role: "ai",
-                    content: "السلام عليكم ورحمة الله وبركاته\n\nأنا H.Ai، مساعدك الذكي الإسلامي الذي يجيب على جميع أسئلتك.\n\nيمكنك سؤالي عن أي شيء، سواء كان شرعيًا أو علميًا أو عامًا."
-                }
-            ];
-
-            // قاعدة المعرفة الإسلامية
-            const islamicKnowledge = {
-                "الله|الرحمن|الرب": {
-                    answer: "الله تعالى هو الإله الحق الذي لا إله إلا هو، له الأسماء الحسنى والصفات العلى، وهو المستحق للعبادة وحده لا شريك له.",
+            
+            // قاعدة المعرفة العقائدية السلفية المحسنة
+            const salafiKnowledgeBase = {
+                "اين الله": {
+                    answer: "الله تعالى فوق السماوات السبع على عرشه استواء يليق بجلاله، كما قال تعالى: ﴿الرَّحْمَٰنُ عَلَى الْعَرْشِ اسْتَوَى﴾ [طه:5]، وقال النبي ﷺ للجارية: 'أين الله؟' قالت: 'في السماء' فقال: 'اعتقها فإنها مؤمنة' (رواه مسلم).",
                     references: [
-                        "قال تعالى: ﴿قُلْ هُوَ اللَّهُ أَحَدٌ﴾ [الإخلاص:1]",
-                        "قال ابن تيمية: 'أصل الدين معرفة الله وإفراده بالعبادة'"
+                        "قال الإمام الذهبي: 'هو العلي الأعلى، العالي فوق خلقه، وفوق كل شيء'",
+                        "قال الشيخ ابن باز: 'الله فوق العرش فوق السماوات'",
+                        "قال الشيخ ابن عثيمين: 'استواء الله على عرشه حقيقة وليس مجازاً'"
                     ]
                 },
-                "اين الله|مكان الله": {
-                    answer: "الله تعالى فوق السماوات مستو على عرشه استواء يليق بجلاله، كما قال تعالى: ﴿الرَّحْمَٰنُ عَلَى الْعَرْشِ اسْتَوَى﴾ [طه:5]، وهذا مذهب السلف الصالح.",
+                "هل الله في السماء": {
+                    answer: "نعم، الله تعالى في السماء فوق العرش، قال الإمام مالك: 'الاستواء معلوم، والكيف مجهول، والإيمان به واجب'.",
                     references: [
-                        "روى مسلم أن النبي ﷺ سأل الجارية: أ��ن الله؟ قالت: في السماء، فأقرها",
-                        "قال الإمام مالك: 'الاستواء معلوم والكيف مجهول'"
+                        "قال الإمام ابن تيمية: 'من أنكر أن الله في السماء فهو معطل جهمي'",
+                        "قال الشيخ الألباني: 'القول بأن الله في كل مكان كفر صريح'"
+                    ]
+                },
+                "استواء الله على العرش": {
+                    answer: "استواء الله على عرشه استواء حقيقي يليق بجلاله من غير تكييف ولا تمثيل، قال تعالى: ﴿ثُمَّ اسْتَوَى عَلَى الْعَرْشِ﴾ في سبع آيات من القرآن.",
+                    references: [
+                        "قال الإمام الطحاوي: 'والعرش والكرسي حق، وهو مستغن عن العرش وما دونه'",
+                        "قال الشيخ الفوزان: 'من أنكر استواء الله على عرشه فهو ضال'"
+                    ]
+                },
+                "صفات الله": {
+                    answer: "صفات الله كلها صفات كمال تليق بجلاله من غير تحريف ولا تعطيل ولا تكييف ولا تمثيل، كالاستواء والنزول واليدين والوجه وغيرها.",
+                    references: [
+                        "قال الإمام ابن القيم: 'أهل السنة يثبتون الصفات وينزهون الله عن مشابهة المخلوقات'",
+                        "قال الشيخ صالح آل الشيخ: 'من نفى صفة من الصفات الثابتة بالكتاب والسنة فهو معطل'"
+                    ]
+                },
+                "العقيدة السلفية": {
+                    answer: "العقيدة السلفية هي ما كان عليه النبي ﷺ وأصحابه من إثبات ما أثبته الله لنفسه في كتابه أو على لسان رسوله ﷺ من غير تحريف ولا تعطيل ولا تكييف ولا تمثيل.",
+                    references: [
+                        "قال الإمام أحمد: 'أصول السنة عندنا التمسك بما كان عليه الصحابة'",
+                        "قال الشيخ ابن عثيمين: 'السلفي هو من سار على منهج السلف الصالح'"
+                    ]
+                },
+                "التوسل": {
+                    answer: "التوسل المشروع هو التوسل بأسماء الله وصفاته، أو بعمل صالح من أعمال المتوسل، أو بدعاء المسلم الحي الحاضر. أما التوسل بذوات الصالحين أو جاههم فبدعة لم تثبت عن النبي ﷺ ولا عن الصحابة.",
+                    references: [
+                        "قال الشيخ ابن باز: 'التوسل البدعي مثل التوسل بجاه النبي أو بذاته لا يجوز'",
+                        "قال الشيخ الألباني: 'التوسل أنواع، فمنه الجائز ومنه الممنوع'"
+                    ]
+                },
+                "الشفاعة": {
+                    answer: "الشفاعة أنواع: شفاعة مثبتة يوم القيامة للنبي ﷺ ولغيره من المؤمنين بإذن الله، وشفاعة منفية في الدنيا كالاستشفاع بالأموات والغائبين، قال تعالى: ﴿مَن ذَا الَّذِي يَشْفَعُ عِنْدَهُ إِلاَّ بِإِذْنِهِ﴾ [البقرة:255].",
+                    references: [
+                        "قال ابن تيمية: 'الشفاعة التي نفاها القرآن ما كان يعتقده المشركون من شفاعة الآلهة بغير إذن الله'",
+                        "قال ابن عثيمين: 'شفاعة النبي ﷺ يوم القيامة حق ولكن بشروط'"
                     ]
                 }
             };
 
-            // تهيئة الوضع الداكن
-            function initTheme() {
-                const savedTheme = localStorage.getItem('h-ai-theme');
-                const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                
-                if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
-                    document.documentElement.setAttribute('data-theme', 'dark');
-                    themeIcon.classList.replace('fa-moon', 'fa-sun');
+            // تحسينات الوضع الليلي
+            let darkMode = localStorage.getItem('darkMode') === 'true';
+            updateTheme();
+            
+            themeIcon.addEventListener('click', () => {
+                darkMode = !darkMode;
+                localStorage.setItem('darkMode', darkMode);
+                updateTheme();
+            });
+            
+            function updateTheme() {
+                document.body.setAttribute('data-theme', darkMode ? 'dark' : 'light');
+                themeIcon.className = darkMode ? 'fas fa-sun' : 'fas fa-moon';
+            }
+
+            // تحسينات لواجهة المستخدم
+            userInput.addEventListener('input', function() {
+                this.style.height = 'auto';
+                this.style.height = (this.scrollHeight) + 'px';
+            });
+            
+            userInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage();
                 }
-            }
-
-            // تبديل الوضع الداكن
-            function toggleTheme() {
-                const currentTheme = document.documentElement.getAttribute('data-theme');
-                if (currentTheme === 'dark') {
-                    document.documentElement.setAttribute('data-theme', 'light');
-                    localStorage.setItem('h-ai-theme', 'light');
-                    themeIcon.classList.replace('fa-sun', 'fa-moon');
-                } else {
-                    document.documentElement.setAttribute('data-theme', 'dark');
-                    localStorage.setItem('h-ai-theme', 'dark');
-                    themeIcon.classList.replace('fa-moon', 'fa-sun');
-                }
-            }
-
-            // عرض الرسائل
-            function renderMessages() {
-                chatMessages.innerHTML = '';
-                messages.forEach(message => {
-                    const messageDiv = document.createElement('div');
-                    messageDiv.className = `message message-${message.role}`;
-                    
-                    const avatarDiv = document.createElement('div');
-                    avatarDiv.className = 'avatar';
-                    avatarDiv.textContent = message.role === 'ai' ? 'H' : 'أنت';
-                    
-                    const contentDiv = document.createElement('div');
-                    contentDiv.className = `message-content ${message.role}-content`;
-                    contentDiv.innerHTML = formatText(message.content);
-                    
-                    messageDiv.appendChild(avatarDiv);
-                    messageDiv.appendChild(contentDiv);
-                    chatMessages.appendChild(messageDiv);
-                });
+            });
+            
+            sendButton.addEventListener('click', sendMessage);
+            
+            // دالة محسنة لإضافة الرسائل
+            function addMessage(role, content) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${role}-message`;
                 
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            }
-
-            // تنسيق النص
-            function formatText(text) {
-                return text
+                const contentDiv = document.createElement('div');
+                contentDiv.className = 'message-content';
+                
+                // تحويل النصوص الدينية إلى تنسيق جميل
+                const formattedContent = content
                     .replace(/﴿(.*?)﴾/g, '<span class="ayah">$1</span>')
                     .replace(/(رواه \w+)/g, '<em class="hadith-ref">$1</em>')
                     .replace(/(قال \w+:)/g, '<strong>$1</strong>')
                     .replace(/\n/g, '<br>');
-            }
-
-            // إضافة رسالة جديدة
-            function addMessage(role, content) {
-                messages.push({ role, content });
-                localStorage.setItem('h-ai-messages', JSON.stringify(messages));
-                renderMessages();
-            }
-
-            // مؤشر الكتابة
-            function showTyping() {
-                typingIndicator.style.display = 'flex';
+                
+                contentDiv.innerHTML = formattedContent;
+                messageDiv.appendChild(contentDiv);
+                chatMessages.appendChild(messageDiv);
+                
                 chatMessages.scrollTop = chatMessages.scrollHeight;
             }
 
-            function hideTyping() {
-                typingIndicator.style.display = 'none';
-            }
-
-            // معالجة الأسئلة العامة
-            function handleGeneralQuestion(question) {
+            // دالة محسنة للبحث في القاعدة المعرفية
+            function getSalafiAnswer(question) {
                 const lowerQuestion = question.toLowerCase();
                 
-                // الأسئلة الرياضية
-                if (/^[\d\+\-\*\/\s\.\(\)]+$/.test(question)) {
-                    try {
-                        const result = eval(question.replace(/\s/g, ''));
-                        return `نتيجة ${question} = ${result}`;
-                    } catch {
-                        return "لا يمكن حل هذه العملية الحسابية";
-                    }
-                }
-                
-                // أسئلة عامة أخرى
-                const generalAnswers = {
-                    "اسمك|شسمك|مين انت": "أنا H.Ai، المساعد الذكي الإسلامي",
-                    "الوقت|الساعة|الساعه كام": `الساعة الآن: ${new Date().toLocaleTimeString('ar-EG')}`,
-                    "التاريخ|تاريخ|ايه التاريخ": `اليوم: ${new Date().toLocaleDateString('ar-EG', {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})}`,
-                    "hello|hi|مرحبا|اهلا": "مرحباً بك! كيف يمكنني مساعدتك؟",
-                    "شكرا|متشكر|thanks": "العفو! تفضل بطرح أي سؤال آخر"
-                };
-                
-                for (const [keywords, answer] of Object.entries(generalAnswers)) {
-                    const regex = new RegExp(keywords.split('|').join('|'), 'i');
-                    if (regex.test(lowerQuestion)) {
-                        return answer;
-                    }
-                }
-                
-                return null;
-            }
-
-            // البحث في القاعدة الإسلامية
-            function getIslamicAnswer(question) {
-                const lowerQuestion = question.toLowerCase();
-                
-                for (const [keywords, data] of Object.entries(islamicKnowledge)) {
-                    const regex = new RegExp(keywords.split('|').join('|'), 'i');
-                    if (regex.test(lowerQuestion)) {
+                // البحث المباشر مع تحسينات
+                for (const [key, data] of Object.entries(salafiKnowledgeBase)) {
+                    const keywords = key.split('|');
+                    if (keywords.some(kw => lowerQuestion.includes(kw))) {
                         const randomRef = data.references[Math.floor(Math.random() * data.references.length)];
-                        return `${data.answer}<br><br><em>${randomRef}</em>`;
+                        return `${data.answer}<br><br><em class="scholar-quote">${randomRef}</em>`;
                     }
                 }
                 
-                return null;
+                // إجابات ذكية للأسئلة المشابهة
+                if (lowerQuestion.includes('عقيد') || lowerQuestion.includes('اعتقاد')) {
+                    return salafiKnowledgeBase["العقيدة السلفية"].answer;
+                }
+                
+                if (lowerQuestion.includes('صفة') || lowerQuestion.includes('صفات')) {
+                    return salafiKnowledgeBase["صفات الله"].answer;
+                }
+                
+                // إجابات عامة محسنة
+                const generalAnswers = [
+                    "هذا سؤال مهم، والأولى الرجوع إلى كتب العقيدة السلفية مثل 'شرح الطحاوية' و'العقيدة الواسطية'",
+                    "أسأل الله أن يثبتنا على الحق، ويمكنك مراجعة فتاوى العلماء الموثوقين في هذه المسألة",
+                    "هذا يحتاج إلى تثبت، ومن أفضل ما يُراجع فيه كتب الشيخ ابن عثيمين وابن باز رحمهما الله",
+                    "المرجع في مثل هذه المسائل كتاب الله وسنة رسوله ﷺ بفهم السلف الصالح",
+                    "هذا السؤال له تفصيل في كتب العقيدة، وأنصحك بمراجعة 'مجموع فتاوى الشيخ ابن باز' أو 'فتاوى العقيدة' للشيخ ابن عثيمين"
+                ];
+                
+                return generalAnswers[Math.floor(Math.random() * generalAnswers.length)];
             }
 
-            // الحصول على رد من API
-            async function getAIResponse(question) {
+            // دالة محسنة لإرسال الرسائل
+            async function sendMessage() {
+                const message = userInput.value.trim();
+                if (!message) return;
+                
+                addMessage('user', message);
+                userInput.value = '';
+                userInput.style.height = 'auto';
+                
+                // عرض مؤشر الكتابة
+                const typingIndicator = addMessage('ai', '...');
+                
                 try {
-                    const response = await fetch(API_ENDPOINT, {
+                    // البحث أولاً في القاعدة المعرفية المحلية
+                    const localAnswer = getSalafiAnswer(message);
+                    
+                    // إذا كانت الإجابة من القاعدة المعرفية كافية
+                    if (!localAnswer.includes("هذا سؤال مهم")) {
+                        setTimeout(() => {
+                            typingIndicator.remove();
+                            addMessage('ai', localAnswer);
+                        }, 1000 + Math.random() * 2000);
+                        return;
+                    }
+                    
+                    // إذا لم تكن كافية، نستخدم API مع معالجة إضافية
+                    const response = await fetch('/api/generate', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
                         },
-                        body: JSON.stringify({
-                            prompt: `أنت مساعد ذكي إسلامي يسمى H.Ai. أجب على السؤال التالي:
-                            ${question}
-                            
-                            التعليمات:
-                            1. إذا كان السؤال شرعيًا أجب وفق منهج السلف الصالح
-                            2. إذا كان السؤال علميًا أو عامًا أجب بإجابة دقيقة
-                            3. إذا كان السؤال شخصيًا أجب بطريقة لطيفة
-                            4. استخدم لغة عربية فصيحة`,
-                            messages: messages
+                        body: JSON.stringify({ 
+                            prompt: `أنت مساعد إسلامي يتبع منهج السلف. أجب بلغة عربية فصيحة وفق الأدلة الشرعية. السؤال: ${message}`
                         })
                     });
-
+                    
                     const data = await response.json();
-                    return data.candidates?.[0]?.content?.parts?.[0]?.text || "عذرًا، لا يمكن الإجابة على هذا السؤال الآن";
-                } catch (error) {
-                    console.error('Error:', error);
-                    return "حدث خطأ في الاتصال بالخادم";
-                }
-            }
-
-            // إرسال الرسالة
-            async function sendMessage() {
-                const question = userInput.value.trim();
-                if (!question) return;
-                
-                addMessage('user', question);
-                userInput.value = '';
-                showTyping();
-                
-                try {
-                    // 1. التحقق من الأسئلة العامة
-                    const generalAnswer = handleGeneralQuestion(question);
-                    if (generalAnswer) {
-                        addMessage('ai', generalAnswer);
-                        return;
+                    
+                    // معالجة الإجابة من API
+                    let aiResponse = '';
+                    try {
+                        aiResponse = data.candidates[0].content.parts[0].text;
+                        
+                        // تحسين الإجابة إذا كانت عامة
+                        if (message.includes('اين الله') || message.includes('مكان الله')) {
+                            aiResponse = salafiKnowledgeBase["اين الله"].answer;
+                        }
+                    } catch (e) {
+                        aiResponse = localAnswer;
                     }
                     
-                    // 2. البحث في القاعدة الإسلامية
-                    const islamicAnswer = getIslamicAnswer(question);
-                    if (islamicAnswer) {
-                        addMessage('ai', islamicAnswer);
-                        return;
-                    }
-                    
-                    // 3. استخدام API للأسئلة الأخرى
-                    const aiResponse = await getAIResponse(question);
+                    typingIndicator.remove();
                     addMessage('ai', aiResponse);
-                    
                 } catch (error) {
                     console.error('Error:', error);
-                    addMessage('ai', "حدث خطأ في معالجة سؤالك");
-                } finally {
-                    hideTyping();
+                    typingIndicator.remove();
+                    addMessage('ai', "عذرًا، حدث خطأ في الاتصال. جرب سؤالاً آخر أو حاول لاحقًا.");
                 }
             }
 
-            // إعداد الأحداث
-            function setupEventListeners() {
-                // إرسال الرسالة
-                sendButton.addEventListener('click', sendMessage);
-                userInput.addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter') sendMessage();
-                });
-
-                // الوضع الداكن
-                themeBtn.addEventListener('click', toggleTheme);
-
-                // الإعدادات
-                settingsBtn.addEventListener('click', () => {
-                    settingsOverlay.style.display = 'flex';
-                });
-                closeSettings.addEventListener('click', () => {
-                    settingsOverlay.style.display = 'none';
-                });
-                settingsOverlay.addEventListener('click', (e) => {
-                    if (e.target === settingsOverlay) {
-                        settingsOverlay.style.display = 'none';
-                    }
-                });
+            // الكشف التلقائي عن الوضع المظلم
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                darkMode = true;
+                updateTheme();
             }
-
-            // تهيئة التطبيق
-            function initApp() {
-                initTheme();
-                setupEventListeners();
-                renderMessages();
-                
-                // الكشف التلقائي عن الوضع المظلم
-                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-                    const darkMode = e.matches;
-                    document.documentElement.setAttribute('data-theme', darkMode ? 'dark' : 'light');
-                    themeIcon.className = darkMode ? 'fas fa-sun' : 'fas fa-moon';
-                });
-            }
-
-            // بدء التطبيق
-            initApp();
+            
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                darkMode = e.matches;
+                updateTheme();
+            });
         });
     </script>
 </body>
