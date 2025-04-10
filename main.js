@@ -28,72 +28,50 @@ document.addEventListener('DOMContentLoaded', function() {
     let messages = JSON.parse(localStorage.getItem('h-ai-messages')) || [
         {
             role: "ai",
-            content: "السلام عليكم ورحمة الله وبركاته\n\nأنا H.Ai، مساعدك الذكي الذي يقدم معلومات مفيدة وموثوقة وفقًا للمنهج الإسلامي الصحيح.\n\nكيف يمكنني مساعدتك اليوم؟"
+            content: "السلام عليكم ورحمة الله وبركاته\n\nأنا H.Ai، مساعدك الذكي الإسلامي الذي يقدم معلومات موثوقة وفق منهج السلف الصالح.\n\nكيف يمكنني مساعدتك اليوم؟"
         }
     ];
 
-    // قاعدة المعرفة العقائدية السلفية المحسنة
-    const salafiKnowledgeBase = {
+    // قاعدة المعرفة المحسنة مع تفسيرات السلف
+    const islamicKnowledgeBase = {
+        "الله|الرحمن|الرب": {
+            answer: "الله تعالى هو الإله الحق الذي لا إله إلا هو، له الأسماء الحسنى والصفات العلى، وهو المستحق للعبادة وحده لا شريك له.",
+            references: [
+                "قال تعالى: ﴿قُلْ هُوَ اللَّهُ أَحَدٌ﴾ [الإخلاص:1]",
+                "قال ابن تيمية: 'أصل الدين معرفة الله وإفراده بالعبادة'"
+            ]
+        },
         "اين الله|مكان الله": {
-            answer: "الله تعالى فوق السماوات السبع على عرشه استواء يليق بجلاله، كما قال تعالى: ﴿الرَّحْمَٰنُ عَلَى الْعَرْشِ اسْتَوَى﴾ [طه:5]، وقال النبي ﷺ للجارية: 'أين الله؟' قالت: 'في السماء' فقال: 'اعتقها فإنها مؤمنة' (رواه مسلم).",
+            answer: "الله تعالى فوق السماوات مستو على عرشه استواء يليق بجلاله، كما قال تعالى: ﴿الرَّحْمَٰنُ عَلَى الْعَرْشِ اسْتَوَى﴾ [طه:5]، وهذا مذهب السلف الصالح.",
             references: [
-                "قال الإمام الذهبي: 'هو العلي الأعلى، العالي فوق خلقه، وفوق كل شيء'",
-                "قال الشيخ ابن باز: 'الله فوق العرش فوق السماوات'",
-                "قال الشيخ ابن عثيمين: 'استواء الله على عرشه حقيقة وليس مجازاً'"
+                "روى مسلم أن النبي ﷺ سأل الجارية: أين الله؟ قالت: في السماء، فأقرها",
+                "قال الإمام مالك: 'الاستواء معلوم والكيف مجهول'"
             ]
         },
-        "هل الله في السماء|مكان الرحمن": {
-            answer: "نعم، الله تعالى في السماء فوق العرش، قال الإمام مالك: 'الاستواء معلوم، والكيف مجهول، والإيمان به واجب'.",
+        "العقيدة|التوحيد": {
+            answer: "العقيدة الصحيحة هي توحيد الله في ربوبيته وألوهيته وأسمائه وصفاته، بلا تشبيه ولا تعطيل، كما كان عليه النبي ﷺ وأصحابه.",
             references: [
-                "قال الإمام ابن تيمية: 'من أنكر أن الله في السماء فهو معطل جهمي'",
-                "قال الشيخ الألباني: 'القول بأن الله في كل مكان كفر صريح'"
+                "قال تعالى: ﴿وَمَا خَلَقْتُ الْجِنَّ وَالْإِنسَ إِلَّا لِيَعْبُدُونِ﴾ [الذاريات:56]",
+                "قال ابن باز: 'أساس الدين توحيد الله وإخلاص العبادة له'"
             ]
         },
-        "استواء الله على العرش|عرش الرحمن": {
-            answer: "استواء الله على عرشه استواء حقيقي يليق بجلاله من غير تكييف ولا تمثيل، قال تعالى: ﴿ثُمَّ اسْتَوَى عَلَى الْعَرْشِ﴾ في سبع آيات من القرآن.",
+        "الصلاة|الصلوات": {
+            answer: "الصلاة هي الركن الثاني من أركان الإسلام، وهي عمود الدين، فرضها الله خمس مرات في اليوم والليلة.",
             references: [
-                "قال الإمام الطحاوي: 'والعرش والكرسي حق، وهو مستغن عن العرش وما دونه'",
-                "قال الشيخ الفوزان: 'من أنكر استواء الله على عرشه فهو ضال'"
+                "قال ﷺ: 'بني الإسلام على خمس...' وذكر منها الصلاة (متفق عليه)",
+                "قال ابن القيم: 'الصلاة صلة بين العبد وربه'"
             ]
         },
-        "صفات الله|أسماء الله": {
-            answer: "صفات الله كلها صفات كمال تليق بجلاله من غير تحريف ولا تعطيل ولا تكييف ولا تمثيل، كالاستواء والنزول واليدين والوجه وغيرها.",
+        "القرآن|الكريم": {
+            answer: "القرآن هو كلام الله المنزل على النبي ﷺ، المتعبد بتلاوته، المعجز بلفظه، المحفوظ من التغيير.",
             references: [
-                "قال الإمام ابن القيم: 'أهل السنة يثبتون الصفات وينزهون الله عن مشابهة المخلوقات'",
-                "قال الشيخ صالح آل الشيخ: 'من نفى صفة من الصفات الثابتة بالكتاب والسنة فهو معطل'"
-            ]
-        },
-        "العقيدة السلفية|عقيدة أهل السنة": {
-            answer: "العقيدة السلفية هي ما كان عليه النبي ﷺ وأصحابه من إثبات ما أثبته الله لنفسه في كتابه أو على لسان رسوله ﷺ من غير تحريف ولا تعطيل ولا تكييف ولا تمثيل.",
-            references: [
-                "قال الإمام أحمد: 'أصول السنة عندنا التمسك بما كان عليه الصحابة'",
-                "قال الشيخ ابن عثيمين: 'السلفي هو من سار على منهج السلف الصالح'"
-            ]
-        },
-        "التوسل|الوسيلة الشرعية": {
-            answer: "التوسل المشروع هو التوسل بأسماء الله وصفاته، أو بعمل صالح من أعمال المتوسل، أو بدعاء المسلم الحي الحاضر. أما التوسل بذوات الصالحين أو جاههم فبدعة لم تثبت عن النبي ﷺ ولا عن الصحابة.",
-            references: [
-                "قال الشيخ ابن باز: 'التوسل البدعي مثل التوسل بجاه النبي أو بذاته لا يجوز'",
-                "قال الشيخ الألباني: 'التوسل أنواع، فمنه الجائز ومنه الممنوع'"
-            ]
-        },
-        "الشفاعة|شفاعة النبي": {
-            answer: "الشفاعة أنواع: شفاعة مثبتة يوم القيامة للنبي ﷺ ولغيره من المؤمنين بإذن الله، وشفاعة منفية في الدنيا كالاستشفاع بالأموات والغائبين، قال تعالى: ﴿مَن ذَا الَّذِي يَشْفَعُ عِنْدَهُ إِلاَّ بِإِذْنِهِ﴾ [البقرة:255].",
-            references: [
-                "قال ابن تيمية: 'الشفاعة التي نفاها القرآن ما كان يعتقده المشركون من شفاعة الآلهة بغير إذن الله'",
-                "قال ابن عثيمين: 'شفاعة النبي ﷺ يوم القيامة حق ولكن بشروط'"
-            ]
-        },
-        "القرآن|كلام الله": {
-            answer: "القرآن كلام الله غير مخلوق، منه بدأ وإليه يعود، منزل من الله تعالى على قلب النبي ﷺ بواسطة جبريل عليه السلام.",
-            references: [
-                "قال الإمام أحمد: 'من قال القرآن مخلوق فهو كافر'",
-                "قال الشيخ ابن عثيمين: 'القرآن حروفه ومعانيه من كلام الله'"
+                "قال تعالى: ﴿إِنَّا نَحْنُ نَزَّلْنَا الذِّكْرَ وَإِنَّا لَهُ لَحَافِظُونَ﴾ [الحجر:9]",
+                "قال الشافعي: 'كل ما حكم به رسول الله فهو مما فهمه من القرآن'"
             ]
         }
     };
 
-    // ============= الدوال الأساسية المحسنة =============
+    // ============= الدوال الأساسية =============
 
     function initTheme() {
         const savedTheme = localStorage.getItem('h-ai-theme');
@@ -130,10 +108,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             const contentDiv = document.createElement('div');
             contentDiv.className = `message-content ${message.role}-content`;
-            
-            // تحسين عرض المحتوى مع تنسيق النصوص الشرعية
-            const formattedContent = formatReligiousText(message.content);
-            contentDiv.innerHTML = formattedContent;
+            contentDiv.innerHTML = formatIslamicText(message.content);
             
             messageDiv.appendChild(avatarDiv);
             messageDiv.appendChild(contentDiv);
@@ -143,13 +118,13 @@ document.addEventListener('DOMContentLoaded', function() {
         chatMessages.scrollTop = chatMessages.scrollHeight;
     }
 
-    // دالة جديدة لتنسيق النصوص الشرعية
-    function formatReligiousText(text) {
+    // دالة جديدة لتنسيق النصوص الإسلامية
+    function formatIslamicText(text) {
         return text
-            .replace(/﴿(.*?)﴾/g, '<span class="ayah">$1</span>') // تنسيق الآيات
-            .replace(/(رواه \w+)/g, '<em class="hadith-ref">$1</em>') // تنسيق أحاديث
-            .replace(/(قال \w+:)/g, '<strong>$1</strong>') // تنسيق أقوال العلماء
-            .replace(/\n/g, '<br>'); // تحويل الأسطر الجديدة
+            .replace(/﴿(.*?)﴾/g, '<span class="ayah">$1</span>')
+            .replace(/(رواه \w+)/g, '<em class="hadith-ref">$1</em>')
+            .replace(/(قال \w+:)/g, '<strong>$1</strong>')
+            .replace(/\n/g, '<br>');
     }
 
     function initSpeechRecognition() {
@@ -225,38 +200,34 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // دالة محسنة للبحث في القاعدة المعرفية
-    function getSalafiAnswer(question) {
+    function getIslamicAnswer(question) {
         const lowerQuestion = question.toLowerCase();
         
-        // البحث المباشر مع تحسينات
-        for (const [keywords, data] of Object.entries(salafiKnowledgeBase)) {
+        // البحث باستخدام الكلمات المفتاحية
+        for (const [keywords, data] of Object.entries(islamicKnowledgeBase)) {
             const keywordList = keywords.split('|');
             if (keywordList.some(kw => lowerQuestion.includes(kw))) {
                 const randomRef = data.references[Math.floor(Math.random() * data.references.length)];
-                return `${data.answer}<br><br><em class="scholar-quote">${randomRef}</em>`;
+                return `${data.answer}<br><br><em class="reference">${randomRef}</em>`;
             }
         }
         
         // إجابات ذكية للأسئلة المشابهة
         if (lowerQuestion.includes('عقيد') || lowerQuestion.includes('اعتقاد')) {
-            return salafiKnowledgeBase["العقيدة السلفية|عقيدة أهل السنة"].answer;
+            return islamicKnowledgeBase["العقيدة|التوحيد"].answer;
         }
         
-        if (lowerQuestion.includes('صفة') || lowerQuestion.includes('اسماء الله')) {
-            return salafiKnowledgeBase["صفات الله|أسماء الله"].answer;
-        }
-        
-        if (lowerQuestion.includes('قرآن') || lowerQuestion.includes('كلام الله')) {
-            return salafiKnowledgeBase["القرآن|كلام الله"].answer;
+        if (lowerQuestion.includes('صلاة') || lowerQuestion.includes('صلوات')) {
+            return islamicKnowledgeBase["الصلاة|الصلوات"].answer;
         }
         
         // إجابات عامة محسنة
         const generalAnswers = [
-            "هذا سؤال مهم، والأولى الرجوع إلى كتب العقيدة السلفية مثل 'شرح الطحاوية' و'العقيدة الواسطية'",
-            "أسأل الله أن يثبتنا على الحق، ويمكنك مراجعة فتاوى العلماء الموثوقين في هذه المسألة",
-            "هذا يحتاج إلى تثبت، ومن أفضل ما يُراجع فيه كتب الشيخ ابن عثيمين وابن باز رحمهما الله",
-            "المرجع في مثل هذه المسائل كتاب الله وسنة رسوله ﷺ بفهم السلف الصالح",
-            "هذا السؤال له تفصيل في كتب العقيدة، وأنصحك بمراجعة 'مجموع فتاوى الشيخ ابن باز' أو 'فتاوى العقيدة' للشيخ ابن عثيمين"
+            "هذا سؤال مهم، أنصحك بمراجعة كتب العقيدة الموثوقة مثل 'شرح الطحاوية'",
+            "أسأل الله أن يهدينا جميعًا للحق، يمكنك الاستفادة من فتاوى العلماء الثقات في هذا الموضوع",
+            "هذه المسألة تحتاج إلى تثبت، ومن أفضل المراجع لها كتب الشيخ ابن عثيمين رحمه الله",
+            "المرجع في مثل هذه الأمور كتاب الله وسنة نبيه ﷺ بفهم السلف الصالح",
+            "هذا السؤال له تفصيل في كتب العقيدة، أنصحك بمراجعة 'مجموع فتاوى ابن باز'"
         ];
         
         return generalAnswers[Math.floor(Math.random() * generalAnswers.length)];
@@ -273,7 +244,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         try {
             // البحث أولاً في القاعدة المعرفية المحلية
-            const localAnswer = getSalafiAnswer(message);
+            const localAnswer = getIslamicAnswer(message);
             
             // إذا كانت الإجابة من القاعدة المعرفية كافية
             if (!localAnswer.includes("هذا سؤال مهم")) {
@@ -290,8 +261,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ 
-                    prompt: `أنت مساعد إسلامي يتبع منهج السلف. أجب بلغة عربية فصيحة وفق الأدلة الشرعية. السؤال: ${message}`,
+                body: JSON.stringify({
+                    prompt: `أنت مساعد إسلامي متخصص في العقيدة السلفية. أجب على السؤال التالي بلغة عربية فصيحة مع الاستدلال بالكتاب والسنة بفهم السلف الصالح. السؤال: ${message}`,
                     messages: messages
                 })
             });
@@ -307,14 +278,14 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // تحسين الإجابة إذا كانت عامة
             if (message.includes('اين الله') || message.includes('مكان الله')) {
-                aiResponse = salafiKnowledgeBase["اين الله|مكان الله"].answer;
+                aiResponse = islamicKnowledgeBase["اين الله|مكان الله"].answer;
             }
             
             addMessage('ai', aiResponse);
             
         } catch (error) {
             console.error('Error:', error);
-            const localAnswer = getSalafiAnswer(message);
+            const localAnswer = getIslamicAnswer(message);
             addMessage('ai', localAnswer || "عذرًا، حدث خطأ في الاتصال. جرب سؤالاً آخر أو حاول لاحقًا.");
         } finally {
             hideTypingIndicator();
@@ -326,20 +297,54 @@ document.addEventListener('DOMContentLoaded', function() {
             localStorage.removeItem('h-ai-messages');
             messages = [{
                 role: "ai",
-                content: "السلام عليكم ورحمة الله وبركاته\n\nأنا H.Ai، مساعدك الذكي الذي يقدم معلومات مفيدة وموثوقة وفقًا للمنهج الإسلامي الصحيح.\n\nكيف يمكنني مساعدتك اليوم؟"
+                content: "السلام عليكم ورحمة الله وبركاته\n\nأنا H.Ai، مساعدك الذكي الإسلامي الذي يقدم معلومات موثوقة وفق منهج السلف الصالح.\n\nكيف يمكنني مساعدتك اليوم؟"
             }];
             renderMessages();
         }
     }
 
-    // ============= إعداد الأحداث المحسنة =============
+    // ============= إعداد الأحداث =============
 
     function setupEventListeners() {
         // تسجيل الدخول
-        loginBtn.addEventListener('click', handleLogin);
+        loginBtn.addEventListener('click', () => {
+            const username = document.getElementById('login-username').value.trim();
+            const password = document.getElementById('login-password').value.trim();
+            
+            if (username && password) {
+                authContainer.style.display = 'none';
+                mainContainer.style.display = 'flex';
+                initSpeechRecognition();
+                renderMessages();
+            } else {
+                alert('الرجاء إدخال اسم المستخدم وكلمة المرور');
+            }
+        });
 
         // تسجيل حساب جديد
-        registerBtn.addEventListener('click', handleRegister);
+        registerBtn.addEventListener('click', () => {
+            const name = document.getElementById('register-name').value.trim();
+            const username = document.getElementById('register-username').value.trim();
+            const email = document.getElementById('register-email').value.trim();
+            const password = document.getElementById('register-password').value.trim();
+            const confirmPassword = document.getElementById('register-confirm-password').value.trim();
+            
+            if (!name || !username || !email || !password || !confirmPassword) {
+                alert('الرجاء ملء جميع الحقول');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                alert('كلمة المرور وتأكيدها غير متطابقين');
+                return;
+            }
+            
+            alert('تم تسجيل الحساب بنجاح! يمكنك الآن تسجيل الدخول');
+            document.getElementById('login-username').value = username;
+            document.getElementById('login-password').value = password;
+            document.getElementById('register-box').style.display = 'none';
+            document.getElementById('login-box').style.display = 'block';
+        });
 
         // إرسال الرسالة
         sendButton.addEventListener('click', sendMessage);
@@ -367,65 +372,36 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         // تبديل بين تسجيل الدخول والتسجيل
-        showRegister.addEventListener('click', showRegisterForm);
-        showLogin.addEventListener('click', showLoginForm);
-        loginTab.addEventListener('click', showLoginForm);
-        registerTab.addEventListener('click', showRegisterForm);
+        showRegister.addEventListener('click', () => {
+            loginBox.style.display = 'none';
+            registerBox.style.display = 'block';
+            loginTab.classList.remove('active');
+            registerTab.classList.add('active');
+        });
+        
+        showLogin.addEventListener('click', () => {
+            registerBox.style.display = 'none';
+            loginBox.style.display = 'block';
+            registerTab.classList.remove('active');
+            loginTab.classList.add('active');
+        });
+
+        loginTab.addEventListener('click', () => {
+            registerBox.style.display = 'none';
+            loginBox.style.display = 'block';
+            registerTab.classList.remove('active');
+            loginTab.classList.add('active');
+        });
+
+        registerTab.addEventListener('click', () => {
+            loginBox.style.display = 'none';
+            registerBox.style.display = 'block';
+            loginTab.classList.remove('active');
+            registerTab.classList.add('active');
+        });
 
         // مسح المحادثة بعد 24 ساعة
         setInterval(clearChatHistory, 24 * 60 * 60 * 1000);
-    }
-
-    // دوال مساعدة للتعامل مع النماذج
-    function handleLogin() {
-        const username = document.getElementById('login-username').value.trim();
-        const password = document.getElementById('login-password').value.trim();
-        
-        if (username && password) {
-            authContainer.style.display = 'none';
-            mainContainer.style.display = 'flex';
-            initSpeechRecognition();
-            renderMessages();
-        } else {
-            alert('الرجاء إدخال اسم المستخدم وكلمة المرور');
-        }
-    }
-
-    function handleRegister() {
-        const name = document.getElementById('register-name').value.trim();
-        const username = document.getElementById('register-username').value.trim();
-        const email = document.getElementById('register-email').value.trim();
-        const password = document.getElementById('register-password').value.trim();
-        const confirmPassword = document.getElementById('register-confirm-password').value.trim();
-        
-        if (!name || !username || !email || !password || !confirmPassword) {
-            alert('الرجاء ملء جميع الحقول');
-            return;
-        }
-        
-        if (password !== confirmPassword) {
-            alert('كلمة المرور وتأكيدها غير متطابقين');
-            return;
-        }
-        
-        alert('تم تسجيل الحساب بنجاح! يمكنك الآن تسجيل الدخول');
-        document.getElementById('login-username').value = username;
-        document.getElementById('login-password').value = password;
-        showLoginForm();
-    }
-
-    function showLoginForm() {
-        registerBox.style.display = 'none';
-        loginBox.style.display = 'block';
-        registerTab.classList.remove('active');
-        loginTab.classList.add('active');
-    }
-
-    function showRegisterForm() {
-        loginBox.style.display = 'none';
-        registerBox.style.display = 'block';
-        loginTab.classList.remove('active');
-        registerTab.classList.add('active');
     }
 
     // ============= تهيئة التطبيق =============
