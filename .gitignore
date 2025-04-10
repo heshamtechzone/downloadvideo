@@ -1,32 +1,3 @@
-# ملفات البيئة
-.env
-.env.*
-!.env.example
-
-# تبعيات Node
 node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# محررات الكود
-.vscode/
-.idea/
-
-# ملفات نظام
+.env
 .DS_Store
-*.swp
-*.swo
-
-# ملفات البناء
-dist/
-build/
-*.min.js
-
-# ملفات الاختبار
-coverage/
-.nyc_output/
-
-# ملفات المؤقتة
-tmp/
-temp/
